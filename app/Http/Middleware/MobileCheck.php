@@ -16,7 +16,7 @@ class MobileCheck
      */
     public function handle($request, Closure $next)
     {
-        if (!(new Agent())->isDesktop())
+        if ((new Agent())->isDesktop())
             return redirect('');
 
         return $next($request);
