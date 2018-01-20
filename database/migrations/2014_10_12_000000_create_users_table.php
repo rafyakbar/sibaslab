@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('nama');
             $table->string('password');
             $table->string('role');
-            $table->integer('jurusan_id')
-                ->unsigned();
-            $table->foreign('jurusan_id')
+            $table->integer('prodi_id')
+            ->unsigned();
+            $table->foreign('prodi_id')
                 ->references('id')
-                ->on('jurusan')
+                ->on('prodi')
                 ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
             $table->rememberToken();
             $table->timestamps();
         });
