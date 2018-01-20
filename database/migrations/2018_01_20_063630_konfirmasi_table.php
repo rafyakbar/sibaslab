@@ -13,7 +13,21 @@ class KonfirmasiTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('konfirmasi', function (Blueprint $table){
+            $table->string('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            $table->string('mahasiswa_id');
+            $table->foreign('mahasiswa_id')
+                ->references('id')
+                ->on('mahasiswa')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            $table->text('catatan')->nullable();
+        });
     }
 
     /**

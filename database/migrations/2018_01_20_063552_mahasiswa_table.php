@@ -13,7 +13,18 @@ class MahasiswaTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('mahasiswa', function (Blueprint $table){
+            $table->string('id')
+                ->unique()
+                ->primary();
+            $table->integer('prodi_id');
+            $table->foreign('prodi_id')
+                ->references('id')
+                ->on('prodi')
+                ->onUpdate('CASCADE')
+                ->onDelete('SET NULL');
+            $table->string('nama');
+        });
     }
 
     /**
