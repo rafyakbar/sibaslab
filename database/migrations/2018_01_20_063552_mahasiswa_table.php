@@ -25,6 +25,7 @@ class MahasiswaTable extends Migration
                 ->onDelete('SET NULL');
             $table->string('nama');
             $table->text('token');
+            $table->boolean('konfirmasi')->default(false);
             $table->timestamps();
         });
     }
