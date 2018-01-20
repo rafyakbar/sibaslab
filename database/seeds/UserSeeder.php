@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'id' => $idkalab++.'0',
             'nama' => $faker->unique()->name,
             'password' => bcrypt('secret'),
-            'role' => Role::KALAB,
+            'role' => Role::ADMIN,
             'prodi_id' => Jurusan::findByName('Teknik Informatika')->getRelasiProdi()->first()->id,
         ]);
         foreach (Jurusan::all() as $jurusan){

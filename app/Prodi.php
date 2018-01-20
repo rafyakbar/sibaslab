@@ -32,6 +32,22 @@ class Prodi extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getRelasiUser()
+    {
+        return $this->hasMany('App\User', 'prodi_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getUser()
+    {
+        return $this->hasMany('App\User', 'prodi_id')->get();
+    }
+
+    /**
      * Mendapatkan relasi jurusan dari prodi ini
      * @return Model|null|static
      */

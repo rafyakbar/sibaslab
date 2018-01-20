@@ -39,13 +39,25 @@ class Jurusan extends Model
     public function getRelasiMahasiswa()
     {
         $id_mhs = Array();
-        foreach ($this->getRelasiProdi()->get() as $prodi){
-            $id_mhs = array_merge($id_mhs, array_flatten($prodi->getRelasiMahasiswa()->get()->map(function ($mhs){
+        foreach ($this->getProdi() as $prodi){
+            $id_mhs = array_merge($id_mhs, array_flatten($prodi->getMahasiswa()->map(function ($mhs){
                 return collect($mhs->toArray())->only(['id'])->all();
             })));
         }
 
-        return Mahasiswa::whereIn('mahasiswa.id', $id_mhs);
+        return Mahasiswa::whereIn('id', $id_mhs);
+    }
+
+    public function getRelasiUser()
+    {
+        $id_usr = Array();
+        foreach ($this->getProdi() as $prodi){
+            $id_usr = array_merge($id_usr, array_flatten($prodi->getUser()->map(function ($usr){
+                return collect($usr->toArray())->only(['id'])->all();
+            })));
+        }
+
+        return User::whereIn('id', $id_usr);
     }
 
     /**
