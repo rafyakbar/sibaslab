@@ -24,6 +24,7 @@ class MahasiswaTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('SET NULL');
             $table->string('nama');
+            $table->text('token');
             $table->timestamps();
         });
     }
