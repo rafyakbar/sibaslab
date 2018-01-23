@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 class MahasiswaController extends Controller
 {
 
+    public function dashboard()
+    {
+        return view('mahasiswa.dashboard');
+    }
+
+    public function login()
+    {
+        return view('mahasiswa.login');
+    }
+
     public function mobileGet(Request $request)
     {
         return response()->json((Jurusan::find($request->jurusan_id)->getRelasiMahasiswa()->get()));

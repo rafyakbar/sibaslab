@@ -16,23 +16,23 @@ Route::get('/', function () {
 });
 
 // Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('tes', function (){
-    return json_encode(\App\Mahasiswa::all());
+Route::namespace('Auth')->group(function () {
+    Route::get('login', 'LoginController@showLoginForm')->name('login');
+    Route::post('login', 'LoginController@login');
 });
 
-Route::group(['middleware' => 'mobile', 'prefix' => 'mobile'], function (){
-    Route::group(['prefix' => 'mahasiswa'], function (){
-        Route::get('get/{jurusan_id}', [
-            'uses' => 'MahasiswaController@mobileGet',
-            'as' => 'mobile.mahasiswa.get'
-        ]);
-    });
-    Route::get('tes', function (){
-        return json_encode(\App\Mahasiswa::all());
-    });
+
+Route::group(['prefix' => 'mahasiswa'], function () {
+    Route::get('dashboard', [
+        'uses'=>'MahasiswaController@dashboard',
+        'as'=>'mahasiswa.dashboard'
+    ]);
+    Route::get('login', [
+        'uses' => 'MahasiswaController@login',
+        'as' => 'mahasiswa.login'
+    ]);
+    Route::post('login', [
+        'uses' => 'Auth\LoginController@loginMahasiswa',
+        'as' => 'mahasiswa.login.proses'
+    ]);
 });

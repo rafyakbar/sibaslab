@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mahasiswa;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class
 LoginController extends Controller
@@ -71,5 +75,26 @@ LoginController extends Controller
         return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
+    }
+
+    protected function loginMahasiswa(Request $request)
+    {
+        try{
+           $this->validate($request,[
+               'id'=> 'required|numeric',
+               'token' => 'required|numeric'
+           ]) ;
+           $mahasiswa = Mahasiswa::findOrFail($request->id);
+           if(Hash::check($request->token, $mahasiswa->token))
+           {
+               Auth::guard('mhs')->login($mahasiswa);
+               return redirect()->route('mahasiswa.dashboard');
+           }
+           return back()->with('message','NIM atau password yang anda masukkan salah');
+        }
+        catch(ModelNotFoundException $err){
+            return back()->with('message','NIM atau password yang anda masukkan salah');
+        }
+
     }
 }
