@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Mahasiswa extends Model
+class Mahasiswa extends Authenticatable
 {
+
+    use Notifiable;
+
     protected $table = 'mahasiswa';
 
     public $timestamps = false;
@@ -57,4 +62,5 @@ class Mahasiswa extends Model
     {
         return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan');
     }
+    
 }
