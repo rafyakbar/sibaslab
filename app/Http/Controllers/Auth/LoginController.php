@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class
 LoginController extends Controller
@@ -38,8 +39,39 @@ LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm()
+    /**
+     * validasi login
+     * @param Request $request
+     */
+    protected function validateLogin(Request $request)
     {
-        return view("auth.login");
+        $this->validate($request, [
+            'id' => 'required|numeric',
+            'password'=>'required'
+        ]);
+    }
+
+    /**
+     * memodifikasi credential
+     * @param Request $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only('id','password', 'mengajukan');
+    }
+
+    /**
+     * memodifikasi attempt
+     * @param Request $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        $request->merge(['mengajukan' => true]);
+
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
     }
 }
