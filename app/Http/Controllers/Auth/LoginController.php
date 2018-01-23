@@ -58,7 +58,7 @@ LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        return $request->only('id','password', 'mengajukan');
+        return $request->only('id','password');
     }
 
     /**
@@ -68,8 +68,6 @@ LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $request->merge(['mengajukan' => true]);
-
         return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );

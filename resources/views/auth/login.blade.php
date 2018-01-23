@@ -27,10 +27,11 @@
             </header>
             <div class="auth-content">
                 <p class="text-center">LOGIN TO CONTINUE</p>
-                <form id="login-form" action="/index.html" method="GET" novalidate="">
+                <form id="login-form" action="{{ route('login') }}" method="POST">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="email" class="form-control underlined" name="username" id="username" placeholder="Your email address" required> </div>
+                        <input type="number" class="form-control underlined" name="id" id="username" placeholder="Your email address" required> </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control underlined" name="password" id="password" placeholder="Your password" required> </div>
