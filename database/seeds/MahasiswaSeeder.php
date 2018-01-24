@@ -22,7 +22,7 @@ class MahasiswaSeeder extends Seeder
                         'id' => '14'.$faker->unique()->numerify('#########'),
                         'nama' => $faker->unique()->name,
                         'prodi_id' => $prodi->id,
-                        'token' => bcrypt('12345')
+                        'password' => bcrypt('secret')
                     ]);
                 }
             }
