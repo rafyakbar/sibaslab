@@ -20,7 +20,7 @@ class Mahasiswa extends Authenticatable
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'prodi_id', 'nama', 'password', 'konfirmasi'
+        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at'
     ];
 
     /**
@@ -60,7 +60,7 @@ class Mahasiswa extends Authenticatable
      */
     public function getRelasiKonfirmasiUser()
     {
-        return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan');
+        return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan')->withTimestamps();
     }
     
 }
