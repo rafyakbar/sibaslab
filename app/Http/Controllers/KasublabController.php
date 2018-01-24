@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Prodi;
 use App\User;
+use App\Support\Role;
 
 class KasublabController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('kalab')->only([
+        $this->middleware('role:' . Role::KALAB)->only([
             'tambah', 'hapus'
         ]);
     }
