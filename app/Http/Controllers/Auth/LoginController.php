@@ -82,10 +82,10 @@ LoginController extends Controller
         try{
            $this->validate($request,[
                'id'=> 'required|numeric',
-               'token' => 'required|numeric'
+               'password' => 'required'
            ]) ;
            $mahasiswa = Mahasiswa::findOrFail($request->id);
-           if(Hash::check($request->token, $mahasiswa->token))
+           if(Hash::check($request->password, $mahasiswa->token))
            {
                Auth::guard('mhs')->login($mahasiswa);
                return redirect()->route('mahasiswa.dashboard');
