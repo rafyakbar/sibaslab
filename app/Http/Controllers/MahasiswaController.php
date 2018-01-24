@@ -24,6 +24,11 @@ class MahasiswaController extends Controller
         return response()->json((Jurusan::find($request->jurusan_id)->getRelasiMahasiswa()->get()));
     }
 
+    public function ajukan(Request $request)
+    {
+        return view('mahasiswa.ajukan');
+    }
+
     /**
      * Menyetujui surat untuk mahasiswa tertentu
      *

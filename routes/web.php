@@ -35,4 +35,8 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'Auth\LoginController@loginMahasiswa',
         'as' => 'mahasiswa.login.proses'
     ]);
+    Route::get('ajukan',[
+        'uses' => 'MahasiswaController@ajukan',
+        'as' => 'mahasiswa.ajukan'
+    ]);
 });

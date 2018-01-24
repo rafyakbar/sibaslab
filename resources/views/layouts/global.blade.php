@@ -44,7 +44,7 @@
             <div class="header-block header-block-buttons">
                 <a href="https://fe.unesa.ac.id/" class="btn btn-sm header-btn" target="_blank">
                     <i class="fa fa-university"></i>
-                    <span>Fakultas Ekonomi UNESA</span>
+                    <span>Fakultas Ekonomi</span>
                 </a>
             </div>
             <div class="header-block header-block-nav">
@@ -67,14 +67,13 @@
                                 </a>
                             @endunless
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); $('#keluar').submit()">
+                            <a class="dropdown-item" href="">
                                 <i class="fa fa-power-off icon"></i>
                                 Keluar
                             </a>
-                            <form action="{{ route('logout') }}" method="post" style="display: none" id="keluar">
-                                {{ csrf_field() }}
-                            </form>
+                            {{--<form action="{{ route('logout') }}" method="post" style="display: none" id="keluar">--}}
+                                {{--{{ csrf_field() }}--}}
+                            {{--</form>--}}
                         </div>
                     </li>
                 </ul>
@@ -104,19 +103,9 @@
                     <nav class="menu">
                         @if(Auth::check())
                             <ul class="sidebar-menu metismenu" id="sidebar-menu">
-                                @if(Auth::user()->isPanitia())
-                                    @include('layouts.panitia')
-                                @elseif(Auth::user()->isAdmin())
-                                    @include('layouts.admin')
-                                @elseif(Auth::user()->isKetuaKPU())
-                                    @include('layouts.kakpu')
-                                @elseif(Auth::user()->isDosen()||Auth::user()->isWD3())
-                                    @include('layouts.wd3dosen')
-                                @elseif(Auth::user()->isRoot())
-                                    @include('layouts.root')
-                                @endif
+
                                 <li @if (Route::currentRouteName() == 'pengaturan') class="active" @endif>
-                                    <a href="{{ route('admin.pengaturan') }}">
+                                    <a href="">
                                         <i class="fa fa-gear"></i> Pengaturan
                                     </a>
                                 </li>
