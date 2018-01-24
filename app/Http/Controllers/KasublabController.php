@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Prodi;
 use App\User;
@@ -74,10 +75,43 @@ class KasublabController extends Controller
     {
 
     }
-
+    
+    /**
+     * Mengubah kata sandi
+     *
+     * @param Request $request
+     * @return void
+     */
     public function ubahKataSandi(Request $request)
     {
+        if(!Hash::check($request->passlama, Auth::user()->password)) {
+            return back()->with([
+                'error' => 'Kata sandi lama anda salah !'
+            ]);
+        }
+        else {
+            if($request->passbaru !== $request->passbaru_confirmation) {
+                return back()->with([
+                    'error' => 'Kata sandi yang anda masukkan tidak sama !'
+                ]); 
+            }
+            else {
+                if (Auth::user()->role == Role::KETUA_KPU) {
+                    Auth::user()->update([
+                        'password' => bcrypt($request->passbaru),
+                        'helper' => bcrypt($request->passbaru)
+                    ]);
+                } else {
+                    Auth::user()->update([
+                        'password' => bcrypt($request->passbaru)
+                    ]);
+                }
 
+                return back()->with([
+                    'success' => 'Berhasil mengubah kata sandi 1 !'
+                ]);
+            }
+        }
     }
 
 }
