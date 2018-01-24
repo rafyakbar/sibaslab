@@ -21,7 +21,6 @@ Route::namespace('Auth')->group(function () {
     Route::post('login', 'LoginController@login');
 });
 
-
 Route::group(['prefix' => 'mahasiswa'], function () {
     Route::get('dashboard', [
         'uses'=>'MahasiswaController@dashboard',
@@ -39,4 +38,8 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@ajukan',
         'as' => 'mahasiswa.ajukan'
     ]);
+});
+
+Route::get('qr', function () {
+    return view('test.qr');
 });
