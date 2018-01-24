@@ -24,8 +24,10 @@ class MahasiswaTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('SET NULL');
             $table->string('nama');
-            $table->text('token');
             $table->boolean('konfirmasi')->default(false);
+            $table->text('dir')->nullable();
+            $table->text('validasi')->nullable();
+            $table->text('password');
             $table->timestamps();
         });
     }

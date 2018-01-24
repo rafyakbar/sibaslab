@@ -27,6 +27,7 @@ class KonfirmasiTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
             $table->text('catatan')->nullable();
+            $table->timestamps();
         });
     }
 
