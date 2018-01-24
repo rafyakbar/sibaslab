@@ -15,6 +15,9 @@ class RedirectIfNotKalabOrKasublab
      */
     public function handle($request, Closure $next)
     {
+        if(!$request->user()->isKalab() || !$request->user()->isKasublab())
+            return abortt(403);
+
         return $next($request);
     }
     

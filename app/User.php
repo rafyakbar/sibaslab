@@ -79,4 +79,35 @@ class User extends Authenticatable
     {
         return $this->getJurusan()->getRelasiUser()->where('role', Role::KASUBLAB);
     }
+
+    /**
+     * Mengecek apakah user adalah admin
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return ($this->role === Role::ADMIN);
+    }
+    
+    /**
+     * Mengecek apakah user adalah kalab
+     *
+     * @return boolean
+     */
+    public function isKalab()
+    {
+        return ($this->role === Role::KALAB);
+    }
+    
+    /**
+     * Mengecek apakah user adalah kasublab
+     *
+     * @return boolean
+     */
+    public function isKasublab()
+    {
+        return ($this->role === Role::KASUBLAB);
+    }
+
 }
