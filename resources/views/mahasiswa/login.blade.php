@@ -7,10 +7,10 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="number" class="form-control underlined" name="id" id="username" placeholder="Your email address" required> </div>
+            <input type="number" class="form-control underlined" name="id" id="username" placeholder="" required> </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control underlined" name="token" id="password" placeholder="Your password" required> </div>
+            <input type="password" class="form-control underlined" name="password" id="password" placeholder="" required> </div>
         <div class="form-group">
             <label for="remember">
                 <input class="checkbox" id="remember" type="checkbox">

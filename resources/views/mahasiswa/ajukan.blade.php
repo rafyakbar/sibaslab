@@ -1,4 +1,4 @@
-@extends('layouts.global')
+@extends('layouts.blank')
 
 @section('activity', 'ajukan pemohonan')
 
@@ -32,11 +32,29 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> </div>
         <div class="form-group">
-            <button type="button" class="btn btn-info">Submit</button>
+            <label for="exampleInputPassword1">Upload Berkas</label><br>
+            <div class="input-group">
+                <input type="button" class="input-group-addon text-dark" onclick="upload()" value="Pilih Berkas">
+                <label class="form-control" id="namaFile" for="exampleInputPassword1"></label><br>
+            </div>
         </div>
-        <input id="inputfile" type="file" style="display: none" class="dz-message-block">
+        <input id="inputFile" type="file" style="display: none" class="dz-message-block">
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 @endsection
+
+@push('js')
+    <script>
+        function upload() {
+            document.getElementById("inputFile").click();
+        }
+        $(document).ready(function(){
+            $('input[type="file"]').change(function(e){
+                var fileName = e.target.files[0].name;
+                document.getElementById("namaFile").innerHTML = fileName;
+            });
+        });
+    </script>
+@endpush

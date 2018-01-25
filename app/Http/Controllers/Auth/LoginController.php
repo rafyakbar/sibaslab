@@ -91,7 +91,8 @@ class LoginController extends Controller {
            ]);
 
            $mahasiswa = Mahasiswa::findOrFail($request->id);
-           if(Hash::check($request->password, $mahasiswa->token)) {
+           if(Hash::check($request->password, $mahasiswa->password))
+           {
                Auth::guard('mhs')->login($mahasiswa);
                return redirect()->route('mahasiswa.dashboard');
            }
