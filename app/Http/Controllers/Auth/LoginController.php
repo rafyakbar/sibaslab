@@ -10,19 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class
-LoginController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+class LoginController extends Controller {
 
     use AuthenticatesUsers;
 
@@ -77,24 +65,42 @@ LoginController extends Controller
         );
     }
 
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if ($request->user()->isAdmin()) {
+            return redirect()->intended($this->redirectPath());
+        }
+        else if ($request->user()->isKalab() || $request->user()->isKasublab()) {
+            return redirect()->route('kasublab.daftar.mahasiswa');
+        }
+    }
+
     protected function loginMahasiswa(Request $request)
     {
-        try{
-           $this->validate($request,[
+        try {
+           $this->validate($request, [
                'id'=> 'required|numeric',
                'password' => 'required'
-           ]) ;
+           ]);
+
            $mahasiswa = Mahasiswa::findOrFail($request->id);
-           if(Hash::check($request->password, $mahasiswa->token))
-           {
+           if(Hash::check($request->password, $mahasiswa->token)) {
                Auth::guard('mhs')->login($mahasiswa);
                return redirect()->route('mahasiswa.dashboard');
            }
+
            return back()->with('message','NIM atau password yang anda masukkan salah');
         }
-        catch(ModelNotFoundException $err){
+        catch (ModelNotFoundException $err) {
             return back()->with('message','NIM atau password yang anda masukkan salah');
         }
-
     }
+
 }
