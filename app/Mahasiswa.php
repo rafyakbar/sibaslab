@@ -89,6 +89,26 @@ class Mahasiswa extends Authenticatable
     }
 
     /**
+     * mendapatkan data user
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->getRelasiUser()->get();
+    }
+
+    /**
+     * mendapatkan id user
+     * @return array
+     */
+    public function getIdUser()
+    {
+        return array_flatten($this->getUser()->map(function ($usr) {
+            return collect($usr->toArray())->only(['id'])->all();
+        }));
+    }
+
+    /**
      * mendapatkan kasublab atau kalab yang menyetujui
      * @return mixed
      */
@@ -98,11 +118,20 @@ class Mahasiswa extends Authenticatable
     }
 
     /**
-     * mendapatkan kasub
+     * mendapatkan kasublab atau kalab yang menolak
      * @return mixed
      */
     public function getUserYangMenolak()
     {
         return $this->getRelasiUser()->where('disetujui', false)->get();
+    }
+
+    /**
+     * mendapatkan data user yang belum menyetujui
+     * @return mixed
+     */
+    public function getUserYangBelumMenyetujui()
+    {
+        return $this->getProdi()->getJurusan()->getRelasiUser()->whereNotIn('id', [$this->getIdUser()])->get();
     }
 }
