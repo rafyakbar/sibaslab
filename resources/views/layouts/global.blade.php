@@ -42,9 +42,15 @@
                 <span class="name"><b>@yield('title')</b></span>
             </div>
             <div class="header-block header-block-buttons">
-                <a href="https://fe.unesa.ac.id/" class="btn btn-sm header-btn" target="_blank">
+                <a href="" class="btn btn-sm header-btn" target="_blank">
                     <i class="fa fa-university"></i>
-                    <span>Fakultas Ekonomi</span>
+                    <span>
+                        @guest
+                            {{ Auth::guard('mhs')->user()->getProdi()->getJurusan()->getFakultas()->nama }}
+                        @else
+                            {{ Auth::user()->getProdi()->getJurusan()->getFakultas()->nama }}
+                        @endguest
+                    </span>
                 </a>
             </div>
             <div class="header-block header-block-nav">
@@ -92,21 +98,19 @@
                                 <span class="l l5"></span>
                             </div>
                             @guest
-                                Modular Admin
+                                Mahasiswa
                             @else
                                 {{ strtoupper(\Illuminate\Support\Facades\Auth::user()->role) }}
                             @endguest
                         </div>
                     </div>
-
-
                     <nav class="menu">
                         @if(Auth::check())
                             <ul class="sidebar-menu metismenu" id="sidebar-menu">
-
                                 <li @if (Route::currentRouteName() == 'pengaturan') class="active" @endif>
                                     <a href="">
-                                        <i class="fa fa-gear"></i> Pengaturan
+                                        <i class="fa fa-gear"></i>
+                                        Pengaturan
                                     </a>
                                 </li>
                             </ul>
