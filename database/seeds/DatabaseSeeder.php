@@ -12,8 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \Illuminate\Database\Eloquent\Model::unguard();
-        $this->call('JurusanProdiSeeder');
+        $this->call('FakultasJurusanProdiSeeder');
         $this->call('UserSeeder');
         $this->call('MahasiswaSeeder');
+        $this->call('KonfirmasiSeeder');
     }
 }
