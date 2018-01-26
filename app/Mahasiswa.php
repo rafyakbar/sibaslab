@@ -132,6 +132,6 @@ class Mahasiswa extends Authenticatable
      */
     public function getUserYangBelumMenyetujui()
     {
-        return $this->getProdi()->getJurusan()->getRelasiUser()->whereNotIn('id', [$this->getIdUser()])->get();
+        return $this->getProdi()->getJurusan()->getRelasiUser()->whereNotIn('id', $this->getIdUser())->get();
     }
 }
