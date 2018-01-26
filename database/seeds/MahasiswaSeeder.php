@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Jurusan;
 use App\Mahasiswa;
 use App\Support\Role;
+use App\Fakultas;
 
 class MahasiswaSeeder extends Seeder
 {
@@ -15,15 +16,17 @@ class MahasiswaSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        foreach (Jurusan::all() as $jurusan){
-            foreach ($jurusan->getProdi() as $prodi){
-                for ($c = 0; $c < rand(10,30); $c++){
-                    Mahasiswa::create([
-                        'id' => '14'.$faker->unique()->numerify('#########'),
-                        'nama' => $faker->unique()->name,
-                        'prodi_id' => $prodi->id,
-                        'password' => bcrypt('secret')
-                    ]);
+        foreach (Fakultas::all() as $fakultas){
+            foreach ($fakultas->getJurusan() as $jurusan){
+                foreach ($jurusan->getProdi() as $prodi){
+                    for ($c = 0; $c < rand(20,35); $c++){
+                        Mahasiswa::create([
+                            'id' => rand(12, 14).$faker->unique()->numerify('#########'),
+                            'nama' => $faker->unique()->name,
+                            'prodi_id' => $prodi->id,
+                            'password' => bcrypt('secret')
+                        ]);
+                    }
                 }
             }
         }
