@@ -11,6 +11,8 @@ namespace App\Support;
 
 class Role
 {
+    const ROOT = 'ROOT';
+
     const ADMIN = 'ADMIN';
 
     const KALAB = 'KALAB';
