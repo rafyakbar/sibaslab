@@ -12,11 +12,11 @@
     <!-- Theme initialization -->
     <link rel="stylesheet" href="{{ asset('modular/css/vendor.css') }}">
     <link rel="stylesheet" href="{{ asset('modular/css/app-green.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/dataTables.responsive.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tempusdominus-bootstrap-4.css') }}" rel="stylesheet">
-
+    @stack('css')
     @if(Auth::guard('mhs')->check())
         <style>
             .app {
