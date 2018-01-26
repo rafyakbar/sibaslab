@@ -73,13 +73,13 @@
                                 </a>
                             @endunless
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="">
+                            <a id="logout-link" @click.prevent="logout" class="dropdown-item" href="{{ route('user.logout') }}">
                                 <i class="fa fa-power-off icon"></i>
                                 Keluar
                             </a>
-                            {{--<form action="{{ route('logout') }}" method="post" style="display: none" id="keluar">--}}
-                                {{--{{ csrf_field() }}--}}
-                            {{--</form>--}}
+                            <form action="{{ route('user.logout') }}" method="post" style="display: none" id="keluar">
+                                {{ csrf_field() }}
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -291,21 +291,6 @@
         <div class="color-secondary"></div>
     </div>
 </div>
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-80463319-4', 'auto');
-    ga('send', 'pageview');
-</script>
 
 <script src="{{ asset('modular/js/vendor.js') }}"></script>
 <script src="{{ asset('modular/js/app.js') }}"></script>
@@ -316,6 +301,20 @@
 <script src="{{ asset('js/datatables-setting.js') }}"></script>
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 <script src="{{ asset('js/tempusdominus-bootstrap-4.js') }}"></script>
+<script>
+    let logoutForm = new Vue({
+        el: '#keluar'
+    })
+
+    let logoutLink = new Vue({
+        el: '#logout-link',
+        methods: {
+            logout() {
+                logoutForm.$el.submit()
+            }
+        }
+    })
+</script>
 @stack('js')
 </body>
 </html>

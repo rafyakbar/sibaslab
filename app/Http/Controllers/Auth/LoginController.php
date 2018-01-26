@@ -104,4 +104,22 @@ class LoginController extends Controller {
         }
     }
 
+    /**
+     * Melakukan proses logout
+     * route: user.logout (post)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        if(Auth::guard('mhs')->check()) {
+            Auth::guard('mhs')->logout();
+            return redirect()->route('mahasiswa.login');
+        }
+
+        Auth::logout();
+        return redirect()->route('user.login');
+    }
+
 }
