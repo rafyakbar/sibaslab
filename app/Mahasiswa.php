@@ -24,7 +24,7 @@ class Mahasiswa extends Authenticatable
     ];
 
     /**
-     * Mendapatkan relasi ke tabel prodi
+     * Mendapatkan relasi ke prodi
      * gunanya untuk bisa menggunakan whereHas
      *
      * @return BelongsTo
@@ -35,14 +35,16 @@ class Mahasiswa extends Authenticatable
     }
 
     /**
+     * mendapatkan data prodi
      * @return Model|null|static
      */
     public function getProdi()
     {
-        return $this->belongsTo('App\Prodi', 'prodi_id')->first();
+        return $this->getRelasiProdi()->first();
     }
 
     /**
+     * mendapatkan relasi jurusan
      * @return mixed
      */
     public function getRelasiJurusan()
@@ -50,17 +52,40 @@ class Mahasiswa extends Authenticatable
         return $this->getProdi()->getRelasiJurusan();
     }
 
+    /**
+     * mendapatkan data jurusan
+     * @return mixed
+     */
     public function getJurusan()
     {
         return $this->getProdi()->getJurusan();
     }
 
     /**
+     * mendapatkan relasi fakultas
+     * @return mixed
+     */
+    public function getRelasiFakultas()
+    {
+        return $this->getJurusan()->getRelasiFakultas();
+    }
+
+    /**
+     * mendapatkan data fakultas
+     * @return mixed
+     */
+    public function getFakultas()
+    {
+        return $this->getRelasiFakultas()->first();
+    }
+
+    /**
+     * mendapatkan relasi dengan dosen
      * @return $this
      */
-    public function getRelasiKonfirmasiUser()
+    public function getRelasiUser()
     {
-        return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan')->withTimestamps();
+        return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan', 'disetujui')->withTimestamps();
     }
     
 }
