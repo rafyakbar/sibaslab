@@ -104,6 +104,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Mengecek apakah user ini adalah root
+     * @return bool
+     */
+    public function isRoot()
+    {
+        return ($this->role === Role::ROOT);
+    }
+
+    /**
      * Mengecek apakah user adalah admin
      *
      * @return boolean
