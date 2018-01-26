@@ -47,9 +47,9 @@
                     <span>
                         Fakultas
                         @guest
-                            {{ Auth::guard('mhs')->user()->getProdi()->getJurusan()->getFakultas()->nama }}
+                            {{ Auth::guard('mhs')->user()->getFakultas()->nama }}
                         @else
-                            {{ Auth::user()->getProdi()->getJurusan()->getFakultas()->nama }}
+                            {{ Auth::user()->getProdi()->getFakultas()->nama }}
                         @endguest
                     </span>
                 </a>
