@@ -33,6 +33,7 @@ class User extends Authenticatable
     ];
 
     /**
+     * mendapatkan relasi prodi
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function getRelasiProdi()
@@ -41,6 +42,7 @@ class User extends Authenticatable
     }
 
     /**
+     * mendapatkan data prodi
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
     public function getProdi()
@@ -49,6 +51,7 @@ class User extends Authenticatable
     }
 
     /**
+     * mendapatkan relasi jurusan
      * @return mixed
      */
     public function getRelasiJurusan()
@@ -57,6 +60,7 @@ class User extends Authenticatable
     }
 
     /**
+     * mendapatkan data jurusan
      * @return mixed
      */
     public function getJurusan()
@@ -65,11 +69,30 @@ class User extends Authenticatable
     }
 
     /**
+     * mendapatkan relasi fakultas
+     * @return mixed
+     */
+    public function getRelasiFakultas()
+    {
+        return $this->getJurusan()->getRelasiFakultas();
+    }
+
+    /**
+     * mendapatkan data fakultas
+     * @return mixed
+     */
+    public function getFakultas()
+    {
+        return $this->getRelasiFakultas()->first();
+    }
+
+    /**
+     * mendapatkan relasi dengan mahasiswa
      * @return $this
      */
-    public function getRelasiKonfirmasiMahasiswa()
+    public function getRelasiMahasiswa()
     {
-        return $this->belongsToMany('App\Mahasiswa', 'konfirmasi', 'user_id', 'mahasiswa_id')->withPivot('catatan');
+        return $this->belongsToMany('App\Mahasiswa', 'konfirmasi', 'user_id', 'mahasiswa_id')->withPivot('catatan', 'disetujui')->withTimestamps();
     }
 
     /**
