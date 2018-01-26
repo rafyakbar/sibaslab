@@ -16,18 +16,6 @@
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/dataTables.responsive.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tempusdominus-bootstrap-4.css') }}" rel="stylesheet">
-
-    @if(Auth::guard('mhs')->check())
-        <style>
-            .app {
-                padding-left: 0;
-            }
-
-            .header {
-                left: 0;
-            }
-        </style>
-    @endif
 </head>
 <body>
 <div class="main-wrapper">
@@ -61,10 +49,11 @@
                            aria-haspopup="true" aria-expanded="false">
                             <span class="name">
                                 @if(Auth::check())
-                                    {{Auth::user()->nama }} </span>
-                            @else
-                                {{ Auth::guard('mhs')->user()->nama }}
-                            @endif
+                                    {{Auth::user()->nama }}
+                                @else
+                                    {{ Auth::guard('mhs')->user()->nama }}
+                                @endif
+                            </span>
                         </a>
                         <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
                             @unless(Auth::guard('mhs')->check())
@@ -74,7 +63,8 @@
                                 </a>
                             @endunless
                             <div class="dropdown-divider"></div>
-                            <a id="logout-link" @click.prevent="logout" class="dropdown-item" href="{{ route('user.logout') }}">
+                            <a id="logout-link" @click.prevent="logout" class="dropdown-item"
+                               href="{{ route('user.logout') }}">
                                 <i class="fa fa-power-off icon"></i>
                                 Keluar
                             </a>
@@ -86,121 +76,122 @@
                 </ul>
             </div>
         </header>
-        @unless(Auth::guard('mhs')->check())
-            <aside class="sidebar">
-                <div class="sidebar-container">
-                    <div class="sidebar-header">
-                        <div class="brand">
-                            <div class="logo">
-                                <span class="l l1"></span>
-                                <span class="l l2"></span>
-                                <span class="l l3"></span>
-                                <span class="l l4"></span>
-                                <span class="l l5"></span>
-                            </div>
-                            @guest
-                                Mahasiswa
-                            @else
-                                {{ strtoupper(\Illuminate\Support\Facades\Auth::user()->role) }}
-                            @endguest
+
+        <aside class="sidebar">
+            <div class="sidebar-container">
+                <div class="sidebar-header">
+                    <div class="brand">
+                        <div class="logo">
+                            <span class="l l1"></span>
+                            <span class="l l2"></span>
+                            <span class="l l3"></span>
+                            <span class="l l4"></span>
+                            <span class="l l5"></span>
                         </div>
+                        @guest
+                            Mahasiswa
+                        @else
+                            {{ strtoupper(\Illuminate\Support\Facades\Auth::user()->role) }}
+                        @endguest
                     </div>
-                    <nav class="menu">
-                        @if(Auth::check())
-                            <ul class="sidebar-menu metismenu" id="sidebar-menu">
-                                <li @if (Route::currentRouteName() == 'pengaturan') class="active" @endif>
-                                    <a href="">
-                                        <i class="fa fa-gear"></i>
-                                        Pengaturan
-                                    </a>
-                                </li>
-                            </ul>
-                        @endif
-                    </nav>
                 </div>
-                <footer class="sidebar-footer">
-                    <ul class="sidebar-menu metismenu" id="customize-menu">
-                        <li>
-                            <ul>
-                                <li class="customize">
-                                    <div class="customize-item">
-                                        <div class="row customize-header">
-                                            <div class="col-4"></div>
-                                            <div class="col-4">
-                                                <label class="title">fixed</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label class="title">static</label>
-                                            </div>
+                <nav class="menu">
+                    <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                        @if(Auth::check())
+                            @if(Auth::user()->role == App\Support\Role::ROOT)
+                                @include('layouts.menu.root')
+                            @elseif(Auth::user()->role == App\Support\Role::ADMIN)
+                                @include('layouts.menu.admin')
+                            @else
+                                @include('layouts.menu.kasublab')
+                            @endif
+                        @else
+                            @include('layouts.menu.mahasiswa')
+                        @endif
+                    </ul>
+                </nav>
+            </div>
+            <footer class="sidebar-footer">
+                <ul class="sidebar-menu metismenu" id="customize-menu">
+                    <li>
+                        <ul>
+                            <li class="customize">
+                                <div class="customize-item">
+                                    <div class="row customize-header">
+                                        <div class="col-4"></div>
+                                        <div class="col-4">
+                                            <label class="title">fixed</label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <label class="title">Sidebar:</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="sidebarPosition"
-                                                           value="sidebar-fixed">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="sidebarPosition" value="">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <label class="title">Header:</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="headerPosition"
-                                                           value="header-fixed">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="headerPosition" value="">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <label class="title">Footer:</label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="footerPosition"
-                                                           value="footer-fixed">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-4">
-                                                <label>
-                                                    <input class="radio" type="radio" name="footerPosition" value="">
-                                                    <span></span>
-                                                </label>
-                                            </div>
+                                        <div class="col-4">
+                                            <label class="title">static</label>
                                         </div>
                                     </div>
-
-                                </li>
-                            </ul>
-                            <a href="">
-                                <i class="fa fa-cog"></i> Customize </a>
-                        </li>
-                    </ul>
-                </footer>
-            </aside>
-            <div class="sidebar-overlay" id="sidebar-overlay"></div>
-            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
-            <div class="mobile-menu-handle"></div>
-        @endunless
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label class="title">Sidebar:</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="sidebarPosition"
+                                                       value="sidebar-fixed">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="sidebarPosition" value="">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label class="title">Header:</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="headerPosition"
+                                                       value="header-fixed">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="headerPosition" value="">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label class="title">Footer:</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="footerPosition"
+                                                       value="footer-fixed">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>
+                                                <input class="radio" type="radio" name="footerPosition" value="">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="">
+                            <i class="fa fa-cog"></i> Customize </a>
+                    </li>
+                </ul>
+            </footer>
+        </aside>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+        <div class="mobile-menu-handle"></div>
 
         <article class="content dashboard-page">
             <section class="section">
