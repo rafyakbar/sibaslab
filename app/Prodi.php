@@ -15,7 +15,7 @@ class Prodi extends Model
     ];
 
     /**
-     * Mendapatkan data mahasiswa dengan prodi ini
+     * Mendapatkan relasi mahasiswa dengan prodi tertentu
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function getRelasiMahasiswa()
@@ -24,14 +24,16 @@ class Prodi extends Model
     }
 
     /**
+     * mendapatkan data mahasiswa prodi tertentu
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getMahasiswa()
     {
-        return $this->hasMany('App\Mahasiswa', 'prodi_id')->get();
+        return $this->getRelasiMahasiswa()->get();
     }
 
     /**
+     * mendapatkan relasi user dengan prodi tertentu
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function getRelasiUser()
@@ -40,15 +42,16 @@ class Prodi extends Model
     }
 
     /**
+     * mendapatkan data user dengan prodi tertentu
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getUser()
     {
-        return $this->hasMany('App\User', 'prodi_id')->get();
+        return $this->getRelasiUser()->get();
     }
 
     /**
-     * Mendapatkan relasi jurusan dari prodi ini
+     * Mendapatkan relasi jurusan dengan prodi tertentu
      * @return Model|null|static
      */
     public function getRelasiJurusan()
@@ -56,9 +59,31 @@ class Prodi extends Model
         return $this->belongsTo('App\Jurusan', 'jurusan_id');
     }
 
+    /**
+     * mendapatkan data jurusan dari prodi tertentu
+     * @return mixed
+     */
     public function getJurusan()
     {
-        return $this->belongsTo('App\Jurusan', 'jurusan_id')->first();
+        return $this->getRelasiJurusan()->first();
+    }
+
+    /**
+     * mendapatkan relasi fakultas dengan prodi tertentu
+     * @return mixed
+     */
+    public function getRelasiFakultas()
+    {
+        return $this->getJurusan()->getRelasiFakultas();
+    }
+
+    /**
+     * mendapatkan data fakultas
+     * @return mixed
+     */
+    public function getFakultas()
+    {
+        return $this->getRelasiFakultas()->first();
     }
 
     /**
