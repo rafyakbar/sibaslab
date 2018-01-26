@@ -87,5 +87,13 @@ class Mahasiswa extends Authenticatable
     {
         return $this->belongsToMany('App\User', 'konfirmasi', 'mahasiswa_id', 'user_id')->withPivot('catatan', 'disetujui')->withTimestamps();
     }
-    
+
+    /**
+     * mendapatkan kasublab yang menyetujui
+     * @return mixed
+     */
+    public function getKasublabYangMenyetujui()
+    {
+        return $this->getRelasiUser()->where('disetujui', true)->get();
+    }
 }
