@@ -32,15 +32,21 @@ class Fakultas extends Model
         return $this->getRelasiJurusan()->get();
     }
 
-    public function getIdProdi()
+    /**
+     * mendapatkan relasi prodi
+     * @return mixed
+     */
+    public function getRelasiProdi()
     {
-        $id_prd = Array();
-        foreach ($this->getJurusan() as $jurusan) {
-            $id_prd = array_merge($id_prd, array_flatten($jurusan->geProdi()->map(function ($prd) {
-                return collect($prd->toArray())->only(['id'])->all();
-            })));
-        }
+        return $this->getJurusan()->getRelasiProdi();
+    }
 
-        return $id_prd;
+    /**
+     * mendapatkan data prodi
+     * @return mixed
+     */
+    public function getProdi()
+    {
+        return $this->getRelasiProdi()->get();
     }
 }
