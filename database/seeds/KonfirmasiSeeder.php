@@ -21,10 +21,13 @@ class KonfirmasiSeeder extends Seeder
                     $konfirmasi = rand(0,1);
                     $dosen = $jurusan->getRelasiUser();
                     $kasublabs = $dosen->whereNotIn('role', [Role::KALAB])->get();
+                    $waktu = $faker->dateTimeThisMonth;
                     if ($konfirmasi){
                         foreach ($dosen->get() as $d){
                             $d->getRelasiMahasiswa()->attach($mahasiswa, [
-                                'disetujui' => true
+                                'disetujui' => true,
+                                'created_at' => $waktu,
+                                'updated_at' => $waktu
                             ]);
                         }
                         $mahasiswa->konfirmasi = true;
@@ -35,7 +38,9 @@ class KonfirmasiSeeder extends Seeder
                             $disetujui = rand(0,1);
                             $kasublab->getRelasiMahasiswa()->attach($mahasiswa, [
                                 'disetujui' => $disetujui,
-                                'catatan' => ($disetujui) ? null : $faker->text
+                                'catatan' => ($disetujui) ? null : $faker->text,
+                                'created_at' => $waktu,
+                                'updated_at' => $waktu
                             ]);
                         }
                     }
