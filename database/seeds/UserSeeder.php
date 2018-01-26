@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
                 'nama' => $faker->unique()->name,
                 'password' => bcrypt('secret'),
                 'role' => Role::ADMIN,
-                'prodi_id' => Jurusan::findByName('Teknik Informatika')->getRelasiProdi()->first()->id,
+                'prodi_id' => $fakultas->getRelasiProdi()->first()->id,
             ]);
             foreach ($fakultas->getJurusan() as $jurusan){
                 User::create([
@@ -36,6 +36,13 @@ class UserSeeder extends Seeder
                     'prodi_id' => $jurusan->getRelasiProdi()->first()->id,
                 ]);
                 foreach ($jurusan->getProdi() as $prodi){
+                    User::create([
+                        'id' => $idkalab.++$counter,
+                        'nama' => $faker->unique()->name,
+                        'password' => bcrypt('secret'),
+                        'role' => Role::KASUBLAB,
+                        'prodi_id' => $prodi->id,
+                    ]);
                     User::create([
                         'id' => $idkalab.++$counter,
                         'nama' => $faker->unique()->name,
