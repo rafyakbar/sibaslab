@@ -23,15 +23,13 @@
                         <span class="l l3"></span>
                         <span class="l l4"></span>
                         <span class="l l5"></span>
-                    </div> LOGIN MAHASISWA </h1>
+                    </div>
+                    @yield('titleinfo')
+                </h1>
             </header>
             <div class="auth-content">
                 @yield('content')
             </div>
-        </div>
-        <div class="text-center">
-            <a href="index.html" class="btn btn-secondary btn-sm">
-                <i class="fa fa-arrow-left"></i> Back to dashboard </a>
         </div>
     </div>
 </div>
