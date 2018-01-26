@@ -133,4 +133,38 @@ class User extends Authenticatable
         return ($this->role === Role::KASUBLAB);
     }
 
+
+    /**
+     * mengkonfirmasi mahasiswa
+     * @param $mahasiswa_id
+     * @param $disetujui
+     * @param null $catatan
+     * @return bool
+     */
+    public function doKonfirmasi($mahasiswa_id, $disetujui, $catatan = null)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswa_id);
+        if ($this->role == Role::KALAB){
+            if ($mahasiswa->getUserYangMenyetujui()->count() == $this->getProdi()->getJurusan()->getUser()->count() - 1){
+                $this->getRelasiMahasiswa()->attach($mahasiswa, [
+                    'disetujui' => $disetujui,
+                    'catatan' => $catatan
+                ]);
+                if ($disetujui){
+                    $mahasiswa->konfirmasi = true;
+                    $mahasiswa->save();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        $this->getRelasiMahasiswa()->attach($mahasiswa, [
+            'disetujui' => $disetujui,
+            'catatan' => $catatan
+        ]);
+
+        return true;
+    }
 }
