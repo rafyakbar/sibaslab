@@ -89,11 +89,20 @@ class Mahasiswa extends Authenticatable
     }
 
     /**
-     * mendapatkan kasublab yang menyetujui
+     * mendapatkan kasublab atau kalab yang menyetujui
      * @return mixed
      */
-    public function getKasublabYangMenyetujui()
+    public function getUserYangMenyetujui()
     {
         return $this->getRelasiUser()->where('disetujui', true)->get();
+    }
+
+    /**
+     * mendapatkan kasub
+     * @return mixed
+     */
+    public function getUserYangMenolak()
+    {
+        return $this->getRelasiUser()->where('disetujui', false)->get();
     }
 }
