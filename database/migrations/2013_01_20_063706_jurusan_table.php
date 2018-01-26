@@ -15,6 +15,12 @@ class JurusanTable extends Migration
     {
         Schema::create('jurusan', function (Blueprint $table){
             $table->increments('id');
+            $table->integer('fakultas_id');
+            $table->foreign('fakultas_id')
+                ->references('id')
+                ->on('fakultas')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
             $table->string('nama');
         });
     }
