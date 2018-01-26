@@ -17,8 +17,14 @@ Route::get('/', function () {
 
 // Authentication Routes...
 Route::namespace('Auth')->group(function () {
-    Route::get('login', 'LoginController@showLoginForm')->name('login');
-    Route::post('login', 'LoginController@login');
+    Route::get('login', [
+        'uses' => 'LoginController@showLoginForm',
+        'as' => 'user.login'
+    ]);
+    Route::post('login', [
+        'uses' => 'LoginController@login',
+        'as' => 'user.login.proses'
+    ]);
 });
 
 Route::group(['prefix' => 'mahasiswa'], function () {
