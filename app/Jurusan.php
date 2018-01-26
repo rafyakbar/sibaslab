@@ -12,11 +12,11 @@ class Jurusan extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nama'
+        'nama', 'fakultas_id'
     ];
 
     /**
-     * Mendapatkan, memasukkan dan menghapus data prodi
+     * Mendapatkan relasi prodi
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function getRelasiProdi()
@@ -25,39 +25,89 @@ class Jurusan extends Model
     }
 
     /**
+     * mendapatkan data semua prodi dari jurusan tertentu
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getProdi()
     {
-        return $this->hasMany('App\Prodi', 'jurusan_id')->get();
+        return $this->getRelasiProdi()->get();
     }
 
     /**
-     * mendapatkan data mahasiswa dari jurusan tertentu
-     * @return mixed
+     * mendapatkan relasi fakultas
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getRelasiMahasiswa()
+    public function getRelasiFakultas()
+    {
+        return $this->belongsTo('App\Fakultas', 'fakultas_id');
+    }
+
+    /**
+     * mendapatkan data fakultas
+     * @return Model|null|static
+     */
+    public function getFakultas()
+    {
+        return $this->getRelasiFakultas()->first();
+    }
+
+    /**
+     * mendapatkan id mahasiswa dari jurusan ini
+     * @return array
+     */
+    public function getIdMahasiswa()
     {
         $id_mhs = Array();
-        foreach ($this->getProdi() as $prodi){
-            $id_mhs = array_merge($id_mhs, array_flatten($prodi->getMahasiswa()->map(function ($mhs){
+        foreach ($this->getProdi() as $prodi) {
+            $id_mhs = array_merge($id_mhs, array_flatten($prodi->getMahasiswa()->map(function ($mhs) {
                 return collect($mhs->toArray())->only(['id'])->all();
             })));
         }
 
-        return Mahasiswa::whereIn('id', $id_mhs);
+        return $id_mhs;
     }
 
-    public function getRelasiUser()
+    /**
+     * mendapatkan relasi mahasiswa dari jurusan tertentu
+     * @return mixed
+     */
+    public function getRelasiMahasiswa()
+    {
+        return Mahasiswa::whereIn('id', $this->getIdMahasiswa());
+    }
+
+    /**
+     * mendapatkan data mahasiswa
+     * @return mixed
+     */
+    public function getMahasiswa()
+    {
+        return $this->getRelasiMahasiswa()->get();
+    }
+
+    /**
+     * mendapatkan id user dari jurusan tertentu
+     * @return array
+     */
+    public function getIdUser()
     {
         $id_usr = Array();
-        foreach ($this->getProdi() as $prodi){
-            $id_usr = array_merge($id_usr, array_flatten($prodi->getUser()->map(function ($usr){
+        foreach ($this->getProdi() as $prodi) {
+            $id_usr = array_merge($id_usr, array_flatten($prodi->getUser()->map(function ($usr) {
                 return collect($usr->toArray())->only(['id'])->all();
             })));
         }
 
-        return User::whereIn('id', $id_usr);
+        return $id_usr;
+    }
+
+    /**
+     * mendapatkan relasi user
+     * @return mixed
+     */
+    public function getRelasiUser()
+    {
+        return User::whereIn('id', $this->getIdUser());
     }
 
     /**
