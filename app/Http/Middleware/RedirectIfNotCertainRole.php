@@ -23,6 +23,7 @@ class RedirectIfNotCertainRole
         else {
             if(!Auth::check() ||
             (Auth::user()->isAdmin() && $hakakses != Role::ADMIN) ||
+            (Auth::user()->isRoot() && $hakakses != Role::ROOT) ||
             (Auth::user()->isKalab() && $hakakses != Role::KALAB) ||
             (Auth::user()->isKasublab() && $hakakses != Role::KASUBLAB)) {
                 return abort(403);
