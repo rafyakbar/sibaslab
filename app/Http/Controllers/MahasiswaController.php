@@ -16,20 +16,48 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat'
         ]);
     }
+    
+    public function prosesAjukan(Request $request)
+    {
+        $this->validate($request, [
+
+            'berkas' => 'required|file|mimes:pdf'
+        ]);
+
+        $berkas = $request->file('berkas');
+
+        $path = $berkas->store('public/berkas');
+
+        if(Auth::guard('mhs')->check())
+        {
+            Auth::guard('mhs')->user()->update([
+                'dir' => $path
+            ]);
+            return back()->with('message', 'Berhasil memperbarui data');
+        }
+        Mahasiswa::create([
+            'nama' => $request->nama,
+            'prodi_id' => $request->prodi,
+            'dir' => $path,
+            'password' => bcrypt($request->nim)
+        ]);
+    }
 
     public function dashboard()
     {
-        return view('mahasiswa.dashboard');
+        $kasublabMenyetujui = Auth::guard('mhs')->user()->getUserYangMenyetujui();
+        $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getUserYangBelumMenyetujui();
+        $kasublabMenolak = Auth::guard('mhs')->user()->getUserYangMenolak();
+
+        return view('mahasiswa.dashboard', [
+            'kasublabMenyetujui' => $kasublabMenyetujui,
+            'kasublabBelumMenyetujui' => $kasublabBelumMenyetujui,
+            'kasublabMenolak' => $kasublabMenolak]);
     }
 
     public function login()
     {
         return view('mahasiswa.login');
-    }
-
-    public function mobileGet(Request $request)
-    {
-        return response()->json((Jurusan::find($request->jurusan_id)->getRelasiMahasiswa()->get()));
     }
 
     public function ajukan(Request $request)
