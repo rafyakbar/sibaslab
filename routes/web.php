@@ -45,6 +45,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@ajukan',
         'as' => 'mahasiswa.ajukan'
     ]);
+    Route::post('ajukan', [
+        'uses' => 'MahasiswaController@prosesAjukan',
+        'as' => 'mahasiswa.ajukan.proses'
+    ]);
 
 });
 
