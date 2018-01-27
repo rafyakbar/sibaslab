@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Jurusan;
 use App\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('ajax')->only([
+            'setujuiSurat', 'tolakSurat'
+        ]);
+    }
 
     public function dashboard()
     {
@@ -40,7 +48,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiKonfirmasiUser()->attach($penyetuju, [
+        $mahasiswa->getRelasiUser()->attach($penyetuju, [
             'disetujui' => true
         ]);
 
@@ -60,7 +68,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiKonfirmasiUser()->attach($penyetuju, [
+        $mahasiswa->getRelasiUser()->attach($penyetuju, [
             'disetujui' => false,
             'catatan' => $request->catatan
         ]);
