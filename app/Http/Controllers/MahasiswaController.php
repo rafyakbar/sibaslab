@@ -38,9 +38,9 @@ class MahasiswaController extends Controller
 
     public function dashboard()
     {
-        $kasublabMenyetujui = Auth::guard('mhs')->user()->getUserYangMenyetujui();
-        $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getUserYangBelumMenyetujui();
-        $kasublabMenolak = Auth::guard('mhs')->user()->getUserYangMenolak();
+        $kasublabMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangMenyetujui();
+        $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangBelumMenyetujui();
+        $kasublabMenolak = Auth::guard('mhs')->user()->getKalabKasublabYangMenolak();
 
         return view('mahasiswa.dashboard', [
             'kasublabMenyetujui' => $kasublabMenyetujui,
