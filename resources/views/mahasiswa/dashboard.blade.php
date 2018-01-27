@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             @if(Auth::guard('mhs')->user()->konfirmasi)
                 <div class="card card-info">
                     <div class="card-block">
@@ -12,12 +12,16 @@
                         <button class="btn btn-primary">DOWNLOAD SURAT</button>
                     </div>
                 </div>
-                @else
-                    <div class="card card-primary">
+            @else
+                <div class="card card-primary">
+                    <div class="card-block">
                         <h3 class="error-title text-warning"><em class="fa  fa-warning"></em> Pengajuan surat belum disetujui</h3>
                     </div>
+                </div>
             @endif
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="card sameheight-item" data-exclude="xs,sm">
                 <div class="card-header bordered">
@@ -46,8 +50,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="card sameheight-item" data-exclude="xs,sm">
                 <div class="card-header bordered">
@@ -74,6 +76,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+
         <div class="col-md-6">
             <div class="card sameheight-item" data-exclude="xs,sm">
                 <div class="card-header bordered">

@@ -16,7 +16,7 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat'
         ]);
     }
-    
+
     public function prosesAjukan(Request $request)
     {
         $this->validate($request, [
@@ -39,8 +39,10 @@ class MahasiswaController extends Controller
             'nama' => $request->nama,
             'prodi_id' => $request->prodi,
             'dir' => $path,
-            'password' => bcrypt($request->nim)
+            'password' => bcrypt($request->nim),
+            'id' => $request->nim
         ]);
+        return back()->with('message', 'Berhasil memperbarui data');
     }
 
     public function dashboard()
