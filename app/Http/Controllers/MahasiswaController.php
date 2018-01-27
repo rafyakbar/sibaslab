@@ -10,7 +10,18 @@ use Illuminate\Support\Facades\Auth;
 class MahasiswaController extends Controller
 {
 
+<<<<<<< HEAD
+    public function __construct()
+    {
+        $this->middleware('ajax')->only([
+            'setujuiSurat', 'tolakSurat'
+        ]);
+    }
+
+    public function dashboard()
+=======
     public function prosesAjukan(Request $request)
+>>>>>>> d5f830e995fef35064ed00e29af1cf0444d4998f
     {
         $this->validate($request, [
 
@@ -69,7 +80,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiKonfirmasiUser()->attach($penyetuju, [
+        $mahasiswa->getRelasiUser()->attach($penyetuju, [
             'disetujui' => true
         ]);
 
@@ -89,7 +100,7 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiKonfirmasiUser()->attach($penyetuju, [
+        $mahasiswa->getRelasiUser()->attach($penyetuju, [
             'disetujui' => false,
             'catatan' => $request->catatan
         ]);
