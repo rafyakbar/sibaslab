@@ -19,7 +19,7 @@ class RootSeeder extends Seeder
             'nama' => 'Rafy Aulia Akbar',
             'password' => bcrypt('secret'),
             'role' => Role::ROOT,
-            'prodi_id' => Prodi::findByName('Teknik Informatika')->id,
+            'prodi_id' => Prodi::findByName('S1 Teknik Informatika')->id,
         ]);
 
         User::create([
@@ -27,7 +27,7 @@ class RootSeeder extends Seeder
             'nama' => 'M Iskandar Java',
             'password' => bcrypt('secret'),
             'role' => Role::ROOT,
-            'prodi_id' => Prodi::findByName('Teknik Informatika')->id,
+            'prodi_id' => Prodi::findByName('S1 Teknik Informatika')->id,
         ]);
 
         User::create([
@@ -35,7 +35,7 @@ class RootSeeder extends Seeder
             'nama' => 'Bagas MHH',
             'password' => bcrypt('secret'),
             'role' => Role::ROOT,
-            'prodi_id' => Prodi::findByName('Teknik Informatika')->id,
+            'prodi_id' => Prodi::findByName('S1 Teknik Informatika')->id,
         ]);
 
         User::create([
@@ -43,7 +43,7 @@ class RootSeeder extends Seeder
             'nama' => 'Naim Rochmawati, S.Kom., M.T.',
             'password' => bcrypt('secret'),
             'role' => Role::ROOT,
-            'prodi_id' => Prodi::findByName('Teknik Informatika')->id,
+            'prodi_id' => Prodi::findByName('S1 Teknik Informatika')->id,
         ]);
 
         User::create([
@@ -51,7 +51,7 @@ class RootSeeder extends Seeder
             'nama' => 'Andi Iwan Nurhidayat, S.Kom., M.T.',
             'password' => bcrypt('secret'),
             'role' => Role::ROOT,
-            'prodi_id' => Prodi::findByName('Teknik Informatika')->id,
+            'prodi_id' => Prodi::findByName('S1 Teknik Informatika')->id,
         ]);
     }
 }

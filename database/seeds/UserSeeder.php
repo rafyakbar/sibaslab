@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
                 'nama' => $faker->unique()->name,
                 'password' => bcrypt('secret'),
                 'role' => Role::ADMIN,
-                'prodi_id' => $fakultas->getRelasiProdi()->first()->id,
+                'prodi_id' => $fakultas->getRelasiJurusan()->first()->getRelasiProdi()->first()->id
             ]);
             foreach ($fakultas->getJurusan() as $jurusan){
                 User::create([
