@@ -31,22 +31,4 @@ class Fakultas extends Model
     {
         return $this->getRelasiJurusan()->get();
     }
-
-    /**
-     * mendapatkan relasi prodi
-     * @return mixed
-     */
-    public function getRelasiProdi()
-    {
-        return $this->getJurusan()->getRelasiProdi();
-    }
-
-    /**
-     * mendapatkan data prodi
-     * @return mixed
-     */
-    public function getProdi()
-    {
-        return $this->getRelasiProdi()->get();
-    }
 }
