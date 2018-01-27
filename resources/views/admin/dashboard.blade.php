@@ -1,6 +1,6 @@
 @extends('layouts.global')
 
-@section('activity', 'Dashboard')
+@section('activity', 'Dashboard - Admin')
 
 @section('title', 'Dashboard')
 
