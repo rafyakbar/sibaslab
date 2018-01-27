@@ -29,8 +29,9 @@
                                 </div>
                             </div>
                             <div class="card-block">
-                                <form action="" method="post">
+                                <form action="{{ route('admin.kalabkasublab.tambah') }}" method="post">
                                     {{ csrf_field() }}
+                                    {{ method_field('put') }}
                                     <div class="form-group">
                                         <label class="control-label">NIP/NIDN</label>
                                         <input type="number" class="form-control" name="id" required>
@@ -71,7 +72,7 @@
             </div>
         </div>
         <div class="card-block">
-            <table class="table" id="kalabkasublab">
+            <table class="table table-responsive" id="kalabkasublab">
                 <thead>
                 <tr>
                     <td>No</td>
@@ -91,7 +92,10 @@
                         <td>{{ $dosen->role }}</td>
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
-                            <button class="btn btn-warning btn-sm text-light">Reset password</button>
+                            <div class="btn-group">
+                                <button class="btn btn-warning btn-sm text-light">Reset password</button>
+                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}')">Hapus</button>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -103,6 +107,20 @@
 
 @push('js')
     <script>
+        @if($errors->any())
+            swal({
+                icon: "error",
+                title: "error",
+                text: "{!! implode('\n', $errors->all()) !!}",
+                html: true
+            });
+        @endif
+        @if(Session::has('message'))
+            swal({
+                icon: "success",
+                title: "{{ Session::get('message') }}"
+            });
+        @endif
         $('#jurusan').on('change', function (e) {
             console.log(e);
             var jurusan_id = e.target.value;
@@ -117,10 +135,23 @@
         });
         $('#kalabkasublab').DataTable({
             responsive: true,
-            "lengthMenu": [[5, 10, 20, 40, 80, 100, -1], [5, 10, 20, 40, 80, 100, "Semua pesanan"]],
+            "lengthMenu": [[5, 10, 20, 40, 80, 100, -1], [5, 10, 20, 40, 80, 100, "Semua data"]],
             "columnDefs": [
                 {"orderable": false, "targets": 5}
             ]
         });
+
+        function konfirmasi(nama) {
+            swal({
+                title: "Anda yakin ingin menghapus '" + nama +"'?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+
+                }
+            })
+        }
     </script>
 @endpush

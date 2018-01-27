@@ -20,4 +20,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@getProdi',
         'as' => 'admin.etc.getjurusan'
     ]);
+
+    Route::put('kalabkasublab/tambah', [
+        'uses' => 'AdminController@tambahKalabKasublab',
+        'as' => 'admin.kalabkasublab.tambah'
+    ]);
 });
