@@ -3,65 +3,115 @@
 
 
 @section('content')
-    <div class="col-md-4">
-        <div class="card tasks sameheight-item" data-exclude="xs,sm">
-            <div class="card-header bordered">
-                <div class="header-block">
-                    <h3 class="title"> Tasks </h3>
+    <div class="row">
+        <div class="col-md-6">
+            @if(Auth::guard('mhs')->user()->konfirmasi)
+                <div class="card card-info">
+                    <div class="card-block">
+                        <h4 class=""><em class="fa fa-check-circle-o"></em> Pengajuan surat telah disetujui</h4>
+                        <button class="btn btn-primary">DOWNLOAD SURAT</button>
+                    </div>
                 </div>
-                <div class="header-block pull-right">
-                    <a href="" class="btn btn-primary btn-sm rounded pull-right"> Add new </a>
+                @else
+                    <div class="card card-primary">
+                        <h3 class="error-title text-warning"><em class="fa  fa-warning"></em> Pengajuan surat belum disetujui</h3>
+                    </div>
+            @endif
+        </div>
+        <div class="col-md-6">
+            <div class="card sameheight-item" data-exclude="xs,sm">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title"> Kasublab yang menyetujui : </h3>
+                    </div>
                 </div>
-            </div>
-            <div class="card-block">
-                <div class="tasks-block">
-                    <ul class="item-list">
-                        <li class="item">
-                            <h6 class="text-secondary">11/12/12</h6>
-                            <div class="item-row">
-                                <div class="item-col item-col-title">
-                                    <label>
-                                        <input class="checkbox" type="checkbox" checked="checked">
-                                        <span>Meeting with embassador</span>
-                                    </label>
-                                </div>
-                                <div class="item-col fixed item-col-actions-dropdown">
-                                    <div class="item-actions-dropdown">
-                                        <a class="item-actions-toggle-btn">
-                                                                    <span class="inactive">
-                                                                        <i class="fa fa-cog"></i>
-                                                                    </span>
-                                            <span class="active">
-                                                                        <i class="fa fa-chevron-circle-right"></i>
-                                                                    </span>
-                                        </a>
-                                        <div class="item-actions-block">
-                                            <ul class="item-actions-list">
-                                                <li>
-                                                    <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal">
-                                                        <i class="fa fa-trash-o "></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="check" href="#">
-                                                        <i class="fa fa-check"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="edit" href="item-editor.html">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                <div class="card-block">
+                    <div class="tasks-block">
+                        <ul class="item-list striped">
+                            @foreach($kasublabMenyetujui as $kasublab)
+                                <li class="item">
+                                    <div class="item-row">
+                                        <div class="item-col item-col-title no-overflow">
+                                            <div>
+                                                <a class="date"
+                                                   style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
+                                                <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
+                                </li>
+                            @endforeach()
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card sameheight-item" data-exclude="xs,sm">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title"> Kasublab yang belum menyetujui : </h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="tasks-block">
+                        <ul class="item-list striped">
+                            @foreach($kasublabBelumMenyetujui as $kasublab)
+                                <li class="item">
+                                    <div class="item-row">
+                                        <div class="item-col item-col-title no-overflow">
+                                            <div>
+                                                <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach()
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card sameheight-item" data-exclude="xs,sm">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title"> Kasublab yang tidak menyetujui : </h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="tasks-block">
+                        <ul class="item-list striped">
+                            @foreach($kasublabMenolak as $kasublab)
+                                <li class="item">
+                                    <div class="item-row">
+                                        <div class="item-col item-col-title no-overflow">
+                                            <div>
+                                                <h4 class="item-title no-wrap">{{$kasublab->pivot->created_at->diffForHumans()}} </h4>
+                                                <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                            </div>
+                                            <button class="btn btn-primary btn-sm rounded pull-right" onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat Catatan</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach()
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+@push('js')
+    <script>
+        function tampilCatatan(catatan) {
+            swal({
+                icon: 'info',
+                title: catatan
+            });
+        }
+    </script>
+@endpush

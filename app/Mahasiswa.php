@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Support\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -112,26 +113,37 @@ class Mahasiswa extends Authenticatable
      * mendapatkan kasublab atau kalab yang menyetujui
      * @return mixed
      */
-    public function getUserYangMenyetujui()
+    public function getKalabKasublabYangMenyetujui()
     {
-        return $this->getRelasiUser()->where('disetujui', true)->get();
+        return $this->getRelasiUser()
+            ->where('disetujui', true)
+            ->orderBy('role')
+            ->get();
     }
 
     /**
      * mendapatkan kasublab atau kalab yang menolak
      * @return mixed
      */
-    public function getUserYangMenolak()
+    public function getKalabKasublabYangMenolak()
     {
-        return $this->getRelasiUser()->where('disetujui', false)->get();
+        return $this->getRelasiUser()
+            ->where('disetujui', false)
+            ->orderBy('role')
+            ->get();
     }
 
     /**
-     * mendapatkan data user yang belum menyetujui
+     * mendapatkan data kalab n kasublab yang belum menyetujui
      * @return mixed
      */
-    public function getUserYangBelumMenyetujui()
+    public function getKalabKasublabYangBelumMenyetujui()
     {
-        return $this->getProdi()->getJurusan()->getRelasiUser()->whereNotIn('id', $this->getIdUser())->get();
+        return $this->getProdi()
+            ->getJurusan()
+            ->getRelasiUser()
+            ->whereNotIn('id', $this->getIdUser())
+            ->whereIn('role', [Role::KALAB, Role::KASUBLAB])
+            ->get();
     }
 }

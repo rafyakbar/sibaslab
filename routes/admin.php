@@ -15,4 +15,14 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@mahasiswa',
         'as' => 'admin.mahasiswa'
     ]);
+
+    Route::get('etc/getprodi/{jurusan_id}', [
+        'uses' => 'AdminController@getProdi',
+        'as' => 'admin.etc.getjurusan'
+    ]);
+
+    Route::put('kalabkasublab/tambah', [
+        'uses' => 'AdminController@tambahKalabKasublab',
+        'as' => 'admin.kalabkasublab.tambah'
+    ]);
 });
