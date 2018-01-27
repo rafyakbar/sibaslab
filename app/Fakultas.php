@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Support\Role;
 use Illuminate\Database\Eloquent\Model;
 
 class Fakultas extends Model
@@ -30,5 +31,37 @@ class Fakultas extends Model
     public function getJurusan()
     {
         return $this->getRelasiJurusan()->get();
+    }
+
+    /**
+     * mendapatkan id user
+     * @return array
+     */
+    public function getIdUser()
+    {
+        $id_usr = Array();
+        foreach ($this->getJurusan() as $jurusan){
+            $id_usr = array_merge($id_usr, $jurusan->getIdUser());
+        }
+
+        return $id_usr;
+    }
+
+    /**
+     * mendapatkan relasi user
+     * @return mixed
+     */
+    public function getRelasiUser()
+    {
+        return User::whereIn('id', $this->getIdUser());
+    }
+
+    /**
+     * mendapatkan kalab dan kasublab
+     * @return mixed
+     */
+    public function getKalabKasublab()
+    {
+        return $this->getRelasiUser()->whereNotIn('role', [Role::ROOT, Role::ADMIN])->get();
     }
 }
