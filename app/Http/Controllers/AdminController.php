@@ -35,7 +35,7 @@ class AdminController extends Controller
             'role' => 'required',
             'prodi' => 'required|numeric',
         ]);
-        if (Prodi::find($request->prodi)->getJurusan()->getRelasiUser()->where('role', Role::KALAB)->count() > 0 || $request->role == Role::KALAB)
+        if (Prodi::find($request->prodi)->getJurusan()->getRelasiUser()->where('role', Role::KALAB)->count() > 0 && $request->role == Role::KALAB)
             return back()->withErrors([
                 'Kalab per jurusan tidak boleh lebih dari satu!'
             ]);
@@ -47,7 +47,7 @@ class AdminController extends Controller
             'password' => bcrypt($request->id)
         ]);
 
-        return back()->with('message', 'Berhasil menambahkan "'.$user->nama.'"".');
+        return back()->with('message', 'Berhasil menambahkan.');
     }
 
     public function mahasiswa()
