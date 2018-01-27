@@ -110,15 +110,14 @@
         @if($errors->any())
             swal({
                 icon: "error",
-                title: "error",
                 text: "{!! implode('\n', $errors->all()) !!}",
                 html: true
             });
         @endif
-        @if(Session::has('message'))
+        @if(session()->has('message'))
             swal({
                 icon: "success",
-                title: "{{ Session::get('message') }}"
+                title: "{{ session()->get('message') }}"
             });
         @endif
         $('#jurusan').on('change', function (e) {
