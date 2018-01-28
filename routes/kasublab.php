@@ -6,6 +6,11 @@ Route::namespace('Page')->group(function () {
         'uses' => 'KasublabController@daftarMahasiswa',
         'as' => 'kasublab.daftar.mahasiswa'
     ]);
+    
+    Route::get('daftar/kasublab', [
+        'uses' => 'KasublabController@daftarKasublab',
+        'as' => 'kasublab.daftar.kasublab'
+    ]);
 
     Route::get('pengaturan', [
         'uses' => 'KasublabController@pengaturan',
