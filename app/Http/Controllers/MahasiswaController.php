@@ -73,15 +73,16 @@ class MahasiswaController extends Controller
      */
     public function setujuiSurat(Request $request)
     {
-        $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiUser()->attach($penyetuju, [
-            'disetujui' => true
-        ]);
+        if($penyetuju->doKonfirmasi($request->nim, true)) {
+            return response()->json([
+                'success' => 'Berhasil menyetujui'
+            ]);
+        }
 
         return response()->json([
-            'success' => 'Berhasil menyetujui'
+            'error' => 'Semua kasublab belum menyetujui'
         ]);
     }
 
@@ -93,17 +94,13 @@ class MahasiswaController extends Controller
      */
     public function tolakSurat(Request $request)
     {
-        $mahasiswa = Mahasiswa::find($request->nim);
         $penyetuju = Auth::user();
 
-        $mahasiswa->getRelasiUser()->attach($penyetuju, [
-            'disetujui' => false,
-            'catatan' => $request->catatan
-        ]);
-
-        return response()->json([
-            'success' => 'Berhasil mengirim catatan'
-        ]);
+        if($penyetuju->doKonfirmasi($request->nim, false, $request->catatan)) {
+            return response()->json([
+                'success' => 'Berhasil mengirim catatan !'
+            ]);
+        }
     }
 
 }
