@@ -5,6 +5,7 @@ namespace App;
 use App\Support\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Mahasiswa extends Authenticatable
@@ -145,5 +146,39 @@ class Mahasiswa extends Authenticatable
             ->whereNotIn('id', $this->getIdUser())
             ->whereIn('role', [Role::KALAB, Role::KASUBLAB])
             ->get();
+    }
+
+    /**
+     * Mendapatkan daftar mahasiswa sesuai status yang diinginkan
+     * daftar status :
+     * 0 -> mahasiswa dengan surat belum ditanggapi atau surat belum disetujui
+     * 1 -> mahasiswa dengan surat telah disetujui
+     * !1 / !0 -> mahasiswa dengan surat telah ditolak
+     *
+     * @param mixed $name
+     * @param Jurusan $jurusan
+     * @param integer $status
+     * @return void
+     */
+    public static function getMahasiswaByStatus($user, $status = 0) 
+    {
+        // jika status 0, maka surat belum ditanggapi
+        if($status == 0) {
+            $daftarMahasiswa = $user->getJurusan()->getRelasiMahasiswa()->whereNotIn('id', $user->getRelasiMahasiswa()->get()->pluck('id')->toArray());
+        }
+        // jika status 1, maka surat telah disetujui
+        else if($status == 1) {
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', true);
+        }
+        // jika status 2 atau lebih, maka surat belum disetujui
+        else {          
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false);
+        }
+
+        return $daftarMahasiswa->get()->each(function ($mahasiswa) {
+            $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count();
+            $mahasiswa['menyetujui'] = $mahasiswa->getKalabKasublabYangMenyetujui()->count();
+            $mahasiswa['menolak'] = $mahasiswa->getKalabKasublabYangMenolak()->count();
+        });
     }
 }
