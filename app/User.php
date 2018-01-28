@@ -5,6 +5,7 @@ namespace App;
 use App\Support\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class User extends Authenticatable
 {
@@ -152,28 +153,45 @@ class User extends Authenticatable
      */
     public function doKonfirmasi($mahasiswa_id, $disetujui, $catatan = null)
     {
-        $mahasiswa = Mahasiswa::findOrFail($mahasiswa_id);
-        if ($this->role == Role::KALAB){
-            if ($mahasiswa->getUserYangMenyetujui()->count() == $this->getProdi()->getJurusan()->getUser()->count() - 1){
+        try {
+            $mahasiswa = Mahasiswa::findOrFail($mahasiswa_id);
+
+            if($this->isKalab()) { 
+                // jika user adalah kalab, maka dicek dulu jumlah dari kasublab yang
+                // telah menyetujui, jika sudah semua, maka kalab dapat menyetujui surat
+                if($mahasiswa->getKalabKasublabYangMenyetujui()->count() == $this->getProdi()->getJurusan()->getRelasiUser()->count() - 1) {
+                    
+                    $this->getRelasiMahasiswa()->attach($mahasiswa, [
+                        'disetujui' => $disetujui,
+                        'catatan' => $catatan
+                    ]);
+    
+                    if($disetujui) {
+                        $mahasiswa->update([
+                            'konfirmasi' => true
+                        ]);
+                    }
+    
+                    return true;
+                }
+                return false;
+            }
+            else if($this->isKasublab()) {
                 $this->getRelasiMahasiswa()->attach($mahasiswa, [
                     'disetujui' => $disetujui,
                     'catatan' => $catatan
                 ]);
-                if ($disetujui){
-                    $mahasiswa->konfirmasi = true;
-                    $mahasiswa->save();
-                }
-
+    
                 return true;
             }
+    
+            return false;
 
+        } catch (ModelNotFoundException $e) {
             return false;
         }
-        $this->getRelasiMahasiswa()->attach($mahasiswa, [
-            'disetujui' => $disetujui,
-            'catatan' => $catatan
-        ]);
 
         return true;
     }
+
 }

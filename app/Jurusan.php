@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Mahasiswa;
+use App\Support\Role;
 
 class Jurusan extends Model
 {
@@ -131,4 +132,21 @@ class Jurusan extends Model
     {
         return Jurusan::where('nama', $name)->first();
     }
+
+    /**
+     * Mendapatkan daftar kasublab pada jurusan tertentu
+     *
+     * @param boolean $queryReturn
+     * @return mixed
+     */
+    public function getDaftarKasublab($queryReturn = false)
+    {
+        $daftarKasublab = $this->getRelasiUser()->where('role', Role::KASUBLAB);
+
+        if($queryReturn)
+            return $daftarKasublab;
+
+        return $daftarKasublab->get();
+    } 
+
 }
