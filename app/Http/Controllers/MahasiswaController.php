@@ -16,7 +16,7 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat'
         ]);
     }
-    
+
     public function prosesAjukan(Request $request)
     {
         $this->validate($request, [
@@ -39,15 +39,17 @@ class MahasiswaController extends Controller
             'nama' => $request->nama,
             'prodi_id' => $request->prodi,
             'dir' => $path,
-            'password' => bcrypt($request->nim)
+            'password' => bcrypt($request->nim),
+            'id' => $request->nim
         ]);
+        return back()->with('message', 'Berhasil memperbarui data');
     }
 
     public function dashboard()
     {
-        $kasublabMenyetujui = Auth::guard('mhs')->user()->getUserYangMenyetujui();
-        $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getUserYangBelumMenyetujui();
-        $kasublabMenolak = Auth::guard('mhs')->user()->getUserYangMenolak();
+        $kasublabMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangMenyetujui();
+        $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangBelumMenyetujui();
+        $kasublabMenolak = Auth::guard('mhs')->user()->getKalabKasublabYangMenolak();
 
         return view('mahasiswa.dashboard', [
             'kasublabMenyetujui' => $kasublabMenyetujui,
