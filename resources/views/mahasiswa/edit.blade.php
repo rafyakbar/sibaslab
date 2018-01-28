@@ -1,13 +1,13 @@
-@extends('layouts.blank')
+@extends('layouts.global')
 
-@section('activity', 'ajukan pemohonan')
+@section('activity', 'Edit')
 
 @section('content')
     @if($errors->any())
         <div class="alert alert-warning">
             <ul>
                 @foreach($errors->all() as $error)
-                   <li >{{$error}}</li>
+                    <li >{{$error}}</li>
                 @endforeach
             </ul>
         </div>

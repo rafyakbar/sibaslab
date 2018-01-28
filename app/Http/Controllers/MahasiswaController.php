@@ -17,32 +17,49 @@ class MahasiswaController extends Controller
         ]);
     }
 
-    public function prosesAjukan(Request $request)
+    public function edit()
     {
-        $this->validate($request, [
+        return view('mahasiswa.edit');
+    }
 
-            'berkas' => 'required|file|mimes:pdf'
-        ]);
+    public function olahData(Request $request)
+    {
+        if (Auth::guard('mhs')->check()) {
+            dd('wes login');
+            $this->validate($request, [
+                'berkas' => 'required|file|mimes:pdf'
+            ]);
+        } else {
+            dd('grung login');
+            $this->validate($request, [
+                'nama' => 'required',
+                'nim' => 'required|numeric|unique:mahasiswa,id',
+                'prodi' => 'required|numeric',
+                'berkas' => 'required|file|mimes:pdf'
+            ]);
+        }
 
         $berkas = $request->file('berkas');
 
         $path = $berkas->store('public/berkas');
 
-        if(Auth::guard('mhs')->check())
-        {
+        if (Auth::guard('mhs')->check()) {
             Auth::guard('mhs')->user()->update([
                 'dir' => $path
             ]);
             return back()->with('message', 'Berhasil memperbarui data');
         }
-        Mahasiswa::create([
+        $mhs = Mahasiswa::create([
             'nama' => $request->nama,
             'prodi_id' => $request->prodi,
             'dir' => $path,
             'password' => bcrypt($request->nim),
             'id' => $request->nim
         ]);
-        return back()->with('message', 'Berhasil memperbarui data');
+
+        Auth::guard('mhs')->login($mhs);
+
+        return view('mahasiswa.login');
     }
 
     public function dashboard()
@@ -90,7 +107,7 @@ class MahasiswaController extends Controller
 
     /**
      * Menolak penyetujuan surat dengan menambahkan catatan tertentu
-     * 
+     *
      * @param Request $request
      * @return Illuminate\Http\JsonResponse
      */
