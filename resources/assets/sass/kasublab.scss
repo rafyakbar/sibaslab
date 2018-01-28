@@ -1,0 +1,118 @@
+@import 'var';
+html,
+body {
+    font-family: 'Gotham';
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.app {
+    .content {
+        padding: 70px 0px 45px 0px;
+    }
+}
+
+.ui-tab {
+    width: 100%;
+    background-color: #d7dde4;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    >li {
+        >a {
+            padding: 10px 20px;
+            display: block;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.5);
+            &:hover {
+                color: rgba(0, 0, 0, 0.75);
+                text-decoration: none;
+            }
+            &:link {
+                text-decoration: none;
+            }
+        }
+        &.active {
+            >a {
+                border-bottom: 5px solid rgba(0, 0, 0, .5);
+                color: rgba(0, 0, 0, 0.75);
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .app {
+        .content {
+            padding: 50px 0px 45px 0px;
+        }
+    }
+}
+
+#daftar-mahasiswa {
+    padding: 20px;
+    .card-mhs {
+        border-radius: 5px;
+        margin-bottom: 20px;
+        .title-block {
+            >.title {
+                color: darken($themeColor, 10)
+            }
+            margin-bottom: 5px;
+        }
+        h6 {
+            font-size: 14px;
+        }
+        .counter-block {
+            border-top: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            margin-right: -15px;
+            margin-left: -15px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            >.item {
+                padding: 15px;
+                text-align: center;
+                >.counter {
+                    font-size: 20px;
+                    display: block;
+                }
+                >.desc {
+                    font-size: 12px;
+                    display: block;
+                }
+
+                &:not(:last-child) {
+                    border-right: 1px solid #dddddd;
+                }
+            }
+        }
+        button {
+            cursor: pointer;
+            border-radius: 2px;
+            float: right;
+            padding: 10px 20px;
+            &:last-child {
+                margin-right: 10px;
+            }
+        }
+        .btn-primary {
+            // background-color: rgb(51, 103, 214);
+            color: #fff;
+            border: none;
+            outline: none;
+        }
+        .btn-text-warning {
+            color: #ce3636;
+            background: transparent;
+            font-weight: bold;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.08);
+            }
+        }
+    }
+}
