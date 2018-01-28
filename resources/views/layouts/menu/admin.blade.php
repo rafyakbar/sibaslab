@@ -4,7 +4,7 @@
         Dashboard
     </a>
 </li>
-<li @if(Route::currentRouteName() == 'admin.kalabkasublab.') class="active" @endif>
+<li @if(Route::currentRouteName() == 'admin.kalabkasublab') class="active" @endif>
     <a href="{{ route('admin.kalabkasublab') }}">
         <i class="fa fa-users"></i>
         Kalab & Kasublab
