@@ -53,6 +53,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@olahData',
         'as' => 'mahasiswa.ajukan.proses'
     ]);
+    Route::post('perbaruiPassword', [
+        'uses' => 'MahasiswaController@perbaruiPassword',
+        'as' => 'mahasiswa.password.perbarui'
+    ]);
 });
 
 Route::get('qr', function () {

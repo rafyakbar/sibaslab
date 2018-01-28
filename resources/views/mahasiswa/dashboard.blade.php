@@ -13,9 +13,10 @@
                     </div>
                 </div>
             @else
-                <div class="card card-primary">
+                <div class="alert alert-warning">
                     <div class="card-block">
-                        <h3 class="error-title text-warning"><em class="fa  fa-warning"></em> Pengajuan surat belum disetujui</h3>
+                        <h3 class="error-title text-light"><em class="fa  fa-warning"></em> Pengajuan surat belum
+                            disetujui</h3>
                     </div>
                 </div>
             @endif
@@ -23,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="card sameheight-item" data-exclude="xs,sm">
+            <div class="card" data-exclude="xs,sm">
                 <div class="card-header bordered">
                     <div class="header-block">
                         <h3 class="title"> Kasublab yang menyetujui : </h3>
@@ -41,6 +42,36 @@
                                                    style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
                                                 <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                             </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach()
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-exclude="xs,sm">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title"> Kasublab yang tidak menyetujui : </h3>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="tasks-block">
+                        <ul class="item-list striped">
+                            @foreach($kasublabMenolak as $kasublab)
+                                <li class="item">
+                                    <div class="item-row">
+                                        <div class="item-col item-col-title no-overflow">
+                                            <div>
+                                                <h4 class="item-title no-wrap">{{$kasublab->pivot->created_at->diffForHumans()}} </h4>
+                                                <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                            </div>
+                                            <button class="btn btn-primary btn-sm rounded pull-right"
+                                                    onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
+                                                Catatan
+                                            </button>
                                         </div>
                                     </div>
                                 </li>
@@ -67,37 +98,6 @@
                                             <div>
                                                 <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach()
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-md-6">
-            <div class="card sameheight-item" data-exclude="xs,sm">
-                <div class="card-header bordered">
-                    <div class="header-block">
-                        <h3 class="title"> Kasublab yang tidak menyetujui : </h3>
-                    </div>
-                </div>
-                <div class="card-block">
-                    <div class="tasks-block">
-                        <ul class="item-list striped">
-                            @foreach($kasublabMenolak as $kasublab)
-                                <li class="item">
-                                    <div class="item-row">
-                                        <div class="item-col item-col-title no-overflow">
-                                            <div>
-                                                <h4 class="item-title no-wrap">{{$kasublab->pivot->created_at->diffForHumans()}} </h4>
-                                                <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
-                                            </div>
-                                            <button class="btn btn-primary btn-sm rounded pull-right" onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat Catatan</button>
                                         </div>
                                     </div>
                                 </li>

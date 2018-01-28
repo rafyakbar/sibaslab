@@ -22,6 +22,11 @@ class MahasiswaController extends Controller
         return view('mahasiswa.edit');
     }
 
+    public function perbaruiPassword()
+    {
+
+    }
+
     public function olahData(Request $request)
     {
         if (Auth::guard('mhs')->check()) {

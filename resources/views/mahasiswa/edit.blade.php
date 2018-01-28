@@ -12,45 +12,49 @@
             </ul>
         </div>
     @endif
-    <form role="form" action="{{route('mahasiswa.ajukan.proses')}}" method="post" enctype="multipart/form-data">
-        {{csrf_field()}}
-        {{method_field('post')}}
-        <div class="form-group">
-            <label for="exampleInputEmail1">Nama Lengkap</label>
-            <input type="text" class="form-control" id="nama" placeholder="" name="nama"> </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">NIM</label>
-            <input type="number" class="form-control" id="nim" placeholder="" name="nim"> </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Jurusan</label>
-            <select class="form-control" name="jurusan">
-                <option>Option one</option>
-                <option>Option two</option>
-                <option>Option three</option>
-                <option>Option four</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Prodi</label>
-            <select class="form-control" name="prodi">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option>Option four</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Upload Berkas</label><br>
-            <div class="input-group">
-                <input type="button" class="input-group-addon text-dark" onclick="upload()" value="Pilih Berkas">
-                <label class="form-control" id="namaFile" for="exampleInputPassword1"></label><br>
+    <div class="row sameheight-container">
+        <div class="col-lg-6">
+            <div class="card card-block">
+                <form role="form" action="{{route('mahasiswa.password.perbarui')}}" method="post" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Perbarui Password</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Password</label>
+                        <input type="text" class="form-control" id="nama" placeholder="" name="password"> </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Password Baru</label>
+                        <input type="number" class="form-control" id="nim" placeholder="" name="newPassword"> </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
+                        <input type="number" class="form-control" id="nim" placeholder="" name="confirmNewPassword"> </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <input id="inputFile" type="file"  name="berkas" style="display: none" class="dz-message-block">
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="col-lg-6">
+            <div class="card card-block">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Perbarui Berkas</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="button" class="input-group-addon text-dark" onclick="upload()" value="Pilih Berkas">
+                            <label class="form-control" id="namaFile" for="exampleInputPassword1"></label><br>
+                        </div>
+                    </div>
+                    <input id="inputFile" type="file"  name="berkas" style="display: none" class="dz-message-block">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 @endsection
 
 @push('js')
