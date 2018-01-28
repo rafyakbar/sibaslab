@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class RedirectIfNotKalabOrKasublab
 {
@@ -15,8 +16,11 @@ class RedirectIfNotKalabOrKasublab
      */
     public function handle($request, Closure $next)
     {
+        if(!Auth::check())
+            return redirect()->route('user.login');
+
         if(!$request->user()->isKalab() && !$request->user()->isKasublab())
-            return abort(403);
+            return redirect()->route('user.login');
 
         return $next($request);
     }

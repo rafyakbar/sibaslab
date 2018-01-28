@@ -18,7 +18,7 @@ class RedirectIfNotCertainRole
     public function handle($request, Closure $next, $hakakses)
     {
         if(($hakakses == 'MHS' && Auth::guard('mhs')->check())) {
-            return abort(403);
+            return redirect()->route('mahasiswa.login');
         }
         else {
             if(!Auth::check() ||
@@ -26,7 +26,7 @@ class RedirectIfNotCertainRole
             (Auth::user()->isRoot() && $hakakses != Role::ROOT) ||
             (Auth::user()->isKalab() && $hakakses != Role::KALAB) ||
             (Auth::user()->isKasublab() && $hakakses != Role::KASUBLAB)) {
-                return abort(403);
+                return redirect()->route('user.login');
             }
         }
 
