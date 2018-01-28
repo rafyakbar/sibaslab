@@ -25,4 +25,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@tambahKalabKasublab',
         'as' => 'admin.kalabkasublab.tambah'
     ]);
+
+    Route::delete('kalabkasublab/hapus', [
+        'uses' => 'AdminController@hapusKalabKasublab',
+        'as' => 'admin.kalabkasublab.hapus'
+    ]);
 });

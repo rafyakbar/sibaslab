@@ -94,7 +94,7 @@
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-warning btn-sm text-light">Reset password</button>
-                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}')">Hapus</button>
+                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}', {{ $dosen->id }})">Hapus</button>
                             </div>
                         </td>
                     </tr>
@@ -103,6 +103,11 @@
             </table>
         </div>
     </div>
+    <form action="{{ route('admin.kalabkasublab.hapus') }}" method="post" id="hapus" style="display: none">
+        {{ csrf_field() }}
+        {{ method_field('delete') }}
+        <input type="hidden" name="id" id="dosen_id">
+    </form>
 @endsection
 
 @push('js')
@@ -140,7 +145,7 @@
             ]
         });
 
-        function konfirmasi(nama) {
+        function konfirmasi(nama, id) {
             swal({
                 title: "Anda yakin ingin menghapus '" + nama +"'?",
                 icon: "warning",
@@ -148,7 +153,8 @@
                 dangerMode: true,
             }).then((willDelete) => {
                 if (willDelete) {
-
+                    $('#dosen_id').val(id)
+                    $('#hapus').submit()
                 }
             })
         }

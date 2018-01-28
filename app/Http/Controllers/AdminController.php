@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jurusan;
+use App\Mahasiswa;
 use App\Prodi;
 use App\Support\Role;
 use App\User;
@@ -48,6 +49,17 @@ class AdminController extends Controller
         ]);
 
         return back()->with('message', 'Berhasil menambahkan.');
+    }
+
+    public function hapusKalabKasublab(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|numeric'
+        ]);
+
+        User::find($request->id)->delete();
+
+        return back()->with('message', 'Berhasil mengahapus pengguna');
     }
 
     public function mahasiswa()
