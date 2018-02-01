@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Jurusan;
 use App\Mahasiswa;
+use App\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
@@ -22,61 +24,110 @@ class MahasiswaController extends Controller
         return view('mahasiswa.edit');
     }
 
-    public function perbaruiPassword()
+    public function perbaruiPassword(Request $request)
     {
+        $this->validate($request, [
+            'password' => 'required',
+            'newPassword' => 'required',
+            'confirmNewPassword' => 'required'
+        ]);
 
+        if(!Hash::check($request->password, Auth::guard('mhs')->user()->password))
+        {
+            return back()->with([
+                'error' =>  'Kata sandi lama anda salah !'
+            ]);
+        }
+        else
+        {
+            if($request->newPassword !== $request->confirmNewPassword)
+            {
+                return back()->with([
+                    'error' =>  'Konfirmasi password tidak sama dengan password baru !'
+                ]);
+            }
+            else if($request->newPassword == Auth::guard('mhs')->user()->password)
+            {
+                return back()->with([
+                    'error' =>  'Password baru dan password lama tidak boleh sama !'
+                ]);
+            }
+            else
+            {
+                Auth::guard('mhs')->user()->update([
+                    'password' => bcrypt($request->newPassword)
+                ]);
+                return back()->with([
+                    'success' => 'Berhasil mengubah kata sandi !'
+                ]);
+            }
+        }
     }
 
     public function olahData(Request $request)
     {
         if (Auth::guard('mhs')->check()) {
-            dd('wes login');
             $this->validate($request, [
                 'berkas' => 'required|file|mimes:pdf'
             ]);
+
+            $berkas = $request->file('berkas');
+
+            $path = $berkas->store('public/berkas');
+
+            Auth::guard('mhs')->user()->update([
+                'dir' => $path
+            ]);
+            return back()->with('message', 'Berhasil memperbarui data');
         } else {
-            dd('grung login');
             $this->validate($request, [
                 'nama' => 'required',
                 'nim' => 'required|numeric|unique:mahasiswa,id',
                 'prodi' => 'required|numeric',
                 'berkas' => 'required|file|mimes:pdf'
             ]);
-        }
 
-        $berkas = $request->file('berkas');
+            $berkas = $request->file('berkas');
 
-        $path = $berkas->store('public/berkas');
+            $path = $berkas->store('public/berkas');
 
-        if (Auth::guard('mhs')->check()) {
-            Auth::guard('mhs')->user()->update([
-                'dir' => $path
+            $mhs = Mahasiswa::create([
+                'nama' => $request->nama,
+                'prodi_id' => $request->prodi,
+                'dir' => $path,
+                'password' => bcrypt($request->nim),
+                'id' => $request->nim
             ]);
-            return back()->with('message', 'Berhasil memperbarui data');
+
+            Auth::guard('mhs')->login($mhs);
+
+            return view('mahasiswa.login');
         }
-        $mhs = Mahasiswa::create([
-            'nama' => $request->nama,
-            'prodi_id' => $request->prodi,
-            'dir' => $path,
-            'password' => bcrypt($request->nim),
-            'id' => $request->nim
-        ]);
 
-        Auth::guard('mhs')->login($mhs);
-
-        return view('mahasiswa.login');
     }
 
     public function dashboard()
     {
+        if(!Auth::guard('mhs')->check())
+        {
+            return view('mahasiswa.login');
+        }
+
         $kasublabMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangMenyetujui();
         $kasublabBelumMenyetujui = Auth::guard('mhs')->user()->getKalabKasublabYangBelumMenyetujui();
         $kasublabMenolak = Auth::guard('mhs')->user()->getKalabKasublabYangMenolak();
 
+        $jumlahMenyetujui = $kasublabMenyetujui->count();
+        $jumlahMenolak = $kasublabMenolak->count();
+        $jumlahBelum = $kasublabBelumMenyetujui->count();
+
         return view('mahasiswa.dashboard', [
             'kasublabMenyetujui' => $kasublabMenyetujui,
             'kasublabBelumMenyetujui' => $kasublabBelumMenyetujui,
-            'kasublabMenolak' => $kasublabMenolak]);
+            'kasublabMenolak' => $kasublabMenolak,
+            'jumlahMenyetujui' => $jumlahMenyetujui,
+            'jumlahMenolak' => $jumlahMenolak,
+            'jumlahBelum' => $jumlahBelum]);
     }
 
     public function login()
@@ -86,7 +137,11 @@ class MahasiswaController extends Controller
 
     public function ajukan(Request $request)
     {
-        return view('mahasiswa.ajukan');
+        $jurusan = Jurusan::all();
+        $prodi = Prodi::all();
+        return view('mahasiswa.ajukan', [
+            'semuaJurusan' => $jurusan,
+            'semuaProdi' => $prodi]);
     }
 
     /**
@@ -125,6 +180,10 @@ class MahasiswaController extends Controller
                 'success' => 'Berhasil mengirim catatan !'
             ]);
         }
+
+        return response()->json([
+            'error' => 'Semua kasublab belum menyetujui'
+        ]);
     }
 
 }

@@ -2,28 +2,30 @@
 
 @section('title', 'login')
 
+@section('titleinfo', 'Login')
+
 @section('content')
     <form id="login-form" action="{{ route('mahasiswa.login.proses') }}" method="POST">
         {{ csrf_field() }}
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">NIM</label>
             <input type="number" class="form-control underlined" name="id" id="username" placeholder="" required> </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" class="form-control underlined" name="password" id="password" placeholder="" required> </div>
         <div class="form-group">
             <label for="remember">
-                <input class="checkbox" id="remember" type="checkbox">
-                <span>Remember me</span>
+                <input class="checkbox" id="remember" type="checkbox" name="remember">
+                <span>Ingat Saya</span>
             </label>
-            <a href="reset.html" class="forgot-btn pull-right">Forgot password?</a>
+            <a href="reset.html" class="forgot-btn pull-right">Lupa password?</a>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-block btn-primary">Login</button>
         </div>
         <div class="form-group">
-            <p class="text-muted text-center">Do not have an account?
-                <a href="signup.html">Sign Up!</a>
+            <p class="text-muted text-center">Belum mengajukan surat bebas lab?
+                <a href="signup.html">Ajukan Surat!</a>
             </p>
         </div>
     </form>

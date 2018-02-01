@@ -2,6 +2,8 @@
 
 @section('activity', 'ajukan pemohonan')
 
+@section('titleinfo', 'Ajukan Surat')
+
 @section('content')
     @if($errors->any())
         <div class="alert alert-warning">
@@ -23,20 +25,16 @@
             <input type="number" class="form-control" id="nim" placeholder="" name="nim"> </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Jurusan</label>
-            <select class="form-control" name="jurusan">
-                <option>Option one</option>
-                <option>Option two</option>
-                <option>Option three</option>
-                <option>Option four</option>
+            <select class="form-control" name="jurusan" id="jurusan" required>
+                @foreach($semuaJurusan as $jurusan)
+                    <option value="{{$jurusan->id}}" >{{$jurusan->nama}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Prodi</label>
-            <select class="form-control" name="prodi">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option>Option four</option>
+            <select class="form-control" name="prodi" id="prodi">
+                <option value=""></option>
             </select>
         </div>
         <div class="form-group">
@@ -64,5 +62,19 @@
                 document.getElementById("namaFile").innerHTML = fileName;
             });
         });
+
+        $('#jurusan').on('change', function(e){
+            console.log(e);
+            var jurusan_id = e.target.value;
+
+            $.get('{{ url('mahasiswa/etc/getprodi') }}/' + jurusan_id, function (data) {
+                console.log(data);
+                $('#prodi').empty();
+                $.each(data, function (index, subCatObj) {
+                    $('#prodi').append('<option value="' + subCatObj.id + '">' + subCatObj.nama + '</option>');
+                });
+            });
+        });
+
     </script>
 @endpush

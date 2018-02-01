@@ -57,6 +57,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@perbaruiPassword',
         'as' => 'mahasiswa.password.perbarui'
     ]);
+    Route::get('etc/getprodi/{jurusan_id}', [
+        'uses' => 'PublicController@getProdi',
+        'as' => 'mahasiswa.etc.getjurusan'
+    ]);
 });
 
 Route::get('qr', function () {
