@@ -64,4 +64,36 @@ class Fakultas extends Model
     {
         return $this->getRelasiUser()->whereNotIn('role', [Role::ROOT, Role::ADMIN])->get();
     }
+
+    /**
+     * mendapatkan id semua mahasiswa dari fakultas tertentu
+     * @return array
+     */
+    public function getIdMahasiswa()
+    {
+        $id_mhs = Array();
+        foreach ($this->getJurusan() as $jurusan){
+            $id_mhs = array_merge($id_mhs, $jurusan->getIdMahasiswa());
+        }
+
+        return $id_mhs;
+    }
+
+    /**
+     * mendapatkan relasi mahasiswa dari fakultas tertentu
+     * @return mixed
+     */
+    public function getRelasiMahasiswa()
+    {
+        return Mahasiswa::whereIn('id', $this->getIdMahasiswa());
+    }
+
+    /**
+     * mendapatkan data mahasiswa dari fakultas tertentu
+     * @return mixed
+     */
+    public function getMahasiswa()
+    {
+        return $this->getRelasiMahasiswa()->get();
+    }
 }
