@@ -79,7 +79,9 @@ class MahasiswaController extends Controller
                 'dir' => $path
             ]);
             return back()->with('message', 'Berhasil memperbarui data');
-        } else {
+        }
+        else
+        {
             $this->validate($request, [
                 'nama' => 'required',
                 'nim' => 'required|numeric|unique:mahasiswa,id',
@@ -101,7 +103,7 @@ class MahasiswaController extends Controller
 
             Auth::guard('mhs')->login($mhs);
 
-            return view('mahasiswa.login');
+            return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
         }
 
     }

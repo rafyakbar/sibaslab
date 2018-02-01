@@ -159,7 +159,7 @@ class User extends Authenticatable
             if($this->isKalab()) { 
                 // jika user adalah kalab, maka dicek dulu jumlah dari kasublab yang
                 // telah menyetujui, jika sudah semua, maka kalab dapat menyetujui surat
-                if($mahasiswa->getKalabKasublabYangMenyetujui()->count() == $this->getProdi()->getJurusan()->getRelasiUser()->count() - 1) {
+                if($mahasiswa->getKalabKasublabYangMenyetujui()->count() - 1 == $this->getJurusan()->getDaftarKasublab()->count()){
                     
                     $this->getRelasiMahasiswa()->detach($mahasiswa);
                     $this->getRelasiMahasiswa()->attach($mahasiswa, [
