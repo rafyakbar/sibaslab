@@ -11,7 +11,7 @@
     </a>
 </li>
 <li @if(Route::currentRouteName() == 'admin.mahasiswa') class="active" @endif>
-    <a href="{{ route('admin.mahasiswa') }}">
+    <a href="{{ route('admin.mahasiswa', ['jurusan' => 'Semua']) }}">
         <i class="fa fa-graduation-cap"></i>
         Mahasiswa
     </a>
