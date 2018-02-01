@@ -161,6 +161,7 @@ class User extends Authenticatable
                 // telah menyetujui, jika sudah semua, maka kalab dapat menyetujui surat
                 if($mahasiswa->getKalabKasublabYangMenyetujui()->count() == $this->getProdi()->getJurusan()->getRelasiUser()->count() - 1) {
                     
+                    $this->getRelasiMahasiswa()->detach($mahasiswa);
                     $this->getRelasiMahasiswa()->attach($mahasiswa, [
                         'disetujui' => $disetujui,
                         'catatan' => $catatan
@@ -177,6 +178,7 @@ class User extends Authenticatable
                 return false;
             }
             else if($this->isKasublab()) {
+                $this->getRelasiMahasiswa()->detach($mahasiswa);                
                 $this->getRelasiMahasiswa()->attach($mahasiswa, [
                     'disetujui' => $disetujui,
                     'catatan' => $catatan

@@ -103,6 +103,10 @@ class MahasiswaController extends Controller
                 'success' => 'Berhasil mengirim catatan !'
             ]);
         }
+
+        return response()->json([
+            'error' => 'Semua kasublab belum menyetujui'
+        ]);
     }
 
 }
