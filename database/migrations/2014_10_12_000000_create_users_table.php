@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('role');
             $table->boolean('tambah_kasublab')
-                ->default(true);
+                ->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
