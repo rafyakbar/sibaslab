@@ -93,8 +93,8 @@
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-warning btn-sm text-light" onclick="reset('{{ $dosen->nama }}', {{ $dosen->id }})">Reset password</button>
-                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}', {{ $dosen->id }})">Hapus</button>
+                                <button class="btn btn-warning btn-sm text-light" onclick="reset({{ $dosen->id }})">Reset password</button>
+                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi({{ $dosen->id }})">Hapus</button>
                             </div>
                         </td>
                     </tr>
@@ -150,9 +150,9 @@
             ]
         });
 
-        function konfirmasi(nama, id) {
+        function konfirmasi(id) {
             swal({
-                title: "Anda yakin ingin menghapus '" + nama +"'?",
+                title: "Anda yakin ingin menghapus?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -164,9 +164,9 @@
             })
         }
 
-        function reset(nama, id) {
+        function reset(id) {
             swal({
-                title: "Anda yakin ingin mereset '" + nama +"'?",
+                title: "Anda yakin ingin mereset?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
