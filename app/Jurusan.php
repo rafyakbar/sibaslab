@@ -116,9 +116,14 @@ class Jurusan extends Model
      * @param $nama
      * @return bool
      */
-    public static function checkByName($name)
+    public static function checkByName($name, $fakultas_id = null)
     {
-        if (Jurusan::where('nama', $name)->count() > 0)
+        if (is_null($fakultas_id)){
+            if (Jurusan::where('nama', $name)->count() > 0)
+                return true;
+            return false;
+        }
+        if (Jurusan::where('nama', $name)->where('fakultas_id', $fakultas_id)->count() > 0)
             return true;
         return false;
     }
