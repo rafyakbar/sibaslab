@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jurusan;
 use App\Mahasiswa;
-use App\Prodi;
 use App\Support\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -65,10 +63,5 @@ class AdminController extends Controller
     public function mahasiswa()
     {
         return view('admin.mahasiswa');
-    }
-
-    public function getProdi(Request $request)
-    {
-        return Jurusan::find($request->jurusan_id)->getProdi();
     }
 }
