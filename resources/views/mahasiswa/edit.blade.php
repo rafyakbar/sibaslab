@@ -12,23 +12,28 @@
             </ul>
         </div>
     @endif
+    @if(Session::get('error')!==null)
+        <div class="alert alert-warning">
+            <p>{{Session::get('error')}}</p>
+        </div>
+    @endif
     <div class="row sameheight-container">
         <div class="col-lg-6">
             <div class="card card-block">
-                <form role="form" action="{{route('mahasiswa.password.perbarui')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('mahasiswa.password.perbarui')}}" method="post">
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="exampleInputEmail1">Perbarui Password</label>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Password</label>
-                        <input type="text" class="form-control" id="nama" placeholder="" name="password"> </div>
+                        <input type="password" class="form-control" id="nama" placeholder="" name="password"> </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Password Baru</label>
-                        <input type="number" class="form-control" id="nim" placeholder="" name="newPassword"> </div>
+                        <input type="password" class="form-control" id="nim" placeholder="" name="newPassword"> </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
-                        <input type="number" class="form-control" id="nim" placeholder="" name="confirmNewPassword"> </div>
+                        <input type="password" class="form-control" id="nim" placeholder="" name="confirmNewPassword"> </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
@@ -37,7 +42,8 @@
         </div>
         <div class="col-lg-6">
             <div class="card card-block">
-                <form>
+                <form role="form" action="{{route('mahasiswa.ajukan.proses')}}" method="post" enctype="multipart/form-data">
+                    {{csrf_field()}}
                     <div class="form-group">
                         <label for="exampleInputPassword1">Perbarui Berkas</label>
                     </div>
@@ -68,5 +74,12 @@
                 document.getElementById("namaFile").innerHTML = fileName;
             });
         });
+
+        @if(Session::has('success'))
+        swal({
+            icon: "success",
+            title: "{{Session::get('success')}}"
+        });
+        @endif
     </script>
 @endpush
