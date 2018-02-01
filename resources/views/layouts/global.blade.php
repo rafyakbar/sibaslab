@@ -99,14 +99,6 @@
                 </div>
                 <nav class="menu">
                     <ul class="sidebar-menu metismenu" id="sidebar-menu">
-                        <li class="">
-                            <a href="{{route('mahasiswa.dashboard')}}">
-                                <i class="fa fa-home"></i> Dashboard </a>
-                        </li>
-                        <li class="">
-                            <a href="">
-                                <i class="fa fa-edit"></i> Update Berkas </a>
-                        </li>
                         @if(Auth::check())
                             @if(Auth::user()->role == App\Support\Role::ROOT)
                                 @include('layouts.menu.root')

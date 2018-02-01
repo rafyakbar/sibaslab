@@ -17,16 +17,18 @@ class CreateUsersTable extends Migration
             $table->string('id')
                 ->unique()
                 ->primary();
-            $table->string('nama');
-            $table->string('password');
-            $table->string('role');
             $table->integer('prodi_id')
-            ->unsigned();
+                ->unsigned();
             $table->foreign('prodi_id')
                 ->references('id')
                 ->on('prodi')
                 ->onUpdate('CASCADE')
                 ->onDelete('SET NULL');
+            $table->string('nama');
+            $table->string('password');
+            $table->string('role');
+            $table->boolean('tambah_kasublab')
+                ->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -93,8 +93,8 @@
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-warning btn-sm text-light">Reset password</button>
-                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}')">Hapus</button>
+                                <button class="btn btn-warning btn-sm text-light" onclick="reset({{ $dosen->id }})">Reset password</button>
+                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi({{ $dosen->id }})">Hapus</button>
                             </div>
                         </td>
                     </tr>
@@ -103,6 +103,16 @@
             </table>
         </div>
     </div>
+    <form action="{{ route('admin.kalabkasublab.hapus') }}" method="post" id="hapus" style="display: none">
+        {{ csrf_field() }}
+        {{ method_field('delete') }}
+        <input type="hidden" name="id" id="hapus_dosen">
+    </form>
+    <form action="{{ route('admin.kalabkasublab.reset') }}" method="post" id="reset" style="display: none">
+        {{ csrf_field() }}
+        {{ method_field('patch') }}
+        <input type="hidden" name="id" id="reset_dosen">
+    </form>
 @endsection
 
 @push('js')
@@ -140,15 +150,30 @@
             ]
         });
 
-        function konfirmasi(nama) {
+        function konfirmasi(id) {
             swal({
-                title: "Anda yakin ingin menghapus '" + nama +"'?",
+                title: "Anda yakin ingin menghapus?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             }).then((willDelete) => {
                 if (willDelete) {
+                    $('#hapus_dosen').val(id)
+                    $('#hapus').submit()
+                }
+            })
+        }
 
+        function reset(id) {
+            swal({
+                title: "Anda yakin ingin mereset?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willReset) => {
+                if (willReset) {
+                    $('#reset_dosen').val(id)
+                    $('#reset').submit()
                 }
             })
         }

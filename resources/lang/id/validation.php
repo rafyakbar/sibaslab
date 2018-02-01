@@ -100,9 +100,10 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        'nim' => [
+            'required' => 'kudu uenf',
+            'numeric' => 'kudu ongko blok'
+        ]
     ],
 
     /*

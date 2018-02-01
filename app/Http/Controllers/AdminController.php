@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Jurusan;
-use App\Prodi;
+use App\Mahasiswa;
 use App\Support\Role;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:'.Role::ADMIN);
+    }
+
     public function dashboard()
     {
         return view('admin.dashboard');
@@ -50,13 +55,34 @@ class AdminController extends Controller
         return back()->with('message', 'Berhasil menambahkan.');
     }
 
+    public function hapusKalabKasublab(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|numeric'
+        ]);
+
+        User::find($request->id)->delete();
+
+        return back()->with('message', 'Berhasil mengahapus pengguna');
+    }
+
     public function mahasiswa()
     {
         return view('admin.mahasiswa');
     }
 
-    public function getProdi(Request $request)
+    public function resetUser(Request $request)
     {
-        return Jurusan::find($request->jurusan_id)->getProdi();
+        try
+        {
+            User::find($request->id)->update([
+                'password' => bcrypt($request->id)
+            ]);
+
+            return back()->with('message', 'Berhasil mereset sandi pengguna');
+        }
+        catch (ModelNotFoundException $e){
+            return back()->withErrors(['Pengguna tidak ditemukan']);
+        }
     }
 }

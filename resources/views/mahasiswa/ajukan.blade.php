@@ -3,6 +3,15 @@
 @section('activity', 'ajukan pemohonan')
 
 @section('content')
+    @if($errors->any())
+        <div class="alert alert-warning">
+            <ul>
+                @foreach($errors->all() as $error)
+                   <li >{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form role="form" action="{{route('mahasiswa.ajukan.proses')}}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         {{method_field('post')}}
