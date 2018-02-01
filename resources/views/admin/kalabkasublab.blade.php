@@ -93,7 +93,7 @@
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-warning btn-sm text-light">Reset password</button>
+                                <button class="btn btn-warning btn-sm text-light" onclick="reset('{{ $dosen->nama }}', {{ $dosen->id }})">Reset password</button>
                                 <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->nama }}', {{ $dosen->id }})">Hapus</button>
                             </div>
                         </td>
@@ -106,7 +106,12 @@
     <form action="{{ route('admin.kalabkasublab.hapus') }}" method="post" id="hapus" style="display: none">
         {{ csrf_field() }}
         {{ method_field('delete') }}
-        <input type="hidden" name="id" id="dosen_id">
+        <input type="hidden" name="id" id="hapus_dosen">
+    </form>
+    <form action="{{ route('admin.kalabkasublab.reset') }}" method="post" id="reset" style="display: none">
+        {{ csrf_field() }}
+        {{ method_field('patch') }}
+        <input type="hidden" name="id" id="reset_dosen">
     </form>
 @endsection
 
@@ -153,8 +158,22 @@
                 dangerMode: true,
             }).then((willDelete) => {
                 if (willDelete) {
-                    $('#dosen_id').val(id)
+                    $('#hapus_dosen').val(id)
                     $('#hapus').submit()
+                }
+            })
+        }
+
+        function reset(nama, id) {
+            swal({
+                title: "Anda yakin ingin mereset '" + nama +"'?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willReset) => {
+                if (willReset) {
+                    $('#reset_dosen').val(id)
+                    $('#reset').submit()
                 }
             })
         }
