@@ -61,6 +61,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'PublicController@getProdi',
         'as' => 'mahasiswa.etc.getjurusan'
     ]);
+    Route::get('unduh', [
+        'uses' => 'MahasiswaController@unduh',
+        'as' => 'mahasiswa.unduh'
+    ]);
 });
 
 Route::get('qr', function () {
