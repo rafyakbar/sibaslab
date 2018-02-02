@@ -11,9 +11,19 @@ Route::group(['prefix' => 'admin'], function (){
         'as' => 'admin.kalabkasublab'
     ]);
 
-    Route::get('mahasiswa', [
+    Route::get('mahasiswa/filter/{jurusan}', [
         'uses' => 'AdminController@mahasiswa',
         'as' => 'admin.mahasiswa'
+    ]);
+
+    Route::patch('mahasiswa/reset', [
+        'uses' => 'AdminController@resetMahasiswa',
+        'as' => 'admin.mahasiswa.reset'
+    ]);
+
+    Route::get('etc/getmahasiswa/{jurusan}', [
+        'uses' => 'AdminController@getMahasiswa',
+        'as' => 'admin.etc.getmahasiswa'
     ]);
 
     Route::get('etc/getprodi/{jurusan_id}', [
