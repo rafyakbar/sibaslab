@@ -15,7 +15,11 @@ class MahasiswaController extends Controller
     public function __construct()
     {
         $this->middleware('ajax')->only([
-            'setujuiSurat', 'tolakSurat'
+            'setujuiSurat', 'tolakSurat', 'loadMoreMahasiswa'
+        ]);
+
+        $this->middleware('role:KALAB')->only([
+            'loadMoreMahasiswa'
         ]);
     }
 
@@ -62,6 +66,20 @@ class MahasiswaController extends Controller
                 ]);
             }
         }
+    }
+
+    public function loadMoreMahasiswa(Request $request)
+    {  
+        $status = (int) $request->status;
+        $countLoaded = (int) $request->count_loaded;
+        
+        $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status)->slice($countLoaded, 10);
+        
+        $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
+            return $item->setHidden(['password']);
+        });
+
+        return response()->json($daftarMahasiswa->toArray());
     }
 
     public function olahData(Request $request)
