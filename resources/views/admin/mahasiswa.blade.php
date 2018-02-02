@@ -9,11 +9,13 @@
         <div class="card-header">
             <div class="header-block">
                 <h3 class="title">Daftar Mahasiswa</h3>
-            </div>
-            <div class="header-block pull-right">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Jurusan {{ $jurusan }}
+                        @if($jurusan == 'Semua')
+                            Semua Jurusan
+                        @else
+                            Jurusan {{ $jurusan }}
+                        @endif
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('admin.mahasiswa', ['jurusan' => 'semua']) }}">Semua</a>
