@@ -8,6 +8,8 @@ use App\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\App;
 
 class MahasiswaController extends Controller
 {
@@ -21,6 +23,13 @@ class MahasiswaController extends Controller
         $this->middleware('role:KALAB')->only([
             'loadMoreMahasiswa'
         ]);
+    }
+
+    public function unduh()
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
     }
 
     public function edit()
