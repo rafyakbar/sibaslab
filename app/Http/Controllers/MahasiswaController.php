@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat', 'loadMoreMahasiswa'
         ]);
 
-        $this->middleware('role:KALAB')->only([
+        $this->middleware('kalabOrKasublab')->only([
             'loadMoreMahasiswa'
         ]);
     }
@@ -181,7 +181,7 @@ class MahasiswaController extends Controller
         }
 
         return response()->json([
-            'error' => 'Semua kasublab belum menyetujui'
+            'error' => Mahasiswa::find($request->nim)->getKalabKasublabYangMenyetujui()->count() - 1
         ]);
     }
 
@@ -204,6 +204,24 @@ class MahasiswaController extends Controller
         return response()->json([
             'error' => 'Semua kasublab belum menyetujui'
         ]);
+    }
+
+    public function lihatCatatan(Request $request)
+    {
+        try {
+
+            $mahasiswa = Mahasiswa::findOrFail($request->nim);
+            $catatan = $mahasiswa->getRelasiUser(Auth::user())->first()->pivot->catatan;
+
+            return response()->json([
+                'catatan' => $catatan
+            ]);
+
+        } catch(ModelNotFoundException $err) {
+            return response()->json([
+                'error' => 'Tidak menemukan mahasiswa tersebut'
+            ]);
+        }
     }
 
 }

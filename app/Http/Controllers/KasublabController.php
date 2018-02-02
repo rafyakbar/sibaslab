@@ -30,7 +30,7 @@ class KasublabController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|string',
-            'nip' => 'required|numeric|unique:users',
+            'nip' => 'required|numeric|unique:users,id',
             'prodi' => [
                 'required',
                 Rule::in(Prodi::all()->pluck('id')->toArray())
@@ -40,7 +40,9 @@ class KasublabController extends Controller
         User::create([
             'id' => $request->nip,
             'nama' => $request->nama,
-            'prodi_id' => $request->prodi
+            'prodi_id' => $request->prodi,
+            'password' => bcrypt('secret'),
+            'role' => Role::KASUBLAB
         ]);
 
         return response()->json([

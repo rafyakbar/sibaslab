@@ -160,7 +160,7 @@ class Mahasiswa extends Authenticatable
      * @param integer $status
      * @return void
      */
-    public static function getMahasiswaByStatus($user, $status = 0) 
+    public static function getMahasiswaByStatus($user, $status = 0, $additionalCounter = true) 
     {
         // jika status 0, maka surat belum ditanggapi
         if($status == 0) {
@@ -175,8 +175,11 @@ class Mahasiswa extends Authenticatable
             $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false);
         }
 
+        if(!$additionalCounter)
+            return $daftarMahasiswa->get();
+
         return $daftarMahasiswa->get()->each(function ($mahasiswa) {
-            $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count();
+            $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count() - 1;
             $mahasiswa['menyetujui'] = $mahasiswa->getKalabKasublabYangMenyetujui()->count();
             $mahasiswa['menolak'] = $mahasiswa->getKalabKasublabYangMenolak()->count();
         });

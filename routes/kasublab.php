@@ -19,6 +19,11 @@ Route::namespace('Page')->group(function () {
 
 });
 
+Route::post('ajax/loadmore/mahasiswa', [
+    'uses' => 'MahasiswaController@loadMoreMahasiswa',
+    'as' => 'kasublab.loadmore.mahasiswa'
+]);
+
 Route::post('kasublab/tambah', [
     'uses' => 'KasublabController@tambah',
     'as' => 'kasublab.tambah'
@@ -42,4 +47,9 @@ Route::prefix('surat')->group(function () {
     ]);
 
 });
+
+Route::post('lihat/catatan', [
+    'uses' => 'MahasiswaController@lihatCatatan',
+    'as' => 'kasublab.lihat.catatan'
+]);
 

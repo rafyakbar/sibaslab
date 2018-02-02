@@ -1,31 +1,40 @@
 <template>
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="card card-mhs">
             <div class="card-block">
                 <div class="title-block">
-                    <h4 class="title">{{ nama }}</h4>
+                    <h4 class="title">{{ mahasiswa.nama }}</h4>
                 </div>
 
-                <h6>{{ nim }}</h6>
+                <h6>{{ mahasiswa.id }}</h6>
 
-                <div class="counter-block">
+                <div class="counter-block" v-show="kalab">
                     <div class="item">
-                        <span class="counter">{{ belumMenanggapi }}</span>
-                        <span class="desc">Belum Menanggapi</span>
+                        <span class="counter" @click="daftarBelumMenanggapi">{{ mahasiswa.belum_menanggapi }}</span>
+                        <span class="desc" @click="daftarBelumMenanggapi">Belum Menanggapi</span>
                     </div>
                     <div class="item">
-                        <span class="counter">{{ menyetujui }}</span>
+                        <span class="counter">{{ mahasiswa.menyetujui }}</span>
                         <span class="desc">Menyetujui</span>
                     </div>
                     <div class="item">
-                        <span class="counter">{{ menolak }}</span>
+                        <span class="counter">{{ mahasiswa.menolak }}</span>
                         <span class="desc">Menolak</span>
                     </div>
                 </div>
 
-                <div class="btn-group-custom">
-                    <button type="button" class="btn btn-primary" @click="setuju">Setujui</button>
-                    <button type="button" class="btn btn-text-warning" @click.prevent="tolak">Tunda penyetujuan</button>
+                <div class="btn-group-custom" v-show="status == 0">
+                    <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                    <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
+                </div>
+                
+                <div class="btn-group" v-show="status == 1">
+                    <button type="button" class="btn btn-danger btn-sm" @click="tolak" :disabled="!bisaBatalkanPenyetujuan">Batalkan Penyetujuan</button>
+                </div>
+                
+                <div class="btn-group" role="group" v-show="status == 2">
+                    <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                    <button type="button" class="btn btn-primary" @click="lihatCatatan">Lihat Catatan</button>
                 </div>
             </div>
         </div>
@@ -35,21 +44,35 @@
 <script>
     export default {
         props: {
-            nama: [String],
-            id: [String],
-            nim: [String],
-            belumMenanggapi: [String, Number],
-            menyetujui: [String, Number],
-            menolak: [String, Number]
+            mahasiswa: [Object]
         },
         data() {
             return {
                 tempTextareaValue: '',
-                status: 0
+                status: 0,
+                bisaSetujui: true,
+                bisaTunda: true,
+                bisaBatalkanPenyetujuan: true,
+                kalab: false
             }
         },
         created() {
             this.status = this.$root.status
+            this.kalab = this.$root.kalab
+
+            if(this.kalab) {
+                if(this.status == 2)
+                    this.bisaSetujui = this.mahasiswa.belum_menanggapi == -1 && this.mahasiswa.menolak == 1
+                else if(this.status == 0)
+                    this.bisaSetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
+                this.bisaTunda = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
+                this.bisaBatalkanPenyetujuan = this.mahasiswa.belum_menanggapi == -1 && this.mahasiswa.menolak == 0
+            }
+            else {
+                if(this.status == 1) {
+                    this.bisaBatalkanPenyetujuan = !this.mahasiswa.konfirmasi
+                }
+            }
         },
         methods: {
             setuju() {
@@ -58,7 +81,7 @@
                 $.ajax({
                     url: that.$root.url_setuju,
                     type: 'POST',
-                    data: 'nim=' + that.id,
+                    data: 'nim=' + that.mahasiswa.id,
                     success: function (response) {
                         if (response.success) {
                             swal({
@@ -66,7 +89,7 @@
                                 text: response.success
                             })
 
-                            that.$root.removeData(that.id)
+                            that.$root.removeData(that.mahasiswa.id)
                         } else if (response.error) {
                             swal({
                                 icon: 'error',
@@ -102,14 +125,22 @@
                             $.ajax({
                                 url: that.$root.url_tolak,
                                 type: 'POST',
-                                data: 'nim=' + that.id + '&catatan=' + textarea.value,
+                                data: 'nim=' + that.mahasiswa.id + '&catatan=' + textarea.value,
                                 success: (response) => {
-                                    swal({
-                                        icon: 'success',
-                                        text: 'Berhasil mengirim catatan'
-                                    })
-                                    that.$root.removeData(that.id)
-                                    swal.close()
+                                    if(response.success) {
+                                        swal({
+                                            icon: 'success',
+                                            text: response.success
+                                        })
+                                        that.$root.removeData(that.mahasiswa.id)
+                                        swal.close()
+                                    }
+                                    else if(response.error) {
+                                        swal({
+                                            icon: 'error',
+                                            text: response.error
+                                        })
+                                    }
                                 },
                                 error: (response) => {
                                     swal({
@@ -130,6 +161,71 @@
                 })
 
                 textarea.focus()
+            },
+            daftarBelumMenanggapi() {
+                let text = document.createElement('p')
+                text.innerHTML = 'Memuat'
+                setTimeout(function () {
+                    text.innerHTML = 'Hello World !'
+                }, 2000)
+                swal({
+                    title: 'Kasublab yang belum menanggapi',
+                    content: text
+                })
+            },
+            batalkanPenyetujuan() {
+                let that = this
+                swal({
+                    icon: 'warning',
+                    title: 'Apa anda yakin ?',
+                    buttons: ['Batal', 'Yakin']
+                }).then(function (response) {
+                    if(response) {
+                        $.ajax({
+                            url: that.url_batal,
+                            type: 'POST',
+                            data: 'nim=' + that.mahasiswa.id,
+                            success: function (response) {
+                                if(response.success) {
+                                    swal({
+                                        icon: 'success',
+                                        text: response.success
+                                    })
+                                    that.$root.removeData(that.mahasiswa.id)
+                                } 
+                                else if(response.error) {
+                                    swal({
+                                        icon: 'error',
+                                        text: response.error
+                                    })
+                                }
+                            }
+                        })
+                    }
+                })
+            },
+            lihatCatatan() {
+                let that = this
+                    
+                let p = document.createElement('p')
+                p.innerText = 'Sedang memuat...'
+                p.style.textAlign = 'Left'
+
+                swal({
+                    title: 'Catatan',
+                    content: p
+                })
+
+                $.ajax({
+                    url: that.$root.url_lihat_catatan,
+                    type: 'POST',
+                    data: 'nim=' + that.mahasiswa.id,
+                    success: function (response) {
+                        if(response.catatan) {
+                            p.innerText = response.catatan
+                        }
+                    }
+                })
             }
         }
     }
