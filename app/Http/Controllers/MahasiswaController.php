@@ -91,7 +91,7 @@ class MahasiswaController extends Controller
         return response()->json($daftarMahasiswa->toArray());
     }
 
-    public function olahData(Request $request)
+    public function perbaruiBerkas(Request $request)
     {
         if (Auth::guard('mhs')->check()) {
             $this->validate($request, [
@@ -107,32 +107,32 @@ class MahasiswaController extends Controller
             ]);
             return back()->with('message', 'Berhasil memperbarui data');
         }
-        else
-        {
-            $this->validate($request, [
-                'nama' => 'required',
-                'nim' => 'required|numeric|unique:mahasiswa,id',
-                'prodi' => 'required|numeric',
-                'berkas' => 'required|file|mimes:pdf'
-            ]);
+    }
 
-            $berkas = $request->file('berkas');
+    public function prosesAjukan(Request $request)
+    {
+        $this->validate($request, [
+            'nama' => 'required',
+            'nim' => 'required|numeric|unique:mahasiswa,id',
+            'prodi' => 'required|numeric',
+            'berkas' => 'required|file|mimes:pdf'
+        ]);
 
-            $path = $berkas->store('public/berkas');
+        $berkas = $request->file('berkas');
 
-            $mhs = Mahasiswa::create([
-                'nama' => $request->nama,
-                'prodi_id' => $request->prodi,
-                'dir' => $path,
-                'password' => bcrypt($request->nim),
-                'id' => $request->nim
-            ]);
+        $path = $berkas->store('public/berkas');
 
-            Auth::guard('mhs')->login($mhs);
+        $mhs = Mahasiswa::create([
+            'nama' => $request->nama,
+            'prodi_id' => $request->prodi,
+            'dir' => $path,
+            'password' => bcrypt($request->nim),
+            'id' => $request->nim
+        ]);
 
-            return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
-        }
+        Auth::guard('mhs')->login($mhs);
 
+        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab. Gunakan NIM anda untuk password');
     }
 
     public function dashboard()
