@@ -12555,13 +12555,13 @@ var content = __webpack_require__(19);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("cb50c5e2", content, false, null);
+var update = __webpack_require__(4)("e45ad508", content, false, null);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-401c7947\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormTambahKasublab.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-401c7947\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormTambahKasublab.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-401c7947\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormTambahKasublab.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-401c7947\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormTambahKasublab.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -12579,7 +12579,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\nform {\r\n\ttext-align: left;\n}\nform .control-label {\r\n\tfont-size: 12px;\n}\r\n", ""]);
+exports.push([module.i, "\nform {\n  text-align: left;\n}\nform .control-label {\n    font-size: 12px;\n}\nform .alert {\n    font-size: 13px;\n    margin: 0 -20px 10px;\n}\nform .alert.alert-danger {\n      background-color: #ffdddd !important;\n      border: none;\n      border-radius: 0;\n      color: #dd0000;\n}\n", ""]);
 
 // exports
 
@@ -12645,6 +12645,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -12652,7 +12661,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			daftarProdi: [],
 			nama: '',
 			nip: '',
-			prodi: ''
+			prodi: '',
+			errors: {
+				nip: {
+					text: null,
+					check: false
+				},
+				prodi: {
+					text: null,
+					check: false
+				},
+				nama: {
+					text: null,
+					check: false
+				}
+			}
 		};
 	},
 	created: function created() {
@@ -12661,7 +12684,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		tambah: function tambah() {
-			// swal.close()
+			var that = this;
+
+			this.errors.nip.check = false;
+			this.errors.nama.check = false;
+			this.errors.prodi.check = false;
+
 			$.ajax({
 				url: this.$root.url,
 				type: 'POST',
@@ -12676,12 +12704,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						});
 					}
 				},
-				error: function error(response) {}
+				error: function error(request, status, _error) {
+					var response = request.responseJSON;
+					if (response.errors) {
+						if (response.errors.nip) {
+							that.errors.nip.check = true;
+							that.errors.nip.text = response.errors.nip[0];
+						}
+						if (response.errors.nama) {
+							that.errors.nama.check = true;
+							that.errors.nama.text = response.errors.nama[0];
+						}
+						if (response.errors.prodi) {
+							that.errors.prodi.check = true;
+							that.errors.prodi.text = response.errors.prodi[0];
+						}
+					}
+				}
 			});
-			// swal({
-			// 	title: 'Berhasil',
-			// 	text: 'Berhasil menambah'
-			// })
 		}
 	}
 });
@@ -12723,6 +12763,23 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
+    _c(
+      "p",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.errors.nip.check,
+            expression: "errors.nip.check"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { id: "nip-error" }
+      },
+      [_vm._v("\n\t\t" + _vm._s(_vm.errors.nip.text) + "\n\t")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { staticClass: "control-label", attrs: { for: "nama" } }, [
         _vm._v("Nama")
@@ -12751,6 +12808,23 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
+    _c(
+      "p",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.errors.nama.check,
+            expression: "errors.nama.check"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { id: "nip-error" }
+      },
+      [_vm._v("\n\t\t" + _vm._s(_vm.errors.nama.text) + "\n\t")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { staticClass: "control-label", attrs: { for: "nama" } }, [
         _vm._v("Program Studi")
@@ -12768,6 +12842,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
+          attrs: { name: "prodi" },
           on: {
             change: function($event) {
               var $$selectedVal = Array.prototype.filter
@@ -12793,6 +12868,23 @@ var render = function() {
         })
       )
     ]),
+    _vm._v(" "),
+    _c(
+      "p",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.errors.prodi.check,
+            expression: "errors.prodi.check"
+          }
+        ],
+        staticClass: "alert alert-danger",
+        attrs: { id: "nip-error" }
+      },
+      [_vm._v("\n\t\t" + _vm._s(_vm.errors.prodi.text) + "\n\t")]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c(
