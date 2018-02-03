@@ -26,6 +26,7 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Jurusan</label>
             <select class="form-control" name="jurusan" id="jurusan" required>
+                <option value="" ></option>
                 @foreach($semuaJurusan as $jurusan)
                     <option value="{{$jurusan->id}}" >{{$jurusan->nama}}</option>
                 @endforeach
@@ -75,17 +76,5 @@
                 });
             });
         });
-
-        @if(Session::has('message'))
-        swal({
-            icon: "success",
-            title: "{{Session::get('message')}}",
-            buttons: true
-        }).then((berhasil) => {
-            if(berhasil){
-                window.location.href = '{{ route('mahasiswa.dashboard') }}';
-            }
-        });
-        @endif
     </script>
 @endpush
