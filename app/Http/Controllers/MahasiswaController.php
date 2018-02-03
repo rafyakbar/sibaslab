@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 
 class MahasiswaController extends Controller
 {
@@ -131,11 +132,7 @@ class MahasiswaController extends Controller
         ]);
 
         Auth::guard('mhs')->login($mhs);
-
-//        return view('mahasiswa.login', [
-//            'pesan' => 'Gunakan NIM anda untuk password sementara. Segera perbarui password anda setelah login !',
-//        ])->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
-        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab.');
+         return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
     }
 
     public function dashboard()
