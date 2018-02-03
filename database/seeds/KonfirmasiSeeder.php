@@ -19,7 +19,7 @@ class KonfirmasiSeeder extends Seeder
             foreach ($fakultas->getJurusan() as $jurusan){
                 foreach ($jurusan->getMahasiswa() as $mahasiswa){
                     $konfirmasi = rand(0,1);
-                    $dosen = $jurusan->getRelasiUser();
+                    $dosen = $jurusan->getRelasiUser()->whereIn('role', [Role::KALAB, Role::KASUBLAB]);
                     $kasublabs = $dosen->whereNotIn('role', [Role::KALAB])->get();
                     if ($konfirmasi){
                         foreach ($dosen->get() as $d){
