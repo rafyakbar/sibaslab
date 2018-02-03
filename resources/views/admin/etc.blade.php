@@ -5,6 +5,15 @@
 @section('title', 'Lain-lain')
 
 @section('content')
+    @if($errors->any())
+        <div class="alert alert-warning">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li >{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-6">
             <div class="card">
@@ -82,3 +91,21 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        @if($errors->any())
+            swal({
+                icon: "error",
+                text: "{!! implode('\n', $errors->all()) !!}",
+                html: true
+            });
+        @endif
+        @if(session()->has('message'))
+            swal({
+                icon: "success",
+                title: "{{ session()->get('message') }}"
+            });
+        @endif
+    </script>
+@endpush
