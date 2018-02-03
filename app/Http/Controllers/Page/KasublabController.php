@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Mahasiswa;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class KasublabController extends Controller
 {
@@ -22,10 +23,13 @@ class KasublabController extends Controller
         
         $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status);
 
+        $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
+            return $item->setHidden(['password']);
+        });
+
         return view('kasublab.daftar_mahasiswa', [
-            'daftarMahasiswa' => $daftarMahasiswa->map(function ($item) {
-                return $item->setHidden(['password']);
-            })
+            'daftarMahasiswa' => $daftarMahasiswa->take(10),
+            'jumlahTotal' => $daftarMahasiswa->count()
         ]);
     }
 
@@ -50,8 +54,15 @@ class KasublabController extends Controller
     {
         $daftarKasublab = Auth::user()->getJurusan()->getDaftarKasublab();
 
+        $daftarKasublab = $daftarKasublab->each(function ($kasublab) {
+            $kasublab['belum_menanggapi'] = Mahasiswa::getMahasiswaByStatus($kasublab, 0, false)->count();
+            $kasublab['menyetujui'] = Mahasiswa::getMahasiswaByStatus($kasublab, 1, false)->count();
+            $kasublab['menolak'] = Mahasiswa::getMahasiswaByStatus($kasublab, 2, false)->count();
+        });
+
         return view('kasublab.daftar_kasublab', [
-            'daftarKasublab' => $daftarKasublab
+            'daftarKasublab' => $daftarKasublab,
+            'daftarProdi' => Auth::user()->getJurusan()->getProdi()
         ]);
     }
 

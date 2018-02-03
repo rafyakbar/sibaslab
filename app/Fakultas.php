@@ -12,7 +12,7 @@ class Fakultas extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nama'
+        'nama', 'link'
     ];
 
     /**

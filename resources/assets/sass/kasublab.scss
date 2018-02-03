@@ -86,6 +86,10 @@ body {
                     display: block;
                 }
 
+                > span {
+                    cursor: pointer;
+                }
+
                 &:not(:last-child) {
                     border-right: 1px solid #dddddd;
                 }
@@ -115,4 +119,43 @@ body {
             }
         }
     }
+}
+
+.header--padding {
+    background: #d7dde4;
+    padding: 15px;
+}
+
+.fab {
+    color: #fff;
+    width: 60px;
+    height:60px;
+    display: flex;
+    border-radius: 50%;
+    position: fixed;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    right: 30px;
+    bottom: 30px;
+    cursor: pointer;
+    z-index: +10;
+    box-shadow: 0 3px 3px 1px rgba(0, 0, 0, .3);
+    background-color: #3698ce;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+        background-color: lighten(#3698ce, 5);
+    }
+
+    &:active {
+        background-color: darken(#3698ce, 10);
+        box-shadow: none;
+        bottom: 27px;
+    }
+
+}
+
+#daftar-kasublab {
+    padding: 20px;
 }

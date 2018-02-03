@@ -19,9 +19,17 @@
             <p>Tidak ada data</p>
         </div>
     </div>
+
     <div class="row">
-        <card-mhs v-for="mahasiswa in daftarMahasiswa" :key="mahasiswa.id" :id="mahasiswa.id" :nama="mahasiswa.nama" :nim="mahasiswa.id" :belum-menanggapi="mahasiswa.belum_menanggapi" :menyetujui="mahasiswa.menyetujui" :menolak="mahasiswa.menolak"></card-mhs>
+        <card-mhs v-for="mahasiswa in daftarMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
+
+    <div class="row">
+        <div class="col">
+            <button v-show="canLoadMore" class="btn btn-primary" @click="loadMore">Tampilkan lainnya</button>
+        </div>
+    </div>
+       
 </div>
 
 @endsection
@@ -34,12 +42,37 @@ let daftarMahasiswa = new Vue({
         daftarMahasiswa: {!! $daftarMahasiswa !!},
         url_setuju: '{{ route('surat.setuju') }}',
         url_tolak: '{{ route('surat.tolak') }}',
-        status: {{ request()->has('status') ? request()->get('status') : 0 }}
+        url_lihat_catatan: '{{ route('kasublab.lihat.catatan') }}',
+        status: {{ request()->has('status') ? request()->get('status') : 0 }},
+        canLoadMore: true,
+        jumlahTotal: {{ $jumlahTotal }},
+        kalab: {{ Auth::user()->isKalab() ? 'true' : 'false' }}
+    },
+    created() {
+        this.canLoadMore = (this.daftarMahasiswa.length > 0 && this.daftarMahasiswa.length < this.jumlahTotal)
     },
     methods: {
         removeData(id) {
             this.daftarMahasiswa = this.daftarMahasiswa.filter((item) => {
                 return item.id != id
+            })
+        },
+        loadMore() {
+            let that = this
+
+            $.ajax({
+                url: '{{ route('kasublab.loadmore.mahasiswa') }}',
+                type: 'POST',
+                data: 'status={{ request()->has('status') ? request()->get('status') : 0 }}&count_loaded=' + that.daftarMahasiswa.length,
+                success: function (response) {
+                    if(response.length === 0) {
+                        that.canLoadMore = false
+                    }
+                    else {
+                        for(i in response)
+                            that.daftarMahasiswa.push(response[i])
+                    }
+                }
             })
         }
     }

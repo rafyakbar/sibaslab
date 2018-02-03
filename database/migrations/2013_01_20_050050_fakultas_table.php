@@ -16,6 +16,7 @@ class FakultasTable extends Migration
         Schema::create('fakultas', function (Blueprint $table){
             $table->increments('id');
             $table->string('nama');
+            $table->text('link')->nullable();
         });
     }
 

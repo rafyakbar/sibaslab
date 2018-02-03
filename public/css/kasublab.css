@@ -100,6 +100,10 @@ body {
   display: block;
 }
 
+#daftar-mahasiswa .card-mhs .counter-block > .item > span {
+  cursor: pointer;
+}
+
 #daftar-mahasiswa .card-mhs .counter-block > .item:not(:last-child) {
   border-right: 1px solid #dddddd;
 }
@@ -129,5 +133,53 @@ body {
 
 #daftar-mahasiswa .card-mhs .btn-text-warning:hover {
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+.header--padding {
+  background: #d7dde4;
+  padding: 15px;
+}
+
+.fab {
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 50%;
+  position: fixed;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  right: 30px;
+  bottom: 30px;
+  cursor: pointer;
+  z-index: +10;
+  -webkit-box-shadow: 0 3px 3px 1px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 3px 3px 1px rgba(0, 0, 0, 0.3);
+  background-color: #3698ce;
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+}
+
+.fab:hover {
+  background-color: #4ba3d3;
+}
+
+.fab:active {
+  background-color: #297ba8;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  bottom: 27px;
+}
+
+#daftar-kasublab {
+  padding: 20px;
 }
 
