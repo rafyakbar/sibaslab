@@ -12,7 +12,7 @@ class Fakultas extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nama'
+        'nama', 'link'
     ];
 
     /**
@@ -63,6 +63,15 @@ class Fakultas extends Model
     public function getKalabKasublab()
     {
         return $this->getRelasiUser()->whereNotIn('role', [Role::ROOT, Role::ADMIN])->get();
+    }
+
+    /**
+     * mendapatkan kalab fakultas
+     * @return mixed
+     */
+    public function getKalab()
+    {
+        return $this->getRelasiUser()->whereNotIn('role', [Role::ROOT, Role::ADMIN, Role::KASUBLAB])->get();
     }
 
     /**

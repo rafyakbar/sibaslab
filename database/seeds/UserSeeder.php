@@ -34,6 +34,7 @@ class UserSeeder extends Seeder
                     'password' => bcrypt('secret'),
                     'role' => Role::KALAB,
                     'prodi_id' => $jurusan->getRelasiProdi()->first()->id,
+                    'tambah_kasublab' => rand(0,1)
                 ]);
                 foreach ($jurusan->getProdi() as $prodi){
                     User::create([

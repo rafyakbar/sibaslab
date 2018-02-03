@@ -20,7 +20,7 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat', 'loadMoreMahasiswa'
         ]);
 
-        $this->middleware('kalabOrKasublab')->only([
+        $this->middleware('role:KALAB')->only([
             'loadMoreMahasiswa'
         ]);
     }
@@ -59,7 +59,7 @@ class MahasiswaController extends Controller
                     'error' =>  'Konfirmasi password tidak sama dengan password baru !'
                 ]);
             }
-            else if($request->newPassword == Auth::guard('mhs')->user()->password)
+            else if(Hash::check($request->newPassword, Auth::guard('mhs')->user()->password))
             {
                 return back()->with([
                     'error' =>  'Password baru dan password lama tidak boleh sama !'
@@ -85,12 +85,12 @@ class MahasiswaController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function loadMoreMahasiswa(Request $request)
-    {  
+    {
         $status = (int) $request->status;
         $countLoaded = (int) $request->count_loaded;
-        
+
         $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status)->slice($countLoaded, 10);
-        
+
         $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
             return $item->setHidden(['password']);
         });
@@ -98,7 +98,7 @@ class MahasiswaController extends Controller
         return response()->json($daftarMahasiswa->toArray());
     }
 
-    public function olahData(Request $request)
+    public function perbaruiBerkas(Request $request)
     {
         if (Auth::guard('mhs')->check()) {
             $this->validate($request, [
@@ -112,34 +112,37 @@ class MahasiswaController extends Controller
             Auth::guard('mhs')->user()->update([
                 'dir' => $path
             ]);
-            return back()->with('message', 'Berhasil memperbarui data');
+            return back()->with('success', 'Berhasil memperbarui data');
         }
-        else
-        {
-            $this->validate($request, [
-                'nama' => 'required',
-                'nim' => 'required|numeric|unique:mahasiswa,id',
-                'prodi' => 'required|numeric',
-                'berkas' => 'required|file|mimes:pdf'
-            ]);
+    }
 
-            $berkas = $request->file('berkas');
+    public function prosesAjukan(Request $request)
+    {
+        $this->validate($request, [
+            'nama' => 'required',
+            'nim' => 'required|numeric|unique:mahasiswa,id',
+            'prodi' => 'required|numeric',
+            'berkas' => 'required|file|mimes:pdf'
+        ]);
 
-            $path = $berkas->store('public/berkas');
+        $berkas = $request->file('berkas');
 
-            $mhs = Mahasiswa::create([
-                'nama' => $request->nama,
-                'prodi_id' => $request->prodi,
-                'dir' => $path,
-                'password' => bcrypt($request->nim),
-                'id' => $request->nim
-            ]);
+        $path = $berkas->store('public/berkas');
 
-            Auth::guard('mhs')->login($mhs);
+        $mhs = Mahasiswa::create([
+            'nama' => $request->nama,
+            'prodi_id' => $request->prodi,
+            'dir' => $path,
+            'password' => bcrypt($request->nim),
+            'id' => $request->nim
+        ]);
 
-            return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
-        }
+        Auth::guard('mhs')->login($mhs);
 
+//        return view('mahasiswa.login', [
+//            'pesan' => 'Gunakan NIM anda untuk password sementara. Segera perbarui password anda setelah login !',
+//        ])->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
+        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab.');
     }
 
     public function dashboard()
@@ -197,7 +200,7 @@ class MahasiswaController extends Controller
         }
 
         return response()->json([
-            'error' => Mahasiswa::find($request->nim)->getKalabKasublabYangMenyetujui()->count() - 1
+            'error' => 'Semua kasublab belum menyetujui'
         ]);
     }
 
