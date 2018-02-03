@@ -117,7 +117,8 @@ class Mahasiswa extends Authenticatable
     public function getKalabKasublabYangMenyetujui()
     {
         return $this->getRelasiUser()
-            ->where('disetujui', true)
+            ->whereIn('role', [Role::KALAB, Role::KASUBLAB])
+            ->wherePivot('disetujui', true)
             ->orderBy('role')
             ->get();
     }
