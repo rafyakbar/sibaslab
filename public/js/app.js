@@ -11924,7 +11924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else if (status == 1) {
                 this.bisaBatalkanPenyetujuan = true;
             }
-            this.bisaTunda = this.mahasiswa.belum_menanggapi == 1 && this.mahasiswa.menolak == 0;
+            this.bisaTunda = true;
         } else {
             if (this.status == 1) {
                 this.bisaBatalkanPenyetujuan = !this.mahasiswa.konfirmasi || this.mahasiswa.belum_menanggapi > 0;
