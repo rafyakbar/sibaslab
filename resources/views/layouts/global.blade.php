@@ -32,15 +32,15 @@
                 <span class="name"><b>@yield('title')</b></span>
             </div>
             <div class="header-block header-block-buttons">
-                <a href="" class="btn btn-sm header-btn">
+                <a href="{{ (Auth::check()) ? Auth::user()->getFakultas()->link : Auth::guard('mhs')->user()->getFakultas()->link }}" class="btn btn-sm header-btn">
                     <i class="fa fa-university"></i>
                     <span>
                         Fakultas
-                        @guest
+                        @if (Auth::guard('mhs')->check())
                             {{ Auth::guard('mhs')->user()->getFakultas()->nama }}
                         @else
-                            {{ Auth::user()->getProdi()->getFakultas()->nama }}
-                        @endguest
+                            {{ Auth::user()->getFakultas()->nama }}
+                        @endif
                     </span>
                 </a>
             </div>
