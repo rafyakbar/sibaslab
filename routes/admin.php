@@ -50,4 +50,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@etc',
         'as' => 'admin.etc'
     ]);
+
+    Route::post('link/update', [
+        'uses' => 'AdminController@updateLink',
+        'as' => 'admin.link.update'
+    ]);
 });

@@ -23,11 +23,11 @@
                     </div>
                 </div>
                 <div class="card-block">
-                    <form action="" method="post">
+                    <form action="{{ route('admin.link.update') }}" method="post">
                         {{ csrf_field() }}
                         <div class="input-group">
                             <input type="text" name="link" class="form-control"
-                                   placeholder="Awali link dengan https:// atau http://">
+                                   placeholder="Awali link dengan https:// atau http://" value="{{ Auth::user()->getFakultas()->link }}">
                             <input type="submit" class="btn btn-primary text-light" value="Atur">
 
                         </div>

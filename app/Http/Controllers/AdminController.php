@@ -126,4 +126,17 @@ class AdminController extends Controller
             return back()->withErrors(['Mahasiswa tidak ditemukan']);
         }
     }
+
+    public function updateLink(Request $request)
+    {
+        $this->validate($request, [
+            'link' => 'required'
+        ]);
+
+        Auth::user()->getFakultas()->update([
+            'link' => $request->link
+        ]);
+
+        return back()->with('message', 'Link berhasil diupdate');
+    }
 }
