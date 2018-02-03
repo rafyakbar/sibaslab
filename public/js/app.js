@@ -11918,7 +11918,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         if (this.kalab) {
             if (this.status == 2) {
-                this.bisaSetujui = this.mahasiswa.menolak == 1;
+                this.bisaSetujui = this.mahasiswa.menolak == 1 && this.mahasiswa.belum_menanggapi == 0;
             } else if (this.status == 0) {
                 this.bisaSetujui = this.mahasiswa.belum_menanggapi == 1 && this.mahasiswa.menolak == 0;
             } else if (status == 1) {
