@@ -45,4 +45,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@resetUser',
         'as' => 'admin.kalabkasublab.reset'
     ]);
+
+    Route::get('etc', [
+        'uses' => 'AdminController@etc',
+        'as' => 'admin.etc'
+    ]);
 });

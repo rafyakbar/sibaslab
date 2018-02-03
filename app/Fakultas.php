@@ -66,6 +66,15 @@ class Fakultas extends Model
     }
 
     /**
+     * mendapatkan kalab fakultas
+     * @return mixed
+     */
+    public function getKalab()
+    {
+        return $this->getRelasiUser()->whereNotIn('role', [Role::ROOT, Role::ADMIN, Role::KASUBLAB])->get();
+    }
+
+    /**
      * mendapatkan id semua mahasiswa dari fakultas tertentu
      * @return array
      */
