@@ -15,13 +15,6 @@ class LoginController extends Controller {
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -80,6 +73,8 @@ class LoginController extends Controller {
         else if ($request->user()->isKalab() || $request->user()->isKasublab()) {
             return redirect()->route('kasublab.daftar.mahasiswa');
         }
+
+        return redirect('/');
     }
 
     protected function loginMahasiswa(Request $request)
