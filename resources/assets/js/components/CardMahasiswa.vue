@@ -14,12 +14,12 @@
                         <span class="desc" @click="daftarBelumMenanggapi">Belum Menanggapi</span>
                     </div>
                     <div class="item">
-                        <span class="counter">{{ mahasiswa.menyetujui }}</span>
-                        <span class="desc">Menyetujui</span>
+                        <span class="counter" @click="daftarMenyetujui">{{ mahasiswa.menyetujui }}</span>
+                        <span class="desc" @click="daftarMenyetujui">Telah Menyetujui</span>
                     </div>
                     <div class="item">
-                        <span class="counter">{{ mahasiswa.menolak }}</span>
-                        <span class="desc">Menolak</span>
+                        <span class="counter" @click="daftarBelumMenyetujui">{{ mahasiswa.menolak }}</span>
+                        <span class="desc" @click="daftarBelumMenyetujui">Belum Menyetujui</span>
                     </div>
                 </div>
 
@@ -61,16 +61,20 @@
             this.kalab = this.$root.kalab
 
             if(this.kalab) {
-                if(this.status == 2)
-                    this.bisaSetujui = this.mahasiswa.belum_menanggapi == -1 && this.mahasiswa.menolak == 1
-                else if(this.status == 0)
-                    this.bisaSetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
-                this.bisaTunda = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
-                this.bisaBatalkanPenyetujuan = this.mahasiswa.belum_menanggapi == -1 && this.mahasiswa.menolak == 0
+                if(this.status == 2) {
+                    this.bisaSetujui = this.mahasiswa.menolak == 1
+                }
+                else if(this.status == 0) {
+                    this.bisaSetujui = this.mahasiswa.belum_menanggapi == 1 && this.mahasiswa.menolak == 0
+                }
+                else if(status == 1) {
+                    this.bisaBatalkanPenyetujuan = true
+                }
+                this.bisaTunda = this.mahasiswa.belum_menanggapi == 1 && this.mahasiswa.menolak == 0
             }
             else {
                 if(this.status == 1) {
-                    this.bisaBatalkanPenyetujuan = !this.mahasiswa.konfirmasi
+                    this.bisaBatalkanPenyetujuan = !this.mahasiswa.konfirmasi || this.mahasiswa.belum_menanggapi > 0
                 }
             }
         },
@@ -163,14 +167,80 @@
                 textarea.focus()
             },
             daftarBelumMenanggapi() {
-                let text = document.createElement('p')
-                text.innerHTML = 'Memuat'
-                setTimeout(function () {
-                    text.innerHTML = 'Hello World !'
-                }, 2000)
+                let that = this
+                let root = document.createElement('swal-list')
+                root.innerText = 'Sedang memuat...'
+
                 swal({
-                    title: 'Kasublab yang belum menanggapi',
-                    content: text
+                    title: 'Yang belum menanggapi',
+                    content: root
+                })
+
+                $.ajax({
+                    url: that.$root.url_daftar_belum_menanggapi,
+                    type: 'POST',
+                    data: 'nim=' + that.mahasiswa.id,
+                    success: (response) => {
+                        root.innerHTML = ''
+
+                        let listVue = new Vue({
+                            el: root,
+                            data: {
+                                list: response
+                            },
+                        })
+                    }
+                })
+            },
+            daftarMenyetujui() {let that = this
+                let root = document.createElement('swal-list')
+                root.innerText = 'Sedang memuat...'
+
+                swal({
+                    title: 'Yang menyetujui',
+                    content: root
+                })
+
+                $.ajax({
+                    url: that.$root.url_daftar_menyetujui,
+                    type: 'POST',
+                    data: 'nim=' + that.mahasiswa.id,
+                    success: (response) => {
+                        root.innerHTML = ''
+
+                        let listVue = new Vue({
+                            el: root,
+                            data: {
+                                list: response
+                            },
+                        })
+                    }
+                })
+            },
+            daftarBelumMenyetujui() {
+                let that = this
+                let root = document.createElement('swal-list')
+                root.innerText = 'Sedang memuat...'
+
+                swal({
+                    title: 'Yang belum menyetujui',
+                    content: root
+                })
+
+                $.ajax({
+                    url: that.$root.url_daftar_belum_menyetujui,
+                    type: 'POST',
+                    data: 'nim=' + that.mahasiswa.id,
+                    success: (response) => {
+                        root.innerHTML = ''
+
+                        let listVue = new Vue({
+                            el: root,
+                            data: {
+                                list: response
+                            },
+                        })
+                    }
                 })
             },
             batalkanPenyetujuan() {
