@@ -77,6 +77,13 @@ class MahasiswaController extends Controller
         }
     }
 
+    /**
+     * Mendapatkan daftar mahasiswa dengan offset tertentu yang akan
+     * ditampilkan ketika pengguna menekan tombol lihat lainnya
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function loadMoreMahasiswa(Request $request)
     {  
         $status = (int) $request->status;
@@ -215,12 +222,19 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    /**
+     * Mendapatkan catatan dari kasublab atau kalab tertentu
+     * terhadap mahasiswa tertentu
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function lihatCatatan(Request $request)
     {
         try {
 
             $mahasiswa = Mahasiswa::findOrFail($request->nim);
-            $catatan = $mahasiswa->getRelasiUser(Auth::user())->first()->pivot->catatan;
+            $catatan = $mahasiswa->getRelasiUser()->where('id', Auth::user()->id)->first()->pivot->catatan;
 
             return response()->json([
                 'catatan' => $catatan
@@ -231,6 +245,46 @@ class MahasiswaController extends Controller
                 'error' => 'Tidak menemukan mahasiswa tersebut'
             ]);
         }
+    }
+
+    /**
+     * Mendapatkan daftar kasublab dan kalab yang belum
+     * memberi tanggapan terhadap sebuah surat
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDaftarBelumMenanggapi(Request $request)
+    {
+        $mahasiswa = Mahasiswa::find($request->nim);
+
+        return response()->json($mahasiswa->getKalabKasublabYangBelumMenyetujui()->toArray());
+    }
+
+    /**
+     * Mendapatkan daftar kasublab dan kalab yang menyetujui surat tertentu
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDaftarMenyetujui(Request $request)
+    {
+        $mahasiswa = Mahasiswa::find($request->nim);
+
+        return response()->json($mahasiswa->getKalabKasublabYangMenyetujui()->toArray());
+    }
+
+    /**
+     * Mendapatkan dfatar kasublab dan kalab yang belum menyetujui surat tertentu
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDaftarBelumMenyetujui(Request $request)
+    {
+        $mahasiswa = Mahasiswa::find($request->nim);
+
+        return response()->json($mahasiswa->getKalabKasublabYangMenolak()->toArray());
     }
 
 }

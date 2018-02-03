@@ -179,7 +179,7 @@ class Mahasiswa extends Authenticatable
             return $daftarMahasiswa->get();
 
         return $daftarMahasiswa->get()->each(function ($mahasiswa) {
-            $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count() - 1;
+            $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count();
             $mahasiswa['menyetujui'] = $mahasiswa->getKalabKasublabYangMenyetujui()->count();
             $mahasiswa['menolak'] = $mahasiswa->getKalabKasublabYangMenolak()->count();
         });

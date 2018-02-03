@@ -19,10 +19,33 @@ Route::namespace('Page')->group(function () {
 
 });
 
-Route::post('ajax/loadmore/mahasiswa', [
-    'uses' => 'MahasiswaController@loadMoreMahasiswa',
-    'as' => 'kasublab.loadmore.mahasiswa'
-]);
+Route::group(['prefix' => 'ajax'], function () {
+
+    Route::post('loadmore/mahasiswa', [
+        'uses' => 'MahasiswaController@loadMoreMahasiswa',
+        'as' => 'kasublab.loadmore.mahasiswa'
+    ]);
+
+    Route::group(['prefix' => 'daftar'], function () {
+
+        Route::post('belum/menyetujui', [
+            'uses' => 'MahasiswaController@getDaftarBelumMenyetujui',
+            'as' => 'kasublab.daftar.belum.setuju'
+        ]);
+
+        Route::post('menanggapi', [
+            'uses' => 'MahasiswaController@getDaftarBelumMenanggapi',
+            'as' => 'kasublab.daftar.belum.menanggapi'
+        ]);
+
+        Route::post('setuju', [
+            'uses' => 'MahasiswaController@getDaftarMenyetujui',
+            'as' => 'kasublab.daftar.setuju'
+        ]);
+
+    });
+
+});
 
 Route::post('kasublab/tambah', [
     'uses' => 'KasublabController@tambah',
