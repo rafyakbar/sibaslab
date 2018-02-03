@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fakultas;
 use App\Jurusan;
 use App\Mahasiswa;
 use App\Support\Role;
@@ -30,6 +31,15 @@ class AdminController extends Controller
         return view('admin.kalabkasublab', [
             'jurusans' => $jurusans,
             'dosens' => $dosens,
+            'no' => 0
+        ]);
+    }
+
+    public function etc()
+    {
+        $kalabs = Auth::user()->getFakultas()->getKalab();
+        return view('admin.etc', [
+            'kalabs' => $kalabs,
             'no' => 0
         ]);
     }
