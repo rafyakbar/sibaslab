@@ -27,6 +27,13 @@
                         <p>Lakukan awf kuwe akik okeh iurjr ojwkeu hidy le,rj akeuehk. jaf alfirf iurkj</p>
                     </div>
                 </div>
+            @else
+                <div class="alert alert-warning">
+                    <div class="card-block">
+                        <h4 class="text-light"><em class="fa  fa-warning"></em> Pengajuan surat belum
+                            disetujui</h4>
+                    </div>
+                </div>
             @endif
         </div>
     </div>
