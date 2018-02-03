@@ -59,7 +59,7 @@ class MahasiswaController extends Controller
                     'error' =>  'Konfirmasi password tidak sama dengan password baru !'
                 ]);
             }
-            else if($request->newPassword == Auth::guard('mhs')->user()->password)
+            else if(Hash::check($request->newPassword, Auth::guard('mhs')->user()->password))
             {
                 return back()->with([
                     'error' =>  'Password baru dan password lama tidak boleh sama !'
@@ -135,7 +135,7 @@ class MahasiswaController extends Controller
 //        return view('mahasiswa.login', [
 //            'pesan' => 'Gunakan NIM anda untuk password sementara. Segera perbarui password anda setelah login !',
 //        ])->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
-        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
+        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab.');
     }
 
     public function dashboard()
