@@ -20,7 +20,7 @@ class MahasiswaController extends Controller
             'setujuiSurat', 'tolakSurat', 'loadMoreMahasiswa'
         ]);
 
-        $this->middleware('kalabOrKasublab')->only([
+        $this->middleware('role:KALAB')->only([
             'loadMoreMahasiswa'
         ]);
     }
@@ -78,12 +78,12 @@ class MahasiswaController extends Controller
     }
 
     public function loadMoreMahasiswa(Request $request)
-    {  
+    {
         $status = (int) $request->status;
         $countLoaded = (int) $request->count_loaded;
-        
+
         $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status)->slice($countLoaded, 10);
-        
+
         $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
             return $item->setHidden(['password']);
         });
@@ -105,7 +105,7 @@ class MahasiswaController extends Controller
             Auth::guard('mhs')->user()->update([
                 'dir' => $path
             ]);
-            return back()->with('message', 'Berhasil memperbarui data');
+            return back()->with('success', 'Berhasil memperbarui data');
         }
     }
 
@@ -132,7 +132,10 @@ class MahasiswaController extends Controller
 
         Auth::guard('mhs')->login($mhs);
 
-        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab. Gunakan NIM anda untuk password');
+//        return view('mahasiswa.login', [
+//            'pesan' => 'Gunakan NIM anda untuk password sementara. Segera perbarui password anda setelah login !',
+//        ])->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
+        return back()->with('message', 'Berhasil Mengajukan Surat Bebas Lab');
     }
 
     public function dashboard()
@@ -190,7 +193,7 @@ class MahasiswaController extends Controller
         }
 
         return response()->json([
-            'error' => Mahasiswa::find($request->nim)->getKalabKasublabYangMenyetujui()->count() - 1
+            'error' => 'Semua kasublab belum menyetujui'
         ]);
     }
 
@@ -213,24 +216,6 @@ class MahasiswaController extends Controller
         return response()->json([
             'error' => 'Semua kasublab belum menyetujui'
         ]);
-    }
-
-    public function lihatCatatan(Request $request)
-    {
-        try {
-
-            $mahasiswa = Mahasiswa::findOrFail($request->nim);
-            $catatan = $mahasiswa->getRelasiUser(Auth::user())->first()->pivot->catatan;
-
-            return response()->json([
-                'catatan' => $catatan
-            ]);
-
-        } catch(ModelNotFoundException $err) {
-            return response()->json([
-                'error' => 'Tidak menemukan mahasiswa tersebut'
-            ]);
-        }
     }
 
 }

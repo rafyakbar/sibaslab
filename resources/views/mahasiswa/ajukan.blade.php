@@ -76,5 +76,16 @@
             });
         });
 
+        @if(Session::has('message'))
+        swal({
+            icon: "success",
+            title: "{{Session::get('message')}}",
+            buttons: true
+        }).then((berhasil) => {
+            if(berhasil){
+                window.location.href = '{{ route('mahasiswa.dashboard') }}';
+            }
+        });
+        @endif
     </script>
 @endpush
