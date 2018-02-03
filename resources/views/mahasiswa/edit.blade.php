@@ -35,14 +35,14 @@
                         <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
                         <input type="password" class="form-control" id="nim" placeholder="" name="confirmNewPassword"> </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card card-block">
-                <form role="form" action="{{route('mahasiswa.ajukan.proses')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('mahasiswa.berkas.perbarui')}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="exampleInputPassword1">Perbarui Berkas</label>
@@ -55,7 +55,7 @@
                     </div>
                     <input id="inputFile" type="file"  name="berkas" style="display: none" class="dz-message-block">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
