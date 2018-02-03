@@ -90,7 +90,7 @@ class MahasiswaController extends Controller
         $status = (int) $request->status;
         $countLoaded = (int) $request->count_loaded;
 
-        $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status)->slice($countLoaded, 10);
+        $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status)->slice($countLoaded, 12);
 
         $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
             return $item->setHidden(['password']);

@@ -28,7 +28,7 @@ class KasublabController extends Controller
         });
 
         return view('kasublab.daftar_mahasiswa', [
-            'daftarMahasiswa' => $daftarMahasiswa->take(10),
+            'daftarMahasiswa' => $daftarMahasiswa->take(12),
             'jumlahTotal' => $daftarMahasiswa->count()
         ]);
     }
