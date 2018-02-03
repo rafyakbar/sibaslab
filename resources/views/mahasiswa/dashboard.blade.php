@@ -159,7 +159,8 @@
         @if(Session::has('message'))
         swal({
             icon: "success",
-            title: "{{Session::get('message')}}"
+            title: 'Berhasil Mengajukan Surat Bebas Lab',
+            text: "{{Session::get('message')}}"
         });
         @endif
     </script>
