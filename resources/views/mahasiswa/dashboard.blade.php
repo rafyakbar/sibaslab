@@ -16,11 +16,15 @@
                         </form>
                     </div>
                 </div>
-            @else
-                <div class="alert alert-warning">
+            @elseif($jumlahMenolak>0)
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <div class="card-block">
+                            <h4 class="text-light"><em class="fa  fa-warning"></em> Pengajuan surat tidak disetujui</h4>
+                        </div>
+                    </div>
                     <div class="card-block">
-                        <h4 class="text-light"><em class="fa  fa-warning"></em> Pengajuan surat belum
-                            disetujui</h4>
+                        <p>Lakukan awf kuwe akik okeh iurjr ojwkeu hidy le,rj akeuehk. jaf alfirf iurkj</p>
                     </div>
                 </div>
             @endif
@@ -54,7 +58,7 @@
                                                 <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                                 <p class="date">{{$kasublab->id}} </p>
                                             </div>
-                                            <p class="text-info rounded pull-right">{{$kasublab->role}}</p>
+                                            <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -87,7 +91,7 @@
                                                 <p class="date">{{$kasublab->id}} </p>
                                             </div>
                                             <div class="pull-right" style="width: auto">
-                                                <p class="text-info rounded">{{$kasublab->role}}</p>
+                                                <p class="text-info" style="font-size: small">{{$kasublab->role}}</p>
                                                 <button class="btn btn-primary btn-sm rounded"
                                                         onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
                                                     Catatan
@@ -123,7 +127,7 @@
                                                 <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                                 <p class="date">{{$kasublab->id}} </p>
                                             </div>
-                                            <p class="text-info rounded pull-right">{{$kasublab->role}}</p>
+                                            <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -145,5 +149,11 @@
                 title: catatan
             });
         }
+        @if(Session::has('message'))
+        swal({
+            icon: "success",
+            title: "{{Session::get('message')}}"
+        });
+        @endif
     </script>
 @endpush
