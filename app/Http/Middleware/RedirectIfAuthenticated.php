@@ -18,7 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+
+            if($guard == 'web') {
+                if(Auth::user()->isKalab() || Auth::user()->isKasublab())
+                    return redirect()->route('kasublab.daftar.mahasiswa');
+            }
         }
 
         return $next($request);
