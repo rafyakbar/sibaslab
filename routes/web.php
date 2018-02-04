@@ -71,6 +71,25 @@ Route::group(['prefix' => 'mahasiswa'], function () {
     ]);
 });
 
+Route::namespace('Page')->group(function () {
+
+    Route::get('pengaturan', [
+        'uses' => 'PengaturanController@index',
+        'as' => 'halaman.pengaturan'
+    ]);
+
+});
+
+Route::post('ubah/profil', [
+    'uses' => 'PengaturanController@ubahProfil',
+    'as' => 'ubah.profil'
+]);
+
+Route::post('ubah/katasandi', [
+    'uses' => 'PengaturanController@ubahKataSandi',
+    'as' => 'ubah.kata.sandi'
+]);
+
 Route::get('qr', function () {
     return view('test.qr');
 });

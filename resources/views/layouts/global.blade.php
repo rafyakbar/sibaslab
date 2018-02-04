@@ -59,7 +59,7 @@
                         </a>
                         <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
                             @unless(Auth::guard('mhs')->check())
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('halaman.pengaturan') }}">
                                     <i class="fa fa-gear icon"></i>
                                     Pengaturan
                                 </a>
