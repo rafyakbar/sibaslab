@@ -12,11 +12,6 @@ Route::namespace('Page')->group(function () {
         'as' => 'kasublab.daftar.kasublab'
     ]);
 
-    Route::get('pengaturan', [
-        'uses' => 'KasublabController@pengaturan',
-        'as' => 'kasublab.pengaturan'
-    ]);
-
 });
 
 Route::group(['prefix' => 'ajax'], function () {
