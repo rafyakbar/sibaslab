@@ -55,4 +55,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@updateLink',
         'as' => 'admin.link.update'
     ]);
+
+    Route::post('etc/kalab/update', [
+        'uses' => 'AdminController@ubahKalabTambahKasublab',
+        'as' => 'admin.etc.kalab.update'
+    ]);
 });

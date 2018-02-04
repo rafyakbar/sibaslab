@@ -139,4 +139,21 @@ class AdminController extends Controller
 
         return back()->with('message', 'Link berhasil diupdate');
     }
+
+    public function ubahKalabTambahKasublab(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|number'
+        ]);
+
+        $user = User::find($request->id);
+        if (Auth::user()->getFakultas()->id == $user->getFakultas()->id && $user->isKalab()){
+            $user->tambah_kasublab = !$user->tambah_kasublab;
+            $user->save();
+
+            return back()->with('message', 'Berhasil mengubah data');
+        }
+
+        return back()->withErrors(['Pengguna tersebut bukan dari Fakultas '.Auth::user()->getFakultas()->nama.' atau bukan Kalab']);
+    }
 }
