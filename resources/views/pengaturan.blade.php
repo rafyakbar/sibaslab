@@ -1,5 +1,7 @@
 @extends('layouts.global')
 
+@section('activity', 'Pengaturan')
+
 @section('content')
     
 <div class="row">
@@ -32,7 +34,7 @@
                     
                     <div class="form-group">
                         <label class="control-label">Nama</label>
-                        <input type="text" name="nama" class="form-control boxed" value="{{ Auth::user()->nama }}"/>
+                        <input type="text" name="nama" class="form-control boxed" value="{{ Auth::user()->nama }}" required/>
                         @if($errors->has('nama'))
                         <p class="alert alert-danger">
                             {{ $errors-first('nama') }}
@@ -65,7 +67,7 @@
 
                     <div class="form-group">
                         <label class="control-label">Kata sandi saat ini</label>
-                        <input type="password" class="form-control boxed" name="passlama"/>
+                        <input type="password" class="form-control boxed" name="passlama" required/>
                         @if($errors->has('passlama'))
                             <p class="alert alert-danger">
                                 {{ $errors->first('passlama') }}
@@ -75,7 +77,7 @@
 
                     <div class="form-group">
                         <label class="control-label">Kata sandi baru</label>
-                        <input type="password" class="form-control boxed" name="passbaru"/>
+                        <input type="password" class="form-control boxed" name="passbaru" required/>
                         @if($errors->has('passbaru'))
                             <p class="alert alert-danger">
                                 {{ $errors->first('passbaru') }}
@@ -85,7 +87,7 @@
                     
                     <div class="form-group">
                         <label class="control-label">Konfirmasi kata sandi baru</label>
-                        <input type="password" class="form-control boxed" name="passbaru_confirmation"/>
+                        <input type="password" class="form-control boxed" name="passbaru_confirmation" required/>
                         @if($errors->has('passbaru_confirmation'))
                             <p class="alert alert-danger">
                                 {{ $errors->first('passbaru_confirmation') }}
