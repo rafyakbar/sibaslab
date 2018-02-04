@@ -26,13 +26,13 @@
                         <label for="exampleInputEmail1">Perbarui Password</label>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
-                        <input type="password" class="form-control" id="nama" placeholder="" name="password"> </div>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="nama" placeholder="" value="" name="password"> </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Password Baru</label>
+                        <label for="newPassword">Password Baru</label>
                         <input type="password" class="form-control" id="nim" placeholder="" name="newPassword"> </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
+                        <label for="confirmNewPassword">Konfirmasi Password Baru</label>
                         <input type="password" class="form-control" id="nim" placeholder="" name="confirmNewPassword"> </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Simpan</button>
