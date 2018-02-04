@@ -9,8 +9,8 @@
 				<h6>{{ kasublab.id }}</h6>
 
 				<ul class="list-group">
-					<li class="list-group-item">Belum menanggapi {{ kasublab.belum_menanggapi }} surat</li>
-					<li class="list-group-item">Masih belum menyetujui {{ kasublab.menolak }} surat</li>
+					<li class="list-group-item">Belum menanggapi {{ kasublab.belum_menanggapi }} mahasiswa</li>
+					<li class="list-group-item">Masih belum menyetujui {{ kasublab.menolak }} mahasiswa</li>
 				</ul>
 
 				<div class="btn-group">
