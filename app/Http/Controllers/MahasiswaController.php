@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jurusan;
 use App\Mahasiswa;
 use App\Prodi;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,11 +27,22 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    public function prosesUnduh()
+    {
+        return view('mahasiswa.surat');
+    }
+
     public function unduh()
     {
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
+        $jurusan = Auth::guard('mhs')->user()->getJurusan();
+        $prodi = Auth::guard('mhs')->user()->getProdi();
+        $kasublab = Auth::guard('mhs')->user()->getKalab();
+        $kalab = Auth::guard('mhs')->user()->getKasublab();
+        return PDF::loadView('mahasiswa.surat-bebas-lab', [
+            'jurusan' => $jurusan,
+            'prodi' => $prodi,
+            'kasublab' => $kasublab,
+            'kalab' => $kalab])->download('Surat bebas lab '.Auth::guard('mhs')->user()->nama.'.pdf');
     }
 
     public function edit()

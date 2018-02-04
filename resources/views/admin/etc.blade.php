@@ -45,7 +45,7 @@
                 <div class="card-block">
                     <form action="" method="post">
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-primary" value="Sinkron sekarang">
+                        <input type="submit" class="btn btn-primary disabled" value="Sinkron sekarang">
                     </form>
                 </div>
             </div>
@@ -79,9 +79,9 @@
                         <td>{{ $kalab->getJurusan()->nama }}</td>
                         <td>
                             @if($kalab->tambah_kasublab)
-                                <button class="btn btn-primary btn-sm text-light" title="Ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
+                                <button class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
                             @else
-                                <button class="btn btn-danger btn-sm text-light" title="Ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
+                                <button class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
                             @endif
                         </td>
                     </tr>
@@ -90,6 +90,10 @@
             </table>
         </div>
     </div>
+    <form action="{{ route('admin.etc.kalab.update') }}" method="post" id="user_form">
+        {{ csrf_field() }}
+        <input type="hidden" name="id" id="user_id">
+    </form>
 @endsection
 
 @push('js')

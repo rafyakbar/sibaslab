@@ -25,6 +25,22 @@ class Mahasiswa extends Authenticatable
         'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at'
     ];
 
+    public function getKalab()
+    {
+        return $this->getRelasiUser()
+            ->whereIn('role', [Role::KALAB])
+            ->orderBy('role')
+            ->get();
+    }
+
+    public function getKasublab()
+    {
+        return $this->getRelasiUser()
+            ->whereIn('role', [Role::KASUBLAB])
+            ->orderBy('role')
+            ->get();
+    }
+
     /**
      * Mendapatkan relasi ke prodi
      * gunanya untuk bisa menggunakan whereHas
