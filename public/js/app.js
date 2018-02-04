@@ -12367,6 +12367,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(37)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(15)
@@ -12375,7 +12379,7 @@ var __vue_template__ = __webpack_require__(16)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -12436,10 +12440,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
 		kasublab: [Object]
+	},
+	methods: {
+		hapus: function hapus() {
+			var that = this;
+
+			swal({
+				icon: 'warning',
+				title: 'Apa anda yakin ?',
+				buttons: ['Batal', 'Yakin'],
+				closeOnConfirm: false
+			}).then(function (clicked) {
+				if (clicked) {
+					$.ajax({
+						url: that.$root.url_hapus,
+						type: 'POST',
+						data: 'nip=' + that.kasublab.id,
+						success: function success(response) {
+							if (response.success) {
+								swal({
+									icon: 'success',
+									text: response.success
+								});
+
+								that.$root.removeData(that.kasublab.id);
+							}
+						},
+						error: function error(response) {
+							response = response.responseJSON;
+
+							if (response.error) {
+								swal({
+									icon: 'error',
+									text: response.error
+								});
+							}
+						}
+					});
+				}
+			});
+		}
 	}
 });
 
@@ -12478,6 +12526,14 @@ var render = function() {
                 " surat"
             )
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "btn-group" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-danger", on: { click: _vm.hapus } },
+            [_vm._v("Hapus")]
+          )
         ])
       ])
     ])
@@ -13069,6 +13125,53 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(38);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("51cdb06a", content, false, null);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-771638aa\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./cardKasublab.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-771638aa\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./cardKasublab.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.title-block {\n  margin-bottom: 10px !important;\n}\n.btn-group {\n  margin-top: 10px;\n}\n.list-group {\n  margin: 0 -15px 0;\n  border-radius: 0;\n}\n.list-group > .list-group-item {\n    border-left: none;\n    border-right: none;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

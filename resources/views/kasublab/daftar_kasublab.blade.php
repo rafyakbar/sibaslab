@@ -27,7 +27,15 @@
     let daftarKasublab = new Vue({
         el: '#daftar-kasublab',
         data: {
-            daftarKasublab: {!! $daftarKasublab !!}
+            daftarKasublab: {!! $daftarKasublab !!},
+            url_hapus: '{{ route('kasublab.hapus') }}'
+        },
+        methods: {
+            removeData(id) {
+                this.daftarKasublab = this.daftarKasublab.map((item) => {
+                    return item.id != id
+                })
+            }
         }
     })
 
