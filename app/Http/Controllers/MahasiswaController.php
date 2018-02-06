@@ -15,15 +15,19 @@ use Illuminate\Support\Facades\URL;
 
 class MahasiswaController extends Controller
 {
-
+    
     public function __construct()
     {
         $this->middleware('ajax')->only([
             'setujuiSurat', 'tolakSurat', 'loadMoreMahasiswa'
         ]);
 
-        $this->middleware('role:KALAB')->only([
+        $this->middleware('kalabOrKasublab')->only([
             'loadMoreMahasiswa'
+        ]);
+
+        $this->middleware('guest:mhs')->only([
+            'login'
         ]);
     }
 
@@ -178,6 +182,11 @@ class MahasiswaController extends Controller
             'jumlahBelum' => $jumlahBelum]);
     }
 
+    /**
+     * Menampilkan halaman login untuk mahasiswa
+     *
+     * @return \Illuminate\View\View
+     */
     public function login()
     {
         return view('mahasiswa.login');

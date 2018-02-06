@@ -3,7 +3,7 @@
 Route::group(['prefix' => 'mahasiswa'], function () {
 
     Route::get('dashboard', [
-        'uses'=>'MahasiswaController@dashboard',
+        'uses'=> 'MahasiswaController@dashboard',
         'as'=>'mahasiswa.dashboard'
     ]);
 

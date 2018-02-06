@@ -17,8 +17,11 @@ class RedirectIfNotCertainRole
      */
     public function handle($request, Closure $next, $hakakses)
     {
-        if(($hakakses == 'MHS' && Auth::guard('mhs')->check())) {
-            return redirect()->route('mahasiswa.login');
+        if($hakakses == 'MHS') {
+            if(!Auth::guard('mhs')->check())
+                return redirect()->route('mahasiswa.login');
+
+            return $next($request);
         }
         else {
             if(!Auth::check() ||
