@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="card-block">
-            <table class="table table-responsive" id="kalabkasublab">
+            <table class="table" id="kalabkasublab">
                 <thead>
                 <tr>
                     <td>No</td>
