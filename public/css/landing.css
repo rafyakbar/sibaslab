@@ -43,6 +43,10 @@ body {
   background: transparent;
 }
 
+.jumbotron h1 {
+  margin-left: 5%;
+}
+
 .jumbotron h3 {
   font-size: 16px;
   font-weight: bold;

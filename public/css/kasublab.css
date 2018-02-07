@@ -56,6 +56,15 @@ body {
   margin-bottom: 20px;
 }
 
+#daftar-mahasiswa .card-mhs .alert.alert-info {
+  margin-left: -15px;
+  margin-right: -15px;
+  background-color: #d5f2fc;
+  color: #0e95c4;
+  border: none;
+  border-radius: 0;
+}
+
 #daftar-mahasiswa .card-mhs .title-block {
   margin-bottom: 5px;
 }
@@ -181,5 +190,32 @@ body {
 
 #daftar-kasublab {
   padding: 20px;
+}
+
+#cari {
+  background-color: #fff;
+  padding: 20px;
+  -webkit-box-shadow: 0 3px 2px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 3px 2px 1px rgba(0, 0, 0, 0.05);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#cari input[type="text"] {
+  border: none;
+  background: transparent;
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+
+#cari button {
+  background: transparent;
+  border: none;
+  padding: 0 10px 0;
+  color: #333;
+  cursor: pointer;
 }
 
