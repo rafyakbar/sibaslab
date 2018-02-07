@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id', 'nama', 'password', 'role', 'prodi_id', 'created_at', 'updated_at', 'tambah_kasublab'
+        'id', 'nama', 'password', 'role', 'prodi_id', 'created_at', 'updated_at', 'tambah_kasublab', 'lab_id'
     ];
 
     /**
@@ -85,6 +85,24 @@ class User extends Authenticatable
     public function getFakultas()
     {
         return $this->getRelasiFakultas()->first();
+    }
+
+    /**
+     * mendapatkan relasi lab
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getRelasiLab()
+    {
+        return $this->belongsTo('App\Lab', 'lab_id');
+    }
+
+    /**
+     * mendapatkan lab
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    public function getLab()
+    {
+        return $this->getRelasiLab()->first();
     }
 
     /**
