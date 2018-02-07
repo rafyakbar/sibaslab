@@ -9,17 +9,17 @@
 
     <header class="header--padding">
         <h4 class="heading--padding">Daftar Kasublab Jurusan {{ Auth::user()->getJurusan()->nama }}</h4>
-
-        <div id="fab" class="fab" @click="tambah">
-            <i class="fa fa-plus fa-2x"></i>
-        </div>
     </header>
+
+    @if(Auth::user()->tambah_kasublab)
+    <div id="fab" class="fab" @click="tambah">
+        <i class="fa fa-plus fa-2x"></i>
+    </div>
+    @endif
 
     <div id="daftar-kasublab" class="row">
         <card-kasublab v-for="kasublab in daftarKasublab" :key="kasublab.id" :kasublab="kasublab"></card-kasublab>
     </div>
-
-    <form-tambah-kasublab></form-tambah-kasublab>
 @endsection
 
 @push('js')
@@ -28,7 +28,8 @@
         el: '#daftar-kasublab',
         data: {
             daftarKasublab: {!! $daftarKasublab !!},
-            url_hapus: '{{ route('kasublab.hapus') }}'
+            url_hapus: '{{ route('kasublab.hapus') }}',
+            bisa_hapus: {{ Auth::user()->tambah_kasublab ? 'true' : 'false' }}
         },
         methods: {
             removeData(id) {
@@ -39,6 +40,7 @@
         }
     })
 
+    @if(Auth::user()->tambah_kasublab)
     let fab = new Vue({
         el: '#fab',
         methods: {
@@ -63,5 +65,6 @@
             }
         }
     })
+    @endif
 </script>
 @endpush
