@@ -23,6 +23,8 @@
 .list-group {
     margin: 0 -20px 0;
     padding: 0;
+    max-height: 300px;
+    overflow: scroll;
 }
 
 .list-group > .list-group-item {
