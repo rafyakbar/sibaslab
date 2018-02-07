@@ -578,7 +578,8 @@ function applyToTag (styleElement, obj) {
 
 __webpack_require__(6);
 __webpack_require__(30);
-module.exports = __webpack_require__(31);
+__webpack_require__(31);
+module.exports = __webpack_require__(32);
 
 
 /***/ }),
@@ -11897,6 +11898,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -11909,12 +11914,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bisaSetujui: true,
             bisaTunda: true,
             bisaBatalkanPenyetujuan: true,
-            kalab: false
+            kalab: false,
+            telahDisetujui: false
         };
     },
     created: function created() {
         this.status = this.$root.status;
         this.kalab = this.$root.kalab;
+
+        this.telahDisetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0;
 
         if (this.kalab) {
             if (this.status == 2) {
@@ -12239,6 +12247,26 @@ var render = function() {
                 [_vm._v("Belum Menyetujui")]
               )
             ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "p",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.telahDisetujui && !_vm.kalab,
+                expression: "telahDisetujui && !kalab"
+              }
+            ],
+            staticClass: "alert alert-info"
+          },
+          [
+            _vm._v(
+              "\n                Mahasiswa ini telah disetujui oleh Kalab\n            "
+            )
           ]
         ),
         _vm._v(" "),
@@ -13162,6 +13190,12 @@ if (false) {
 
 /***/ }),
 /* 31 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

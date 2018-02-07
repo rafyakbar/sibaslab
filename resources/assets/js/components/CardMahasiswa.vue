@@ -23,6 +23,10 @@
                     </div>
                 </div>
 
+                <p class="alert alert-info" v-show="telahDisetujui && !kalab">
+                    Mahasiswa ini telah disetujui oleh Kalab
+                </p>
+
                 <div class="btn-group-custom" v-show="status == 0">
                     <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
                     <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
@@ -53,12 +57,15 @@
                 bisaSetujui: true,
                 bisaTunda: true,
                 bisaBatalkanPenyetujuan: true,
-                kalab: false
+                kalab: false,
+                telahDisetujui: false
             }
         },
         created() {
             this.status = this.$root.status
             this.kalab = this.$root.kalab
+
+            this.telahDisetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
 
             if(this.kalab) {
                 if(this.status == 2) {

@@ -55,15 +55,31 @@ body {
     .card-mhs {
         border-radius: 5px;
         margin-bottom: 20px;
+
+        .alert{
+            &.alert-info {
+                margin-left: -15px;
+                margin-right: -15px;
+                background-color: lighten($color: #76D4F5, $amount: 20);
+                color: darken($color: #76D4F5, $amount: 30);
+                border: none;
+                border-radius: 0;
+            }
+        }
+
         .title-block {
+
             >.title {
                 color: darken($themeColor, 10)
             }
+
             margin-bottom: 5px;
         }
+
         h6 {
             font-size: 14px;
         }
+
         .counter-block {
             border-top: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
@@ -158,4 +174,26 @@ body {
 
 #daftar-kasublab {
     padding: 20px;
+}
+
+#cari {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 3px 2px 1px rgba(0, 0, 0, .05);
+    display: flex;
+    margin-bottom: 20px;
+
+    input[type="text"] {
+        border: none;
+        background: transparent;
+        flex-grow: 2;
+    }
+
+    button {
+        background: transparent;
+        border: none;
+        padding: 0 10px 0;
+        color: #333;
+        cursor: pointer;
+    }
 }
