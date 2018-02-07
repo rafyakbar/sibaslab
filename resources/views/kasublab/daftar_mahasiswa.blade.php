@@ -13,6 +13,8 @@
     <li class="{{ (request()->has('status') && request()->get('status') == 2) ? 'active' : '' }}"><a href="{{ route('kasublab.daftar.mahasiswa', ['status' => 2]) }}">Belum Disetujui </a></li>
 </ul>
 
+
+
 <div id="daftar-mahasiswa">
     <div class="card" v-show="daftarMahasiswa.length == 0">
         <div class="card-block">
@@ -20,8 +22,21 @@
         </div>
     </div>
 
-    <div class="row">
+    <div v-show="daftarMahasiswa.length > 0">
+            <div class="col-md-4">
+                <form id="cari" @submit.prevent="cari">
+                    <input v-on:keyup="cari" type="text" v-model="keyword" placeholder="Cari mahasiswa ..."/>
+                    <button><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
+    <div class="row" v-show="filteredMahasiswa.length == 0">
         <card-mhs v-for="mahasiswa in daftarMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
+    </div>
+    
+    <div class="row" v-show="filteredMahasiswa.length > 0">
+        <card-mhs v-for="mahasiswa in filteredMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
 
     <div class="row">
@@ -49,7 +64,9 @@ let daftarMahasiswa = new Vue({
         status: {{ request()->has('status') ? request()->get('status') : 0 }},
         canLoadMore: true,
         jumlahTotal: {{ $jumlahTotal }},
-        kalab: {{ Auth::user()->isKalab() ? 'true' : 'false' }}
+        kalab: {{ Auth::user()->isKalab() ? 'true' : 'false' }},
+        keyword: null,
+        filteredMahasiswa: []
     },
     created() {
         this.canLoadMore = (this.daftarMahasiswa.length > 0 && this.daftarMahasiswa.length < this.jumlahTotal)
@@ -77,6 +94,31 @@ let daftarMahasiswa = new Vue({
                     }
                 }
             })
+        },
+        cari() {
+            let that = this
+
+            console.log(this.keyword.length)
+
+            if(this.keyword.length > 0) {
+                this.filteredMahasiswa = this.daftarMahasiswa.filter((mahasiswa) => {
+                    return mahasiswa.nama.toLowerCase().indexOf(that.keyword) > -1 || mahasiswa.id.indexOf(that.keyword) > -1
+                })
+
+                if(this.filteredMahasiswa.length == 0) {
+                    $.ajax({
+                        url: '{{ route('kasublab.cari.mahasiswa') }}',
+                        type: 'POST',
+                        data: 'keyword=' + that.keyword + '&status=' + that.status,
+                        success: (response) => {
+                            that.filteredMahasiswa = response
+                        }
+                    })
+                }
+            }
+            else {
+                this.filteredMahasiswa = []
+            }
         }
     }
 })

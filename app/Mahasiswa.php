@@ -177,7 +177,7 @@ class Mahasiswa extends Authenticatable
      * @param integer $status
      * @return void
      */
-    public static function getMahasiswaByStatus($user, $status = 0, $additionalCounter = true) 
+    public static function getMahasiswaByStatus($user, $status = 0, $additionalCounter = true, $keyword = null) 
     {
         // jika status 0, maka surat belum ditanggapi
         if($status == 0) {
@@ -190,6 +190,10 @@ class Mahasiswa extends Authenticatable
         // jika status 2 atau lebih, maka surat belum disetujui
         else {          
             $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false);
+        }
+
+        if(!is_null($keyword)) {
+            $daftarMahasiswa = $daftarMahasiswa->whereRaw('lower(nama) LIKE \'%'. strtolower($keyword) .'%\'');
         }
 
         if(!$additionalCounter)

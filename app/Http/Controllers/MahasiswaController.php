@@ -308,4 +308,23 @@ class MahasiswaController extends Controller
         return response()->json($mahasiswa->getKalabKasublabYangMenolak()->toArray());
     }
 
+    /**
+     * Mencari mahasiswa oleh kasublab berdasarkan nama atau nim
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cariMahasiswa(Request $request)
+    {
+        $keyword = $request->keyword;
+        $status = $request->status;
+
+        return response()->json(Mahasiswa::getMahasiswaByStatus(
+            Auth::user(),
+            $status,
+            true,
+            $keyword
+        ));
+    }
+
 }

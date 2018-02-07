@@ -21,6 +21,11 @@ Route::group(['prefix' => 'ajax'], function () {
         'as' => 'kasublab.loadmore.mahasiswa'
     ]);
 
+    Route::post('cari/mahasiswa', [
+        'uses' => 'MahasiswaController@cariMahasiswa',
+        'as' => 'kasublab.cari.mahasiswa'
+    ]);
+
     Route::group(['prefix' => 'daftar'], function () {
 
         Route::post('belum/menyetujui', [
