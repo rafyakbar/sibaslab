@@ -16,22 +16,35 @@
 
 
 <div id="daftar-mahasiswa">
-    <div class="card" v-show="daftarMahasiswa.length == 0">
-        <div class="card-block">
-            <p>Tidak ada data</p>
+
+    <div v-show="daftarMahasiswa.length > 0">
+        <div class="col-md-4" style="padding: 0">
+            <form id="cari" @submit.prevent="cari">
+                <input @keyup="cari" type="text" v-model="keyword" placeholder="Cari mahasiswa ..."/>
+                <button><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </div>
 
-    <div v-show="daftarMahasiswa.length > 0">
-            <div class="col-md-4">
-                <form id="cari" @submit.prevent="cari">
-                    <input v-on:keyup="cari" type="text" v-model="keyword" placeholder="Cari mahasiswa ..."/>
-                    <button><i class="fa fa-search"></i></button>
-                </form>
-            </div>
+    <div style="display: none" class="card" v-show="filteredMahasiswa.length == 0 && search_flag && !onSearchProcessing">
+        <div class="card-block">
+            <p>Tidak menemukan mahasiswa dengan kata kunci tersebut</p>
         </div>
+    </div>
 
-    <div class="row" v-show="filteredMahasiswa.length == 0">
+    <div style="display: none" class="card" v-show="daftarMahasiswa.length == 0">
+        <div class="card-block">
+            <p>Tidak ada data</p>            
+        </div>
+    </div>
+
+    <div style="display: none" class="card" v-show="onSearchProcessing">
+        <div class="card-block"> 
+            <p>Sedang mencari</p>         
+        </div>
+    </div>
+
+    <div class="row" v-show="filteredMahasiswa.length == 0 && !search_flag">
         <card-mhs v-for="mahasiswa in daftarMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
     
@@ -63,13 +76,12 @@ let daftarMahasiswa = new Vue({
         url_daftar_belum_menyetujui: '{{ route('kasublab.daftar.belum.setuju') }}',
         status: {{ request()->has('status') ? request()->get('status') : 0 }},
         canLoadMore: true,
-        jumlahTotal: {{ $jumlahTotal }},
         kalab: {{ Auth::user()->isKalab() ? 'true' : 'false' }},
+        // variable dibawah ini berfungsi untuk proses pencarian
         keyword: null,
-        filteredMahasiswa: []
-    },
-    created() {
-        this.canLoadMore = (this.daftarMahasiswa.length > 0 && this.daftarMahasiswa.length < this.jumlahTotal)
+        filteredMahasiswa: [],
+        search_flag: false,
+        onSearchProcessing: false
     },
     methods: {
         removeData(id) {
@@ -98,26 +110,34 @@ let daftarMahasiswa = new Vue({
         cari() {
             let that = this
 
-            console.log(this.keyword.length)
-
             if(this.keyword.length > 0) {
+
+                this.search_flag = true
+                this.onSearchProcessing = true
+
                 this.filteredMahasiswa = this.daftarMahasiswa.filter((mahasiswa) => {
                     return mahasiswa.nama.toLowerCase().indexOf(that.keyword) > -1 || mahasiswa.id.indexOf(that.keyword) > -1
                 })
-
-                if(this.filteredMahasiswa.length == 0) {
-                    $.ajax({
-                        url: '{{ route('kasublab.cari.mahasiswa') }}',
-                        type: 'POST',
-                        data: 'keyword=' + that.keyword + '&status=' + that.status,
-                        success: (response) => {
-                            that.filteredMahasiswa = response
-                        }
-                    })
-                }
+                
+                $.ajax({
+                    url: '{{ route('kasublab.cari.mahasiswa') }}',
+                    type: 'POST',
+                    data: 'keyword=' + that.keyword + '&status=' + that.status,
+                    success: (response) => {
+                        this.onSearchProcessing = false
+                        that.filteredMahasiswa = response
+                    }
+                })
             }
             else {
+                this.search_flag = false
                 this.filteredMahasiswa = []
+            }
+        },
+        checkKeywordLength() {
+            if(this.keyword.length == 0) {
+                this.filteredMahasiswa = []
+                this.search_flag = false
             }
         }
     }
