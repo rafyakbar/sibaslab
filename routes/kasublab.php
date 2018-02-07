@@ -8,7 +8,7 @@ Route::namespace('Page')->group(function () {
     ]);
     
     Route::get('daftar/kasublab', [
-        'uses' => 'KasublabController@daftarKasublab',
+        'uses' => 'KalabController@daftarKasublab',
         'as' => 'kasublab.daftar.kasublab'
     ]);
 
