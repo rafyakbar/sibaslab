@@ -56,13 +56,21 @@ body {
   margin-bottom: 20px;
 }
 
-#daftar-mahasiswa .card-mhs .alert.alert-info {
+#daftar-mahasiswa .card-mhs .alert {
   margin-left: -15px;
   margin-right: -15px;
-  background-color: #d5f2fc;
-  color: #0e95c4;
   border: none;
   border-radius: 0;
+}
+
+#daftar-mahasiswa .card-mhs .alert.alert-info {
+  background-color: #d5f2fc;
+  color: #0e95c4;
+}
+
+#daftar-mahasiswa .card-mhs .alert.alert-warning {
+  background-color: #fcf3d5;
+  color: #c4990e;
 }
 
 #daftar-mahasiswa .card-mhs .title-block {

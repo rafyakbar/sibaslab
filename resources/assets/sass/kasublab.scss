@@ -57,13 +57,19 @@ body {
         margin-bottom: 20px;
 
         .alert{
+            margin-left: -15px;
+            margin-right: -15px;
+            border: none;
+            border-radius: 0;
+
             &.alert-info {
-                margin-left: -15px;
-                margin-right: -15px;
                 background-color: lighten($color: #76D4F5, $amount: 20);
                 color: darken($color: #76D4F5, $amount: 30);
-                border: none;
-                border-radius: 0;
+            }
+            
+            &.alert-warning {
+                background-color: lighten($color: rgb(245, 215, 118), $amount: 20);
+                color: darken($color: rgb(245, 215, 118), $amount: 30);
             }
         }
 
