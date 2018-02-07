@@ -19,7 +19,7 @@ class MahasiswaSeeder extends Seeder
         foreach (Fakultas::all() as $fakultas){
             foreach ($fakultas->getJurusan() as $jurusan){
                 foreach ($jurusan->getProdi() as $prodi){
-                    for ($c = 0; $c < rand(35,45); $c++){
+                    for ($c = 0; $c < rand(15,25); $c++){
                         Mahasiswa::create([
                             'id' => rand(12, 14).$faker->unique()->numerify('#########'),
                             'nama' => $faker->unique()->name,
