@@ -10,10 +10,10 @@
 
 				<ul class="list-group">
 					<li class="list-group-item">Belum menanggapi {{ kasublab.belum_menanggapi }} mahasiswa</li>
-					<li class="list-group-item">Masih belum menyetujui {{ kasublab.menolak }} mahasiswa</li>
+					<li class="list-group-item">Belum menyetujui {{ kasublab.menolak }} mahasiswa</li>
 				</ul>
 
-				<div class="btn-group">
+				<div class="btn-group" v-show="bisa_hapus">
 					<button class="btn btn-danger" @click="hapus">Hapus</button>
 				</div>
 			</div>
@@ -27,6 +27,11 @@
 	export default {
 		props: {
 			kasublab: [Object]
+		},
+		data() {
+			return {
+				bisa_hapus: this.$root.bisa_hapus
+			}
 		},
 		methods: {
 			hapus() {
