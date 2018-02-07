@@ -11902,6 +11902,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -12271,6 +12275,26 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
+          "p",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.telahDisetujui && !_vm.kalab && _vm.status == 1,
+                expression: "!telahDisetujui && !kalab && status == 1"
+              }
+            ],
+            staticClass: "alert alert-warning"
+          },
+          [
+            _vm._v(
+              "\n                Mahasiswa ini belum disetujui oleh Kalab\n            "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
           "div",
           {
             directives: [
@@ -12550,6 +12574,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	props: {
 		kasublab: [Object]
 	},
+	data: function data() {
+		return {
+			bisa_hapus: this.$root.bisa_hapus
+		};
+	},
+
 	methods: {
 		hapus: function hapus() {
 			var that = this;
@@ -12622,20 +12652,32 @@ var render = function() {
           _vm._v(" "),
           _c("li", { staticClass: "list-group-item" }, [
             _vm._v(
-              "Masih belum menyetujui " +
-                _vm._s(_vm.kasublab.menolak) +
-                " mahasiswa"
+              "Belum menyetujui " + _vm._s(_vm.kasublab.menolak) + " mahasiswa"
             )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "btn-group" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-danger", on: { click: _vm.hapus } },
-            [_vm._v("Hapus")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.bisa_hapus,
+                expression: "bisa_hapus"
+              }
+            ],
+            staticClass: "btn-group"
+          },
+          [
+            _c(
+              "button",
+              { staticClass: "btn btn-danger", on: { click: _vm.hapus } },
+              [_vm._v("Hapus")]
+            )
+          ]
+        )
       ])
     ])
   ])
@@ -13123,7 +13165,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.list-group {\r\n    margin: 0 -20px 0;\r\n    padding: 0;\n}\n.list-group > .list-group-item {\r\n    border-radius: 0;\r\n    text-align: left;\r\n    font-weight: bold;\r\n    border-right: none;\r\n    border-left: none;\n}\r\n", ""]);
+exports.push([module.i, "\n.list-group {\r\n    margin: 0 -20px 0;\r\n    padding: 0;\r\n    max-height: 300px;\r\n    overflow: scroll;\n}\n.list-group > .list-group-item {\r\n    border-radius: 0;\r\n    text-align: left;\r\n    font-weight: bold;\r\n    border-right: none;\r\n    border-left: none;\n}\r\n", ""]);
 
 // exports
 

@@ -26,6 +26,10 @@
                 <p class="alert alert-info" v-show="telahDisetujui && !kalab">
                     Mahasiswa ini telah disetujui oleh Kalab
                 </p>
+                
+                <p class="alert alert-warning" v-show="!telahDisetujui && !kalab && status == 1">
+                    Mahasiswa ini belum disetujui oleh Kalab
+                </p>
 
                 <div class="btn-group-custom" v-show="status == 0">
                     <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
