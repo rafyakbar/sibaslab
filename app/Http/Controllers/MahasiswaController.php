@@ -40,12 +40,19 @@ class MahasiswaController extends Controller
     {
         $jurusan = Auth::guard('mhs')->user()->getJurusan();
         $prodi = Auth::guard('mhs')->user()->getProdi();
-        $kasublab = Auth::guard('mhs')->user()->getKalab();
-        $kalab = Auth::guard('mhs')->user()->getKasublab();
+        $kasublab = Auth::guard('mhs')->user()->getKasublab();
+        $kalab = Auth::guard('mhs')->user()->getKalab();
+
+        $renderer = new \BaconQrCode\Renderer\Image\Png();
+        $renderer->setHeight(256);
+        $renderer->setWidth(256);
+        $writer = new \BaconQrCode\Writer($renderer);
+        $writer->writeFile('www.google.com', 'qrcode.png');
+
         return PDF::loadView('mahasiswa.surat-bebas-lab', [
             'jurusan' => $jurusan,
             'prodi' => $prodi,
-            'kasublab' => $kasublab,
+            'semuaKasublab' => $kasublab,
             'kalab' => $kalab])->download('Surat bebas lab '.Auth::guard('mhs')->user()->nama.'.pdf');
     }
 

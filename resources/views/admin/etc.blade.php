@@ -79,9 +79,9 @@
                         <td>{{ $kalab->getJurusan()->nama }}</td>
                         <td>
                             @if($kalab->tambah_kasublab)
-                                <button class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
+                                <button onclick="ubah({{ $kalab->id }})" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
                             @else
-                                <button class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
+                                <button onclick="ubah({{ $kalab->id }})" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
                             @endif
                         </td>
                     </tr>
@@ -111,5 +111,18 @@
                 title: "{{ session()->get('message') }}"
             });
         @endif
+        function ubah(id) {
+            swal({
+                title: "Anda yakin ingin mengubah?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willReset) => {
+                if (willReset) {
+                    $('#user_id').val(id)
+                    $('#user_form').submit()
+                }
+            })
+        }
     </script>
 @endpush

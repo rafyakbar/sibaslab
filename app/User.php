@@ -169,7 +169,8 @@ class User extends Authenticatable
         
                         if($disetujui) {
                             $mahasiswa->update([
-                                'konfirmasi' => true
+                                'konfirmasi' => true,
+                                'validasi' => encrypt($mahasiswa->id)
                             ]);
                         }
         

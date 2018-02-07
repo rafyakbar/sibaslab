@@ -143,7 +143,7 @@ class AdminController extends Controller
     public function ubahKalabTambahKasublab(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|number'
+            'id' => 'required|numeric'
         ]);
 
         $user = User::find($request->id);
