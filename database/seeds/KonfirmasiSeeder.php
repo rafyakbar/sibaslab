@@ -31,10 +31,11 @@ class KonfirmasiSeeder extends Seeder
                             ]);
                         }
                         $mahasiswa->konfirmasi = true;
+                        $mahasiswa->validasi = encrypt($mahasiswa->id);
                         $mahasiswa->save();
                     }
                     else{
-                        foreach ($kasublabs as $kasublab){
+                        foreach ($kasublabs->get() as $kasublab){
                             $waktu = $faker->dateTimeThisMonth;
                             $disetujui = rand(0,1);
                             $kasublab->getRelasiMahasiswa()->attach($mahasiswa, [
