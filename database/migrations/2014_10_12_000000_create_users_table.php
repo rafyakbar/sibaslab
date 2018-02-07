@@ -23,6 +23,14 @@ class CreateUsersTable extends Migration
                 ->references('id')
                 ->on('prodi')
                 ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            $table->integer('lab_id')
+                ->unsigned()
+                ->nullable();
+            $table->foreign('lab_id')
+                ->references('id')
+                ->on('lab')
+                ->onUpdate('CASCADE')
                 ->onDelete('SET NULL');
             $table->string('nama');
             $table->string('password');
