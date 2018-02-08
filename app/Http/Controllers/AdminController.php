@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Ixudra\Curl\Facades\Curl;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:'.Role::ADMIN);
+        $this->middleware('role:' . Role::ADMIN);
     }
 
     public function dashboard()
@@ -90,39 +91,35 @@ class AdminController extends Controller
     public function getMahasiswa(Request $request)
     {
         $mahasiswa = ($request->jurusan == 'Semua') ? Auth::user()->getFakultas()->getMahasiswa() : Jurusan::findByName($request->jurusan)->getMahasiswa();
-        return DataTables::of($mahasiswa)->addColumn('jurusan', function (Mahasiswa $mahasiswa){
+        return DataTables::of($mahasiswa)->addColumn('jurusan', function (Mahasiswa $mahasiswa) {
             return $mahasiswa->getJurusan()->nama;
-        })->addColumn('aksi', function (Mahasiswa $mahasiswa){
-            return '<button class="btn btn-warning btn-sm text-light" onclick="reset('.$mahasiswa->id.')">Reset password</button>';
+        })->addColumn('aksi', function (Mahasiswa $mahasiswa) {
+            return '<button class="btn btn-warning btn-sm text-light" onclick="reset(' . $mahasiswa->id . ')">Reset password</button>';
         })->rawColumns(['aksi'])->make(true);
     }
 
     public function resetUser(Request $request)
     {
-        try
-        {
+        try {
             User::findOrFail($request->id)->update([
                 'password' => bcrypt($request->id)
             ]);
 
             return back()->with('message', 'Berhasil mereset sandi pengguna');
-        }
-        catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return back()->withErrors(['Pengguna tidak ditemukan']);
         }
     }
 
     public function resetMahasiswa(Request $request)
     {
-        try
-        {
+        try {
             Mahasiswa::findOrFail($request->id)->update([
                 'password' => bcrypt($request->id)
             ]);
 
             return back()->with('message', 'Berhasil mereset sandi mahasiswa');
-        }
-        catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return back()->withErrors(['Mahasiswa tidak ditemukan']);
         }
     }
@@ -147,13 +144,13 @@ class AdminController extends Controller
         ]);
 
         $user = User::find($request->id);
-        if (Auth::user()->getFakultas()->id == $user->getFakultas()->id && $user->isKalab()){
+        if (Auth::user()->getFakultas()->id == $user->getFakultas()->id && $user->isKalab()) {
             $user->tambah_kasublab = !$user->tambah_kasublab;
             $user->save();
 
             return back()->with('message', 'Berhasil mengubah data');
         }
 
-        return back()->withErrors(['Pengguna tersebut bukan dari Fakultas '.Auth::user()->getFakultas()->nama.' atau bukan Kalab']);
+        return back()->withErrors(['Pengguna tersebut bukan dari Fakultas ' . Auth::user()->getFakultas()->nama . ' atau bukan Kalab']);
     }
 }
