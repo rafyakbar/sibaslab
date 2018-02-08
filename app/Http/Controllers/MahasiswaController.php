@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use App\Support\Role;
 
 class MahasiswaController extends Controller
 {
@@ -29,10 +31,15 @@ class MahasiswaController extends Controller
         $this->middleware('guest:mhs')->only([
             'login'
         ]);
+
+        $this->middleware('role:' . Role::KALAB)->only([
+            'tambah', 'hapus'
+        ]);
     }
 
     public function prosesUnduh()
     {
+
         return view('mahasiswa.surat');
     }
 
@@ -47,7 +54,7 @@ class MahasiswaController extends Controller
         $renderer->setHeight(256);
         $renderer->setWidth(256);
         $writer = new \BaconQrCode\Writer($renderer);
-        $writer->writeFile('www.google.com', 'qrcode.png');
+        $writer->writeFile('www.google.com', 'images/qrcode.png');
 
         return PDF::loadView('mahasiswa.surat-bebas-lab', [
             'jurusan' => $jurusan,
@@ -129,6 +136,8 @@ class MahasiswaController extends Controller
                 'berkas' => 'required|file|mimes:pdf'
             ]);
 
+            $namaBerkas = Auth::guard('mhs')->user()->dir;
+
             $berkas = $request->file('berkas');
 
             $path = $berkas->store('public/berkas');
@@ -136,7 +145,10 @@ class MahasiswaController extends Controller
             Auth::guard('mhs')->user()->update([
                 'dir' => $path
             ]);
-            return back()->with('success', 'Berhasil memperbarui data');
+
+            Storage::delete($namaBerkas);
+
+            return back()->with('success', 'Berhasil memperbarui berkas');
         }
     }
 
