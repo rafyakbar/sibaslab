@@ -5,5 +5,5 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    Ini dashboard!
+
 @endsection

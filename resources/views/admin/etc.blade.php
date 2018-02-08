@@ -45,7 +45,7 @@
                 <div class="card-block">
                     <form action="" method="post">
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-primary disabled" value="Sinkron sekarang">
+                        <input type="submit" class="btn btn-primary disabled" value="Sinkron sekarang" disabled>
                     </form>
                 </div>
             </div>
