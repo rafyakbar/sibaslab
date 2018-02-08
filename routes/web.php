@@ -26,6 +26,16 @@ Route::namespace('Auth')->group(function () {
 
 Route::group(['prefix' => 'mahasiswa'], function () {
 
+    Route::get('ajukan',[
+        'uses' => 'MahasiswaController@ajukan',
+        'as' => 'mahasiswa.ajukan'
+    ]);
+
+    Route::post('ajukan', [
+        'uses' => 'MahasiswaController@prosesAjukan',
+        'as' => 'mahasiswa.ajukan.proses'
+    ]);
+
     Route::get('login', [
         'uses' => 'MahasiswaController@login',
         'as' => 'mahasiswa.login'
@@ -35,7 +45,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'Auth\LoginController@loginMahasiswa',
         'as' => 'mahasiswa.login.proses'
     ]);
-
+    Route::get('etc/getprodi/{jurusan_id}', [
+        'uses' => 'PublicController@getProdi',
+        'as' => 'mahasiswa.etc.getjurusan'
+    ]);
 });
 
 Route::namespace('Page')->group(function () {

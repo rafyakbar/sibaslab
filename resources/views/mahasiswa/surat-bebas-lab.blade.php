@@ -37,7 +37,7 @@
         <td align=center><b>JURUSAN {{ $jurusan->nama }} - FT.UNESA</b></td>
     </tr>
 </table>
-    <img style="float: right; height: 100px; position: fixed; margin-top: 100px" src="{{ asset('qrcode.png') }}"/>
+    <img style="float: right; height: 100px; position: fixed; margin-top: 100px" src="{{ asset('public/qrcode/qrcode.png') }}"/>
 <br>
 <p>blali aohfaljf al kaku eur pak ajheu alkf aputau alskk nslak aisut lak alke adkcu akeeid alknediu alkwjefn aiud aloi</p>
 <table width="">
@@ -83,7 +83,7 @@
             <br>
             <br>
             <u>@foreach($kalab as $kalab1)
-                    {{ $kalab->nama }}</u><br>{{ $kalab->id }}
+                    {{ $kalab1->nama }}</u><br>{{ $kalab1->id }}
                 @endforeach</td>
     </tr>
 </table>
