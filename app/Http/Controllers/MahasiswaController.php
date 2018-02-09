@@ -119,8 +119,9 @@ class MahasiswaController extends Controller
     {
         $status = (int) $request->status;
         $countLoaded = (int) $request->count_loaded;
+        $keyword = $request->keyword == 'null' ? null : $request->keyword;
 
-        $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status, true, null, $countLoaded / 12 + 1);
+        $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status, true, $keyword, $countLoaded / 12);
 
         $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
             return $item->setHidden(['password']);
