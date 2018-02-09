@@ -56,7 +56,7 @@ class MahasiswaController extends Controller
         $renderer->setWidth(256);
         $writer = new \BaconQrCode\Writer($renderer);
         $namaQr = Auth::guard('mhs')->user()->validasi;
-        $writer->writeFile(Auth::guard('mhs')->user()->validasi, storage_path('app/public/qrCode/images/'.$namaQr));
+        $writer->writeFile(Auth::guard('mhs')->user()->validasi, storage_path('app/public/qrCode/images/'.$namaQr.'.png'));
 
         return PDF::loadView('mahasiswa.surat-bebas-lab', [
             'jurusan' => $jurusan,
