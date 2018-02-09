@@ -9506,8 +9506,8 @@ fieldset[disabled] a.btn {
 
 .btn-dark {
   color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
+  background-color: #484f55;
+  border-color: #484f55;
 }
 
 .btn-dark:hover {
@@ -9527,9 +9527,9 @@ fieldset[disabled] a.btn {
 
 .btn-dark:active, .btn-dark.active,
 .show > .btn-dark.dropdown-toggle {
-  background-color: #23272b;
+  background-color: #484f55;
   background-image: none;
-  border-color: #1d2124;
+  border-color: #484f55;
 }
 
 .btn-outline-primary {

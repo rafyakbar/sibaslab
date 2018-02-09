@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use App\Support\Role;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahasiswaController extends Controller
 {
@@ -29,7 +30,7 @@ class MahasiswaController extends Controller
         ]);
 
         $this->middleware('guest:mhs')->only([
-            'login'
+            'login', 'ajukan', 'prosesAjukan'
         ]);
 
         $this->middleware('role:' . Role::KALAB)->only([
@@ -54,11 +55,13 @@ class MahasiswaController extends Controller
         $renderer->setHeight(256);
         $renderer->setWidth(256);
         $writer = new \BaconQrCode\Writer($renderer);
-        $writer->writeFile('www.google.com', 'images/qrcode.png');
+        $namaQr = Auth::guard('mhs')->user()->validasi;
+        $writer->writeFile(Auth::guard('mhs')->user()->validasi, storage_path('app/public/qrCode/images/'.$namaQr.'.png'));
 
         return PDF::loadView('mahasiswa.surat-bebas-lab', [
             'jurusan' => $jurusan,
             'prodi' => $prodi,
+            'qr' => QrCode::size(300)->generate('Smadia'),
             'semuaKasublab' => $kasublab,
             'kalab' => $kalab])->download('Surat bebas lab '.Auth::guard('mhs')->user()->nama.'.pdf');
     }
