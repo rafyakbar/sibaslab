@@ -66,8 +66,6 @@
                         <div class="tab-content tabs-bordered">
                             <div class="tab-pane fade in active show" id="menyetujui">
                                 <div class="card card-default" data-exclude="xs,sm">
-                                    <div class="card-header bordered">
-                                    </div>
                                     <div class="card-block">
                                         <div class="tasks-block">
                                             <ul class="item-list striped">
@@ -94,8 +92,6 @@
                             </div>
                             <div class="tab-pane fade" id="menolak">
                                 <div class="card card-default" data-exclude="xs,sm">
-                                    <div class="card-header bordered">
-                                    </div>
                                     <div class="card-block">
                                         <div class="tasks-block">
                                             <ul class="item-list striped">
@@ -127,8 +123,6 @@
                             </div>
                             <div class="tab-pane fade" id="belumSetuju">
                                 <div class="card sameheight-item card-default" data-exclude="xs,sm">
-                                    <div class="card-header bordered">
-                                    </div>
                                     <div class="card-block">
                                         <div class="tasks-block">
                                             <ul class="item-list striped">
