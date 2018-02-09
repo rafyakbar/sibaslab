@@ -11906,6 +11906,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -11919,12 +11925,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bisaTunda: true,
             bisaBatalkanPenyetujuan: true,
             kalab: false,
-            telahDisetujui: false
+            telahDisetujui: false,
+            csrf: null,
+            url_unduh: null
         };
     },
     created: function created() {
         this.status = this.$root.status;
         this.kalab = this.$root.kalab;
+        this.csrf = $('meta[name="csrf-token"]').attr('content');
+        this.url_unduh = this.$root.url_unduh;
 
         this.telahDisetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0;
 
@@ -12161,6 +12171,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             });
+        },
+        unduhBerkas: function unduhBerkas() {
+            var _this = this;
+
+            Vue.nextTick(function () {
+                _this.$refs.form.submit();
+            });
         }
     }
 });
@@ -12321,6 +12338,16 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.unduhBerkas }
+              },
+              [_vm._v("Unduh Berkas")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
                 staticClass: "btn btn-text-warning",
                 attrs: { type: "button", disabled: !_vm.bisaTunda },
                 on: {
@@ -12401,7 +12428,23 @@ var render = function() {
           ]
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      { ref: "form", attrs: { action: _vm.url_unduh, method: "post" } },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "nim" },
+          domProps: { value: _vm.mahasiswa.id }
+        })
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -12825,9 +12868,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			daftarProdi: [],
+			daftarLab: [],
 			nama: '',
 			nip: '',
 			prodi: '',
+			lab: '',
 			errors: {
 				nip: {
 					text: null,

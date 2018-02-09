@@ -13,8 +13,6 @@
     <li class="{{ (request()->has('status') && request()->get('status') == 2) ? 'active' : '' }}"><a href="{{ route('kasublab.daftar.mahasiswa', ['status' => 2]) }}">Belum Disetujui </a></li>
 </ul>
 
-
-
 <div id="daftar-mahasiswa">
 
     <div v-show="daftarMahasiswa.length > 0">
@@ -54,6 +52,7 @@
 
     <div class="row">
         <div class="col">
+            <img v-show="isLoadMoreProcessing" src="{{ asset('images/material-loading.gif') }}" width="50"/>
             <button v-show="canLoadMore" class="btn btn-primary" @click="loadMore">Tampilkan lainnya</button>
         </div>
     </div>
@@ -68,20 +67,27 @@ let daftarMahasiswa = new Vue({
     el: '#daftar-mahasiswa',
     data: {
         daftarMahasiswa: {!! $daftarMahasiswa !!},
+        // daftar url
         url_setuju: '{{ route('surat.setuju') }}',
         url_tolak: '{{ route('surat.tolak') }}',
         url_lihat_catatan: '{{ route('kasublab.lihat.catatan') }}',
         url_daftar_belum_menanggapi: '{{ route('kasublab.daftar.belum.menanggapi') }}',
         url_daftar_menyetujui: '{{ route('kasublab.daftar.setuju') }}',
         url_daftar_belum_menyetujui: '{{ route('kasublab.daftar.belum.setuju') }}',
+        url_unduh: '{{ route('unduh.berkas') }}',
         status: {{ request()->has('status') ? request()->get('status') : 0 }},
-        canLoadMore: true,
         kalab: {{ Auth::user()->isKalab() ? 'true' : 'false' }},
+        // variabel dibawah ini untuk keperluan load more
+        canLoadMore: true,
+        isLoadMoreProcessing: false,
         // variable dibawah ini berfungsi untuk proses pencarian
         keyword: null,
         filteredMahasiswa: [],
         search_flag: false,
         onSearchProcessing: false
+    },
+    created() {
+        this.canLoadMore = this.daftarMahasiswa.length == 12
     },
     methods: {
         removeData(id) {
@@ -91,18 +97,27 @@ let daftarMahasiswa = new Vue({
         },
         loadMore() {
             let that = this
+            this.isLoadMoreProcessing = true
 
             $.ajax({
                 url: '{{ route('kasublab.loadmore.mahasiswa') }}',
                 type: 'POST',
-                data: 'status={{ request()->has('status') ? request()->get('status') : 0 }}&count_loaded=' + that.daftarMahasiswa.length,
+                data: 'status={{ request()->has('status') ? request()->get('status') : 0 }}&count_loaded=' + that.daftarMahasiswa.length + '&keyword=' + that.keyword,
                 success: function (response) {
+                    that.isLoadMoreProcessing = false
+
                     if(response.length === 0) {
                         that.canLoadMore = false
                     }
                     else {
-                        for(i in response)
-                            that.daftarMahasiswa.push(response[i])
+                        if(that.keyword.length == 0) {
+                            for(i in response)
+                                that.daftarMahasiswa.push(response[i])
+                        }
+                        else {
+                            for(i in response)
+                                that.filteredMahasiswa.push(response[i])
+                        }
                     }
                 }
             })

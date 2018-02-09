@@ -33,6 +33,7 @@
 
                 <div class="btn-group-custom" v-show="status == 0">
                     <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                    <button type="button" class="btn btn-primary" @click="unduhBerkas">Unduh Berkas</button>
                     <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
                 </div>
                 
@@ -46,13 +47,18 @@
                 </div>
             </div>
         </div>
+
+        <form :action="url_unduh" method="post" ref="form">
+            <input type="hidden" name="_token" :value="csrf"/>
+            <input type="hidden" name="nim" :value="mahasiswa.id"/>
+        </form>
     </div>
 </template>
 
 <script>
     export default {
         props: {
-            mahasiswa: [Object]
+            mahasiswa: [Object],
         },
         data() {
             return {
@@ -62,12 +68,16 @@
                 bisaTunda: true,
                 bisaBatalkanPenyetujuan: true,
                 kalab: false,
-                telahDisetujui: false
+                telahDisetujui: false,
+                csrf: null,
+                url_unduh: null
             }
         },
         created() {
             this.status = this.$root.status
             this.kalab = this.$root.kalab
+            this.csrf = $('meta[name="csrf-token"]').attr('content')
+            this.url_unduh = this.$root.url_unduh
 
             this.telahDisetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
 
@@ -306,6 +316,11 @@
                             p.innerText = response.catatan
                         }
                     }
+                })
+            },
+            unduhBerkas() {
+                Vue.nextTick(() => {
+                    this.$refs.form.submit()
                 })
             }
         }

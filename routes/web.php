@@ -70,6 +70,11 @@ Route::post('ubah/katasandi', [
     'as' => 'ubah.kata.sandi'
 ]);
 
+Route::post('unduh/berkas', [
+    'uses' => 'MahasiswaController@unduhBerkas',
+    'as' => 'unduh.berkas'
+]);
+
 Route::get('qr', function () {
     return view('test.qr');
 });

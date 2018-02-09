@@ -225,6 +225,21 @@ class MahasiswaController extends Controller
     }
 
     /**
+     * Melakukan proses pengunduhan berkas
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function unduhBerkas(Request $request)
+    {
+        $file = Mahasiswa::find($request->nim)->dir;
+
+        return response()->download(
+            storage_path('app/public/berkas/' . $file)
+        );
+    }
+
+    /**
      * Menyetujui surat untuk mahasiswa tertentu
      *
      * @param Request $request
