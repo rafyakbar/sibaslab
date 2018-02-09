@@ -69,10 +69,10 @@ class LoginController extends Controller {
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($request->user()->isAdmin()) {
+        if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
-        else if ($request->user()->isKalab() || $request->user()->isKasublab()) {
+        else if ($user->isKalab() || $user->isKasublab()) {
             return redirect()->route('kasublab.daftar.mahasiswa');
         }
 
