@@ -16,7 +16,7 @@
     {{--@endforeach--}}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="padding: 30px">
             @if(Auth::guard('mhs')->user()->konfirmasi)
                 <div class="card card-info">
                     <div class="card-block">
@@ -47,119 +47,112 @@
                     </div>
                 </div>
             @endif
-        </div>
-    </div>
-    <br>
-    <br>
-    <br>
-    <ul class="nav ui-tab" style="background-color: transparent">
-        <li href="#menyetujui" class="nav-link" data-target="#menyetujui" data-toggle="tab">
-            <a  aria-controls="home" role="tab">Kasublab/Kalab yang menyetujui  {{$jumlahMenyetujui}}</a>
-        </li>
-        <li href="#belumSetuju" class="nav-link" data-target="#belumSetuju" data-toggle="tab">
-            <a aria-controls="profile" role="tab">Kasublab/Kalab yang belum menyetujui  {{$jumlahBelum}}</a>
-        </li>
-        <li href="" class="nav-link" data-target="#menolak" aria-controls="messages" data-toggle="tab">
-            <a role="tab">Kasublab/Kalab yang tidak menyetujui  {{$jumlahMenolak}}</a>
-        </li>
-    </ul>
-    <div class="card sameheight-item">
-        <div class="card-block">
-            <!-- Tab panes -->
-            <div class="tab-content tabs-bordered">
-                <div class="tab-pane fade in active show" id="menyetujui">
-                    <div class="card card-default" data-exclude="xs,sm">
-                        <div class="card-header bordered">
-                        </div>
-                        <div class="card-block">
-                            <div class="tasks-block">
-                                <ul class="item-list striped">
+            <br>
+                <br>
+                <ul class="nav ui-tab" style="background-color: transparent">
+                    <li href="#menyetujui" class="btn-dark active" data-target="#menyetujui" data-toggle="tab">
+                        <a  class="text-light" aria-controls="home" role="tab">Yang menyetujui  : {{$jumlahMenyetujui}}</a>
+                    </li>
+                    <li href="#belumSetuju" class="btn-dark" data-target="#belumSetuju" data-toggle="tab">
+                        <a class="text-light" aria-controls="profile" role="tab">Yang belum menyetujui  : {{$jumlahBelum}}</a>
+                    </li>
+                    <li href="" class="btn-dark" data-target="#menolak" aria-controls="messages" data-toggle="tab">
+                        <a class="text-light" role="tab">Yang tidak menyetujui  : {{$jumlahMenolak}}</a>
+                    </li>
+                </ul>
+                <div class="card sameheight-item">
+                    <div class="card-block">
+                        <!-- Tab panes -->
+                        <div class="tab-content tabs-bordered">
+                            <div class="tab-pane fade in active show" id="menyetujui">
+                                <div class="card card-default" data-exclude="xs,sm">
+                                    <div class="card-header bordered">
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="tasks-block">
+                                            <ul class="item-list striped">
 
-                                    @foreach($kasublabMenyetujui as $kasublab)
-                                        <li class="item">
-                                            <div class="item-row">
-                                                <div class="item-col item-col-title no-overflow">
-                                                    <div>
-                                                        <a class="date"
-                                                           style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
-                                                        <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
-                                                        <p class="date">{{$kasublab->id}} </p>
-                                                    </div>
-                                                    <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach()
-                                </ul>
+                                                @foreach($kasublabMenyetujui as $kasublab)
+                                                    <li class="item">
+                                                        <div class="item-row">
+                                                            <div class="item-col item-col-title no-overflow">
+                                                                <div>
+                                                                    <a class="date"
+                                                                       style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
+                                                                    <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                                                    <p class="date">{{$kasublab->id}} </p>
+                                                                </div>
+                                                                <p class="text-info date pull-right" style="font-size: small">{{$kasublab->role}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach()
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="menolak">
+                                <div class="card card-default" data-exclude="xs,sm">
+                                    <div class="card-header bordered">
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="tasks-block">
+                                            <ul class="item-list striped">
+                                                @foreach($kasublabMenolak as $kasublab)
+                                                    <li class="item">
+                                                        <div class="item-row">
+                                                            <div class="item-col item-col-title no-overflow">
+                                                                <div>
+                                                                    <a class="date"
+                                                                       style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
+                                                                    <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                                                    <p class="date">{{$kasublab->id}} </p>
+                                                                </div>
+                                                                <div class="pull-right" style="width: auto">
+                                                                    <p class="text-info" style="font-size: small">{{$kasublab->role}}</p>
+                                                                    <button class="btn btn-primary btn-sm rounded"
+                                                                            onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
+                                                                        Catatan
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach()
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="belumSetuju">
+                                <div class="card sameheight-item card-default" data-exclude="xs,sm">
+                                    <div class="card-header bordered">
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="tasks-block">
+                                            <ul class="item-list striped">
+                                                @foreach($kasublabBelumMenyetujui as $kasublab)
+                                                    <li class="item">
+                                                        <div class="item-row">
+                                                            <div class="item-col item-col-title no-overflow">
+                                                                <div>
+                                                                    <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                                                    <p class="date">{{$kasublab->id}} </p>
+                                                                </div>
+                                                                <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach()
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="menolak">
-                    <div class="card card-default" data-exclude="xs,sm">
-                        <div class="card-header bordered">
-                        </div>
-                        <div class="card-block">
-                            <div class="tasks-block">
-                                <ul class="item-list striped">
-                                    @foreach($kasublabMenolak as $kasublab)
-                                        <li class="item">
-                                            <div class="item-row">
-                                                <div class="item-col item-col-title no-overflow">
-                                                    <div>
-                                                        <a class="date"
-                                                           style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
-                                                        <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
-                                                        <p class="date">{{$kasublab->id}} </p>
-                                                    </div>
-                                                    <div class="pull-right" style="width: auto">
-                                                        <p class="text-info" style="font-size: small">{{$kasublab->role}}</p>
-                                                        <button class="btn btn-primary btn-sm rounded"
-                                                                onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
-                                                            Catatan
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach()
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="belumSetuju">
-                    <div class="card sameheight-item card-default" data-exclude="xs,sm">
-                        <div class="card-header bordered">
-                        </div>
-                        <div class="card-block">
-                            <div class="tasks-block">
-                                <ul class="item-list striped">
-                                    @foreach($kasublabBelumMenyetujui as $kasublab)
-                                        <li class="item">
-                                            <div class="item-row">
-                                                <div class="item-col item-col-title no-overflow">
-                                                    <div>
-                                                        <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
-                                                        <p class="date">{{$kasublab->id}} </p>
-                                                    </div>
-                                                    <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach()
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6">
-
         </div>
     </div>
 
