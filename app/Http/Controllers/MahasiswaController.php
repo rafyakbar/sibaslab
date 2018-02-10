@@ -365,4 +365,21 @@ class MahasiswaController extends Controller
         ));
     }
 
+    /**
+     * Menampilkan qr code dari nim mahasiswa
+     *
+     * @param string $nim
+     * @return mixed
+     */ 
+    public function tampilQr($nim)
+    {
+        try {
+            $dir_qr = Mahasiswa::find($nim)->validasi;
+            
+            return response()->file(storage_path('app/public/qrCode/images/' . $dir_qr . '.png'));
+        } catch (ModelNotFoundException $err) {
+            return 'Tidak dapat menemukan qr code';
+        }
+    }
+
 }
