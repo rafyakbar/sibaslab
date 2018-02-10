@@ -33,6 +33,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="header-block">
+                            <h1 style="text-align: center">Tampilane Apik.ono dewe</h1>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <div class="header-block">
                             <h3 class="title">Surat ini dimiliki oleh</h3>
                         </div>
                     </div>
