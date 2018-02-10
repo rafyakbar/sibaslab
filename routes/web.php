@@ -78,3 +78,8 @@ Route::post('unduh/berkas', [
 Route::get('qr', function () {
     return view('test.qr');
 });
+
+Route::get('tampil/qr/{nim}', [
+    'uses' => 'MahasiswaController@tampilQr',
+    'as' => 'mahasiswa.tampil.qr'
+]);
