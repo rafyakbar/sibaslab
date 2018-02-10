@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use App\Support\Role;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MahasiswaController extends Controller
 {
@@ -375,7 +376,7 @@ class MahasiswaController extends Controller
     {
         try {
             $dir_qr = Mahasiswa::find($nim)->validasi;
-            
+
             return response()->file(storage_path('app/public/qrCode/images/' . $dir_qr . '.png'));
         } catch (ModelNotFoundException $err) {
             return 'Tidak dapat menemukan qr code';
