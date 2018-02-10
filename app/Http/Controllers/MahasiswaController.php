@@ -43,12 +43,6 @@ class MahasiswaController extends Controller
         ]);
     }
 
-    public function prosesUnduh()
-    {
-
-        return view('mahasiswa.surat');
-    }
-
     public function unduh()
     {
         $jurusan = Auth::guard('mhs')->user()->getJurusan();
