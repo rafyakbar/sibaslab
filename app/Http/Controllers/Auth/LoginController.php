@@ -97,7 +97,7 @@ class LoginController extends Controller {
            return back()->with('message','NIM atau password yang anda masukkan salah');
         }
         catch (ModelNotFoundException $err) {
-            return back()->with('message','NIM atau password yang anda masukkan  catch');
+            return back()->with('message','NIM atau password yang anda masukkan salah');
         }
     }
 
