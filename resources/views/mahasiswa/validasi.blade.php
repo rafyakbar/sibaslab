@@ -33,7 +33,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="header-block">
-                            <h1 style="text-align: center">Tampilane Apik.ono dewe</h1>
+                            <h1 style="text-align: center">Tampilane Apik.ono dewe Jav</h1>
+                            <p>by RafyAA</p>
                         </div>
                     </div>
                     <div class="card-header">
