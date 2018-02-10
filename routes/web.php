@@ -49,6 +49,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'PublicController@getProdi',
         'as' => 'mahasiswa.etc.getjurusan'
     ]);
+    Route::get('validasi/{val}', [
+        'uses' => 'PublicController@validasi',
+        'as' => 'mahasiswa.validasi'
+    ]);
 });
 
 Route::namespace('Page')->group(function () {
