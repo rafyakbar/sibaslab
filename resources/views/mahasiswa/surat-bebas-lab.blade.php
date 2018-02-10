@@ -34,12 +34,12 @@
         <td align=center><font size=3><b><u>DAFTAR BEBAS LABORATORIUM</u></b></font></td>
     </tr>
     <tr>
-        <td align=center><b>JURUSAN {{ $jurusan->nama }} - FT.UNESA</b></td>
+        <td align=center><b>JURUSAN {{ strtoupper($jurusan->nama) }} - FAKULTAS TEKNIK UNESA</b></td>
     </tr>
 </table>
-    <img style="float: right; height: 100px; position: fixed; margin-top: 100px" src="{{ asset('public/qrcode/qrcode.png') }}"/>
 <br>
-<p>blali aohfaljf al kaku eur pak ajheu alkf aputau alskk nslak aisut lak alke adkcu akeeid alknediu alkwjefn aiud aloi</p>
+<br>
+<p>Yang bertanda tangan dibawah ini menerangkan bahwa : </p>
 <table width="">
     <tr>
         <td nowrap><font size="-1"><strong>NIM</strong></font></td>
@@ -54,31 +54,40 @@
         <td><font size="-1">: {{ $prodi->nama }} </font></td>
     </tr>
 </table>
+<p>telah terbebas dari tanggungan laboratorium.</p>
 <br>
-<table style="width: 100%; " border=1 cellspacing=0 cellpadding="2">
-    <tr>
-        <td colspan="3">
-                <tr align="center" height=20>
-                    <td class="PrintBG" ><font size="-1">No.</font></td>
-                    <td class="PrintBG"><font size="-1">Laboratorium</font></td>
-                    <td class="PrintBG"><font size="-1">Ka.Sub.Lab/Teknisi</font></td>
-                </tr>
-    @foreach($semuaKasublab as $kasublab)
-                <tr height=20>
-                    <td align=right><font size="-1"> 1 .</font></td>
-                    <td><font size="-1"> Labaratorium RPL </font></td>
-                    <td><font size="-1"> {{ $kasublab->nama }} </font></td>
-                </tr>
-    @endforeach
-        </td>
-    </tr>
-</table>
+{{--<table style="width: 100%; " border=1 cellspacing=0 cellpadding="2">--}}
+    {{--<tr>--}}
+        {{--<td colspan="3">--}}
+                {{--<tr align="center" height=20>--}}
+                    {{--<td class="PrintBG" ><font size="-1">No.</font></td>--}}
+                    {{--<td class="PrintBG"><font size="-1">Laboratorium</font></td>--}}
+                    {{--<td class="PrintBG"><font size="-1">Ka.Sub.Lab/Teknisi</font></td>--}}
+                {{--</tr>--}}
+    {{--@foreach($semuaKasublab as $kasublab)--}}
+                {{--<tr height=20>--}}
+                    {{--<td align=right><font size="-1"> 1 .</font></td>--}}
+                    {{--<td><font size="-1"> Labaratorium RPL </font></td>--}}
+                    {{--<td><font size="-1"> {{ $kasublab->nama }} </font></td>--}}
+                {{--</tr>--}}
+    {{--@endforeach--}}
+        {{--</td>--}}
+    {{--</tr>--}}
+{{--</table>--}}
 <br>
 <br>
+<br>
+<div style="float: left;">
+    <br>
+    <img style="height: 150px;" src="{{ route('mahasiswa.tampil.qr', ['nim' => Auth::guard('mhs')->user()->id]) }}"/>
+    <p style="margin-top: -20px"> &nbsp;&nbsp;Scan untuk validasi</p>
+</div>
 <table style="float: right">
     <tr>
         <td width="50%" align="left">Mengetahui,<br>
             Ketua Laboratorium
+            <br>
+            <br>
             <br>
             <br>
             <br>
