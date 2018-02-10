@@ -81,7 +81,7 @@ let daftarMahasiswa = new Vue({
         canLoadMore: true,
         isLoadMoreProcessing: false,
         // variable dibawah ini berfungsi untuk proses pencarian
-        keyword: null,
+        keyword: '',
         filteredMahasiswa: [],
         search_flag: false,
         onSearchProcessing: false
@@ -125,6 +125,8 @@ let daftarMahasiswa = new Vue({
         cari() {
             let that = this
 
+            console.log(this.keyword)
+
             if(this.keyword.length > 0) {
 
                 this.search_flag = true
@@ -140,7 +142,8 @@ let daftarMahasiswa = new Vue({
                     data: 'keyword=' + that.keyword + '&status=' + that.status,
                     success: (response) => {
                         this.onSearchProcessing = false
-                        that.filteredMahasiswa = response
+                        if(that.keyword.length > 0)
+                            that.filteredMahasiswa = response
                     }
                 })
             }
