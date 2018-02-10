@@ -37,6 +37,10 @@ class MahasiswaController extends Controller
         $this->middleware('role:' . Role::KALAB)->only([
             'tambah', 'hapus'
         ]);
+
+        $this->middleware('guest:web')->only([
+            'login', 'ajukan'
+        ]);
     }
 
     public function prosesUnduh()
