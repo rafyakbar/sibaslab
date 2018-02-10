@@ -3,10 +3,16 @@
         <div class="card card-mhs">
             <div class="card-block">
                 <div class="title-block">
-                    <h4 class="title">{{ mahasiswa.nama }}</h4>
+                    <div class="identity">
+                        <h4 class="title">{{ mahasiswa.nama }}</h4>
+                        <h6>{{ mahasiswa.id }}</h6>
+                    </div>
+                    <div class="tools">
+                        <button type="button" class="btn btn-primary unduh-berkas" @click="unduhBerkas">
+                            <i class="fa fa-download"></i>&nbsp;&nbsp;Unduh Berkas</button>
+                    </div>
                 </div>
 
-                <h6>{{ mahasiswa.id }}</h6>
 
                 <div class="counter-block" v-show="kalab">
                     <div class="item">
@@ -26,31 +32,32 @@
                 <p class="alert alert-info" v-show="telahDisetujui && !kalab">
                     Mahasiswa ini telah disetujui oleh Kalab
                 </p>
-                
+
                 <p class="alert alert-warning" v-show="!telahDisetujui && !kalab && status == 1">
                     Mahasiswa ini belum disetujui oleh Kalab
                 </p>
 
-                <div class="btn-group-custom" v-show="status == 0">
-                    <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
-                    <button type="button" class="btn btn-primary" @click="unduhBerkas">Unduh Berkas</button>
-                    <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
-                </div>
-                
-                <div class="btn-group" v-show="status == 1">
-                    <button type="button" class="btn btn-danger btn-sm" @click="tolak" :disabled="!bisaBatalkanPenyetujuan">Batalkan Penyetujuan</button>
-                </div>
-                
-                <div class="btn-group" role="group" v-show="status == 2">
-                    <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
-                    <button type="button" class="btn btn-primary" @click="lihatCatatan">Lihat Catatan</button>
+                <div class="card-footer">
+                    <div class="btn-group" v-show="status == 0">
+                        <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                        <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
+                    </div>
+
+                    <div class="btn-group" v-show="status == 1">
+                        <button type="button" class="btn btn-danger btn-sm" @click="tolak" :disabled="!bisaBatalkanPenyetujuan">Batalkan Penyetujuan</button>
+                    </div>
+
+                    <div class="btn-group" role="group" v-show="status == 2">
+                        <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                        <button type="button" class="btn btn-primary" @click="lihatCatatan">Lihat Catatan</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <form :action="url_unduh" method="post" ref="form">
-            <input type="hidden" name="_token" :value="csrf"/>
-            <input type="hidden" name="nim" :value="mahasiswa.id"/>
+            <input type="hidden" name="_token" :value="csrf" />
+            <input type="hidden" name="nim" :value="mahasiswa.id" />
         </form>
     </div>
 </template>
@@ -81,20 +88,17 @@
 
             this.telahDisetujui = this.mahasiswa.belum_menanggapi == 0 && this.mahasiswa.menolak == 0
 
-            if(this.kalab) {
-                if(this.status == 2) {
+            if (this.kalab) {
+                if (this.status == 2) {
                     this.bisaSetujui = this.mahasiswa.menolak == 1 && this.mahasiswa.belum_menanggapi == 0
-                }
-                else if(this.status == 0) {
+                } else if (this.status == 0) {
                     this.bisaSetujui = this.mahasiswa.belum_menanggapi == 1 && this.mahasiswa.menolak == 0
-                }
-                else if(status == 1) {
+                } else if (status == 1) {
                     this.bisaBatalkanPenyetujuan = true
                 }
                 this.bisaTunda = true
-            }
-            else {
-                if(this.status == 1) {
+            } else {
+                if (this.status == 1) {
                     this.bisaBatalkanPenyetujuan = !this.mahasiswa.konfirmasi || this.mahasiswa.belum_menanggapi > 0
                 }
             }
@@ -152,15 +156,14 @@
                                 type: 'POST',
                                 data: 'nim=' + that.mahasiswa.id + '&catatan=' + textarea.value,
                                 success: (response) => {
-                                    if(response.success) {
+                                    if (response.success) {
                                         swal({
                                             icon: 'success',
                                             text: response.success
                                         })
                                         that.$root.removeData(that.mahasiswa.id)
                                         swal.close()
-                                    }
-                                    else if(response.error) {
+                                    } else if (response.error) {
                                         swal({
                                             icon: 'error',
                                             text: response.error
@@ -213,7 +216,8 @@
                     }
                 })
             },
-            daftarMenyetujui() {let that = this
+            daftarMenyetujui() {
+                let that = this
                 let root = document.createElement('swal-list')
                 root.innerText = 'Sedang memuat...'
 
@@ -271,20 +275,19 @@
                     title: 'Apa anda yakin ?',
                     buttons: ['Batal', 'Yakin']
                 }).then(function (response) {
-                    if(response) {
+                    if (response) {
                         $.ajax({
                             url: that.url_batal,
                             type: 'POST',
                             data: 'nim=' + that.mahasiswa.id,
                             success: function (response) {
-                                if(response.success) {
+                                if (response.success) {
                                     swal({
                                         icon: 'success',
                                         text: response.success
                                     })
                                     that.$root.removeData(that.mahasiswa.id)
-                                } 
-                                else if(response.error) {
+                                } else if (response.error) {
                                     swal({
                                         icon: 'error',
                                         text: response.error
@@ -297,7 +300,7 @@
             },
             lihatCatatan() {
                 let that = this
-                    
+
                 let p = document.createElement('p')
                 p.innerText = 'Sedang memuat...'
                 p.style.textAlign = 'Left'
@@ -312,7 +315,7 @@
                     type: 'POST',
                     data: 'nim=' + that.mahasiswa.id,
                     success: function (response) {
-                        if(response.catatan) {
+                        if (response.catatan) {
                             p.innerText = response.catatan
                         }
                     }

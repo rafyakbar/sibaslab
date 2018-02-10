@@ -74,15 +74,33 @@ body {
 }
 
 #daftar-mahasiswa .card-mhs .title-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   margin-bottom: 5px;
+  -ms-flex-line-pack: distribute;
+      align-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-#daftar-mahasiswa .card-mhs .title-block > .title {
+#daftar-mahasiswa .card-mhs .title-block .title {
   color: #6ba829;
+}
+
+#daftar-mahasiswa .card-mhs .title-block .tools > button {
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 12px;
 }
 
 #daftar-mahasiswa .card-mhs h6 {
   font-size: 14px;
+  margin-top: 5px;
 }
 
 #daftar-mahasiswa .card-mhs .counter-block {
@@ -100,20 +118,22 @@ body {
       align-content: center;
   margin-bottom: 10px;
   margin-top: 10px;
+  padding-bottom: 10px;
 }
 
 #daftar-mahasiswa .card-mhs .counter-block > .item {
   padding: 15px;
-  text-align: center;
+  text-align: left;
 }
 
 #daftar-mahasiswa .card-mhs .counter-block > .item > .counter {
   font-size: 20px;
   display: block;
+  font-weight: bold;
 }
 
 #daftar-mahasiswa .card-mhs .counter-block > .item > .desc {
-  font-size: 12px;
+  font-size: 10px;
   display: block;
 }
 
@@ -121,8 +141,13 @@ body {
   cursor: pointer;
 }
 
-#daftar-mahasiswa .card-mhs .counter-block > .item:not(:last-child) {
-  border-right: 1px solid #dddddd;
+#daftar-mahasiswa .card-mhs .counter-block + .unduh-berkas {
+  display: block;
+}
+
+#daftar-mahasiswa .card-mhs .card-footer {
+  margin: -15px;
+  background-color: #ddd;
 }
 
 #daftar-mahasiswa .card-mhs button {
