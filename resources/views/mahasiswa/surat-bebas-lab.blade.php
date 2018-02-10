@@ -37,7 +37,7 @@
         <td align=center><b>JURUSAN {{ $jurusan->nama }} - FT.UNESA</b></td>
     </tr>
 </table>
-    <img style="float: right; height: 100px; position: fixed; margin-top: 100px" src="{{ asset('public/qrcode/qrcode.png') }}"/>
+    <img style="float: right; height: 100px; position: fixed; margin-top: 100px" src="{{ route('mahasiswa.tampil.qr', ['nim' => Auth::guard('mhs')->user()->id]) }}"/>
 <br>
 <p>blali aohfaljf al kaku eur pak ajheu alkf aputau alskk nslak aisut lak alke adkcu akeeid alknediu alkwjefn aiud aloi</p>
 <table width="">
