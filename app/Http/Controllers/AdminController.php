@@ -20,11 +20,6 @@ class AdminController extends Controller
         $this->middleware('role:' . Role::ADMIN);
     }
 
-    public function dashboard()
-    {
-        return view('admin.dashboard');
-    }
-
     public function kalabKasublab()
     {
         $jurusans = Auth::user()->getFakultas()->getJurusan();

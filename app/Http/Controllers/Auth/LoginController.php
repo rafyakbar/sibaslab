@@ -70,7 +70,7 @@ class LoginController extends Controller {
     protected function authenticated(Request $request, $user)
     {
         if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.kalabkasublab');
         }
         else if ($user->isKalab() || $user->isKasublab()) {
             return redirect()->route('kasublab.daftar.mahasiswa');
