@@ -55,12 +55,14 @@ body {
     .card-mhs {
         border-radius: 5px;
         margin-bottom: 20px;
+        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.08);
 
         .alert{
             margin-left: -15px;
             margin-right: -15px;
             border: none;
             border-radius: 0;
+            padding-bottom: 30px;
 
             &.alert-info {
                 background-color: lighten($color: #76D4F5, $amount: 20);
@@ -83,14 +85,6 @@ body {
             .title {
                 color: darken($themeColor, 10)
             }
-
-            .tools {
-                > button {
-                    padding: 10px 15px;
-                    border-radius: 15px;
-                    font-size: 12px;
-                }
-            }
         }
 
         h6 {
@@ -106,7 +100,7 @@ body {
             display: flex;
             justify-content: center;
             align-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             margin-top: 10px;
             padding-bottom: 10px;
 
@@ -134,20 +128,57 @@ body {
             }
         }
 
-        .card-footer {
-            margin: -15px;
-            background-color: #ddd;
-        }
+        .tools {
+            display: flex;
+            justify-content: center;
 
-        button {
-            cursor: pointer;
-            border-radius: 2px;
-            float: right;
-            padding: 10px 20px;
-            &:last-child {
-                margin-right: 10px;
+            > button {
+                padding: 10px 15px;
+                border-radius: 20px;
+                font-size: 12px;
+                cursor: pointer;
+                margin-top: -20px;
+                border: 1px solid #3698ce;
+                color: #3698ce;
+                background-color: #fff;
+                outline: none;
+
+                &:hover:not(:disabled) {
+                    background-color: #3698ce;
+                    color: #fff;
+                }
+
+                &:disabled {
+                    border: 1px solid #ddd;
+                    color: #333;
+                    background-color: #fff;
+                    cursor: default
+                }
             }
         }
+
+        .card-footer-custom {
+            margin: -15px;
+            background-color: #f1f1f1;
+            .btn-group {
+                padding: 5px 10px 10px;
+
+                button {
+                    border-radius: 20px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                    padding: 10px 15px;
+                    &:last-child {
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            &.add-margin {
+                margin-top: 20px;
+            }
+        }
+
         .btn-primary {
             // background-color: rgb(51, 103, 214);
             color: #fff;

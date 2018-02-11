@@ -7,24 +7,19 @@
                         <h4 class="title">{{ mahasiswa.nama }}</h4>
                         <h6>{{ mahasiswa.id }}</h6>
                     </div>
-                    <div class="tools">
-                        <button type="button" class="btn btn-primary unduh-berkas" @click="unduhBerkas">
-                            <i class="fa fa-download"></i>&nbsp;&nbsp;Unduh Berkas</button>
-                    </div>
                 </div>
-
 
                 <div class="counter-block" v-show="kalab">
                     <div class="item">
-                        <span class="counter" @click="daftarBelumMenanggapi">{{ mahasiswa.belum_menanggapi }}</span>
+                        <span class="counter text-warning" @click="daftarBelumMenanggapi">{{ mahasiswa.belum_menanggapi }}</span>
                         <span class="desc" @click="daftarBelumMenanggapi">Belum Menanggapi</span>
                     </div>
                     <div class="item">
-                        <span class="counter" @click="daftarMenyetujui">{{ mahasiswa.menyetujui }}</span>
+                        <span class="counter text-success" @click="daftarMenyetujui">{{ mahasiswa.menyetujui }}</span>
                         <span class="desc" @click="daftarMenyetujui">Telah Menyetujui</span>
                     </div>
                     <div class="item">
-                        <span class="counter" @click="daftarBelumMenyetujui">{{ mahasiswa.menolak }}</span>
+                        <span class="counter text-danger" @click="daftarBelumMenyetujui">{{ mahasiswa.menolak }}</span>
                         <span class="desc" @click="daftarBelumMenyetujui">Belum Menyetujui</span>
                     </div>
                 </div>
@@ -37,9 +32,14 @@
                     Mahasiswa ini belum disetujui oleh Kalab
                 </p>
 
-                <div class="card-footer">
+                <div :class="{'card-footer-custom': true, 'add-margin': (status == 2 || status == 0) && !kalab}">
+                    <div class="tools">
+                        <button type="button" class="btn btn-primary unduh-berkas" @click="unduhBerkas" :disabled="typeof mahasiswa.dir !== 'string'">
+                            <i class="fa fa-download"></i>&nbsp;&nbsp;Unduh Berkas</button>
+                    </div>
                     <div class="btn-group" v-show="status == 0">
-                        <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">Setujui</button>
+                        <button type="button" class="btn btn-primary" @click="setuju" :disabled="!bisaSetujui">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;Setujui</button>
                         <button type="button" class="btn btn-text-warning" @click.prevent="tolak" :disabled="!bisaTunda">Tunda penyetujuan</button>
                     </div>
 
