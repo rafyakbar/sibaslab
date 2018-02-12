@@ -9,6 +9,7 @@ use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -41,6 +42,16 @@ class MahasiswaController extends Controller
         $this->middleware('guest:web')->only([
             'login', 'ajukan'
         ]);
+    }
+
+    public function kirimEmailKeKalabKasublab()
+    {
+        $data=['name' => Auth::guard('mhs')->user()->nama];
+        Mail::send('emails.mail', $data, function($message) {
+            $message->to('bagashidayat45@gmail.com', 'Artisans Web')
+                ->subject('Pengajuan Surat Bebas Laboratorium');
+            $message->from('bebaslabunesa@gmail.com','Bebas Lab Fakultas Teknik Unesa');
+        });
     }
 
     public function unduh()
@@ -163,7 +174,7 @@ class MahasiswaController extends Controller
             'nama' => 'required',
             'nim' => 'required|numeric|unique:mahasiswa,id',
             'prodi' => 'required|numeric',
-            'berkas' => 'required|file|mimes:pdf'
+            'berkas' => 'nullable|file|mimes:pdf'
         ]);
 
         $berkas = $request->file('berkas');
@@ -179,6 +190,7 @@ class MahasiswaController extends Controller
         ]);
 
         Auth::guard('mhs')->login($mhs);
+        $this->kirimEmailKeKalabKasublab();
          return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
     }
 
