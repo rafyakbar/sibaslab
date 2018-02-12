@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
                 else if(Auth::user()->isRoot())
                     return redirect()->route('root.dashboard');
                 else if (Auth::user()->isAdmin())
-                    return redirect()->route('admin.dashboard');
+                    return redirect()->route('admin.kalabkasublab');
             }
             else if($guard == 'mhs') {
                 return redirect()->route('mahasiswa.dashboard');

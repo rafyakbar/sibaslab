@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #eeeeee;
     width: 100%;
@@ -6,8 +10,13 @@ body {
     font-family: 'Gotham'
 }
 
+#hidden {
+    overflow: hidden;
+    position: relative;
+}
+
 #material {
-    position: absolute;
+    position: fixed;
     z-index: -1;
     display: flex;
     transform: rotate(-45deg);
@@ -19,22 +28,24 @@ body {
         height: 500px;
         border-radius: 50px;
         margin-right: 30px;
+        transition: all ease-in-out 0.2s; 
 
         &:nth-child(1) {
-            background-color: purple
+            background-color: cornflowerblue;          
         }
         &:nth-child(2) {
-            background-color: green;
+            background-color: orange;
             transform: translateY(-75px);
         }
         &:nth-child(3) {
-            background-color: orange
+            background-color: cornflowerblue
         }
     }
 }
 
 .jumbotron {
     background: transparent;
+    padding: 20px;
 
     h1 {
         margin-left: 5%;
@@ -55,7 +66,7 @@ body {
 
             &:nth-child(1) {
                 margin-left: 7.5%;
-                width: 85%;
+                margin-right: 7.5%;
                 border-radius: 25px 25px 0 0;
                 box-shadow: 0 0 5px 1px rgba(0,0,0,.05);
             }
@@ -65,14 +76,23 @@ body {
                 box-shadow: 0 0 30px 1px rgba(100, 149, 237,.5);
                 z-index: +2;        
                 color: #ffffff;
-                background-color: cornflowerblue;        
+                background-color: cornflowerblue;
+
+                &:hover {
+                    box-shadow: 0 0 30px 1px rgba(100, 149, 237,.7) !important;                    
+                }
             }
             
             &:nth-child(3) {
                 margin-left: 7.5%;
-                width: 85%;
+                margin-right: 7.5%;
                 border-radius: 0 0 25px 25px;
                 box-shadow: 0 0 5px 1px rgba(0,0,0,.05);
+            }
+
+            &:hover {
+                transform: scale(1.025);
+                box-shadow: 0 0 30px 1px rgba(0,0,0,.15);
             }
 
             > a {
@@ -92,9 +112,6 @@ body {
                 }
             }
 
-            &:hover {
-                box-shadow: 0 0 30px 1px rgba(0,0,0,.15);
-            }
         }
     }
 }

@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+    <div id="hidden">
     <div id="material">
         <div></div>
         <div></div>
@@ -40,6 +41,7 @@
                 </a>
             </li>
         </ul>
+    </div>
     </div>
     <script src="{{ asset('modular/js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
