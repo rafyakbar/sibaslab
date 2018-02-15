@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="card-block">
-                        <p>Lakukan awf kuwe akik okeh iurjr ojwkeu hidy le,rj akeuehk. jaf alfirf iurkj</p>
+                        <p>Mohon segera hubungi kalab atau kasublab yang bersangkutan</p>
                     </div>
                 </div>
             @else
@@ -54,10 +54,10 @@
                         <a  class="text-light" aria-controls="home" role="tab">Yang menyetujui  : {{$jumlahMenyetujui}}</a>
                     </li>
                     <li href="#belumSetuju" class="btn-dark" data-target="#belumSetuju" data-toggle="tab">
-                        <a class="text-light" aria-controls="profile" role="tab">Yang belum menyetujui  : {{$jumlahBelum}}</a>
+                        <a class="text-light" aria-controls="profile" role="tab">Yang belum menanggapi  : {{$jumlahBelum}}</a>
                     </li>
                     <li href="" class="btn-dark" data-target="#menolak" aria-controls="messages" data-toggle="tab">
-                        <a class="text-light" role="tab">Yang tidak menyetujui  : {{$jumlahMenolak}}</a>
+                        <a class="text-light" role="tab">Yang belum menyetujui  : {{$jumlahMenolak}}</a>
                     </li>
                 </ul>
                 <div class="card sameheight-item">
