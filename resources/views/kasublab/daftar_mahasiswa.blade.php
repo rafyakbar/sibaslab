@@ -125,8 +125,6 @@ let daftarMahasiswa = new Vue({
         cari() {
             let that = this
 
-            console.log(this.keyword)
-
             if(this.keyword.length > 0) {
 
                 this.search_flag = true
