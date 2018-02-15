@@ -66,7 +66,7 @@ class MahasiswaController extends Controller
         $renderer->setWidth(256);
         $renderer->setMargin(0);
         $writer = new \BaconQrCode\Writer($renderer);
-        $namaQr = Auth::guard('mhs')->user()->validasi;
+        $namaQr = Auth::guard('mhs')->user()->id;
         $val = route('mahasiswa.validasi', ['val' => Auth::guard('mhs')->user()->validasi]);
         $writer->writeFile($val, storage_path('app/public/qrCode/images/'.$namaQr.'.png'));
 
@@ -387,7 +387,7 @@ class MahasiswaController extends Controller
     public function tampilQr($nim)
     {
         try {
-            $dir_qr = Mahasiswa::find($nim)->validasi;
+            $dir_qr = Mahasiswa::find($nim)->id;
 
             return response()->file(storage_path('app/public/qrCode/images/' . $dir_qr . '.png'));
         } catch (ModelNotFoundException $err) {
