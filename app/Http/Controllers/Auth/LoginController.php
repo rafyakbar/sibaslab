@@ -24,6 +24,10 @@ class LoginController extends Controller {
         $this->middleware('guest:web')->only([
             'showLoginForm'
         ]);
+
+        $this->middleware('guest:mhs')->only([
+            'showLoginForm'
+        ]);
     }
 
     /**
