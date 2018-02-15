@@ -578,8 +578,7 @@ function applyToTag (styleElement, obj) {
 
 __webpack_require__(6);
 __webpack_require__(30);
-__webpack_require__(31);
-module.exports = __webpack_require__(32);
+module.exports = __webpack_require__(31);
 
 
 /***/ }),
@@ -11912,6 +11911,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -12194,12 +12200,14 @@ var render = function() {
     _c("div", { staticClass: "card card-mhs" }, [
       _c("div", { staticClass: "card-block" }, [
         _c("div", { staticClass: "title-block" }, [
-          _c("h4", { staticClass: "title" }, [
-            _vm._v(_vm._s(_vm.mahasiswa.nama))
+          _c("div", { staticClass: "identity" }, [
+            _c("h4", { staticClass: "title" }, [
+              _vm._v(_vm._s(_vm.mahasiswa.nama))
+            ]),
+            _vm._v(" "),
+            _c("h6", [_vm._v(_vm._s(_vm.mahasiswa.id))])
           ])
         ]),
-        _vm._v(" "),
-        _c("h6", [_vm._v(_vm._s(_vm.mahasiswa.id))]),
         _vm._v(" "),
         _c(
           "div",
@@ -12219,7 +12227,7 @@ var render = function() {
               _c(
                 "span",
                 {
-                  staticClass: "counter",
+                  staticClass: "counter text-warning",
                   on: { click: _vm.daftarBelumMenanggapi }
                 },
                 [_vm._v(_vm._s(_vm.mahasiswa.belum_menanggapi))]
@@ -12238,7 +12246,10 @@ var render = function() {
             _c("div", { staticClass: "item" }, [
               _c(
                 "span",
-                { staticClass: "counter", on: { click: _vm.daftarMenyetujui } },
+                {
+                  staticClass: "counter text-success",
+                  on: { click: _vm.daftarMenyetujui }
+                },
                 [_vm._v(_vm._s(_vm.mahasiswa.menyetujui))]
               ),
               _vm._v(" "),
@@ -12253,7 +12264,7 @@ var render = function() {
               _c(
                 "span",
                 {
-                  staticClass: "counter",
+                  staticClass: "counter text-danger",
                   on: { click: _vm.daftarBelumMenyetujui }
                 },
                 [_vm._v(_vm._s(_vm.mahasiswa.menolak))]
@@ -12314,116 +12325,135 @@ var render = function() {
         _c(
           "div",
           {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.status == 0,
-                expression: "status == 0"
-              }
-            ],
-            staticClass: "btn-group-custom"
+            class: {
+              "card-footer-custom": true,
+              "add-margin": (_vm.status == 2 || _vm.status == 0) && !_vm.kalab
+            }
           },
           [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button", disabled: !_vm.bisaSetujui },
-                on: { click: _vm.setuju }
-              },
-              [_vm._v("Setujui")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.unduhBerkas }
-              },
-              [_vm._v("Unduh Berkas")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-text-warning",
-                attrs: { type: "button", disabled: !_vm.bisaTunda },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.tolak($event)
-                  }
-                }
-              },
-              [_vm._v("Tunda penyetujuan")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.status == 1,
-                expression: "status == 1"
-              }
-            ],
-            staticClass: "btn-group"
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger btn-sm",
-                attrs: {
-                  type: "button",
-                  disabled: !_vm.bisaBatalkanPenyetujuan
+            _c("div", { staticClass: "tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary unduh-berkas",
+                  attrs: {
+                    type: "button",
+                    disabled: typeof _vm.mahasiswa.dir !== "string"
+                  },
+                  on: { click: _vm.unduhBerkas }
                 },
-                on: { click: _vm.tolak }
-              },
-              [_vm._v("Batalkan Penyetujuan")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.status == 2,
-                expression: "status == 2"
-              }
-            ],
-            staticClass: "btn-group",
-            attrs: { role: "group" }
-          },
-          [
+                [
+                  _c("i", { staticClass: "fa fa-download" }),
+                  _vm._v("  Unduh Berkas")
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c(
-              "button",
+              "div",
               {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button", disabled: !_vm.bisaSetujui },
-                on: { click: _vm.setuju }
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.status == 0,
+                    expression: "status == 0"
+                  }
+                ],
+                staticClass: "btn-group"
               },
-              [_vm._v("Setujui")]
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", disabled: !_vm.bisaSetujui },
+                    on: { click: _vm.setuju }
+                  },
+                  [_c("i", { staticClass: "fa fa-check" }), _vm._v("  Setujui")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-text-warning",
+                    attrs: { type: "button", disabled: !_vm.bisaTunda },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.tolak($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Tunda penyetujuan")]
+                )
+              ]
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "div",
               {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.lihatCatatan }
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.status == 1,
+                    expression: "status == 1"
+                  }
+                ],
+                staticClass: "btn-group"
               },
-              [_vm._v("Lihat Catatan")]
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-sm",
+                    attrs: {
+                      type: "button",
+                      disabled: !_vm.bisaBatalkanPenyetujuan
+                    },
+                    on: { click: _vm.tolak }
+                  },
+                  [_vm._v("Batalkan Penyetujuan")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.status == 2,
+                    expression: "status == 2"
+                  }
+                ],
+                staticClass: "btn-group",
+                attrs: { role: "group" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", disabled: !_vm.bisaSetujui },
+                    on: { click: _vm.setuju }
+                  },
+                  [_vm._v("Setujui")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.lihatCatatan }
+                  },
+                  [_vm._v("Lihat Catatan")]
+                )
+              ]
             )
           ]
         )
@@ -12868,11 +12898,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			daftarProdi: [],
-			daftarLab: [],
 			nama: '',
 			nip: '',
 			prodi: '',
-			lab: '',
 			errors: {
 				nip: {
 					text: null,
@@ -13277,12 +13305,6 @@ if (false) {
 
 /***/ }),
 /* 31 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 32 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
