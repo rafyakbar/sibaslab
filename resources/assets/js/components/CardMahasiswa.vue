@@ -9,7 +9,9 @@
                     </div>
                 </div>
 
-                <div class="counter-block" v-show="kalab">
+                <div style="height: 30px" v-show="kalab && status == 1"></div>
+
+                <div class="counter-block" v-show="kalab && status != 1">
                     <div class="item">
                         <span class="counter text-warning" @click="daftarBelumMenanggapi">{{ mahasiswa.belum_menanggapi }}</span>
                         <span class="desc" @click="daftarBelumMenanggapi">Belum Menanggapi</span>

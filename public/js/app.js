@@ -11918,6 +11918,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -12209,6 +12211,18 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.kalab && _vm.status == 1,
+              expression: "kalab && status == 1"
+            }
+          ],
+          staticStyle: { height: "30px" }
+        }),
+        _vm._v(" "),
         _c(
           "div",
           {
@@ -12216,8 +12230,8 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.kalab,
-                expression: "kalab"
+                value: _vm.kalab && _vm.status != 1,
+                expression: "kalab && status != 1"
               }
             ],
             staticClass: "counter-block"
