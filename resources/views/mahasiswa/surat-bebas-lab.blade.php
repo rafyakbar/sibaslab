@@ -80,7 +80,7 @@
 <div style="float: left;">
     <br>
     <img style="height: 150px;" src="{{ route('mahasiswa.tampil.qr', ['nim' => Auth::guard('mhs')->user()->id]) }}"/>
-    <p style="margin-top: -20px"> &nbsp;&nbsp;Scan untuk validasi</p>
+    <p style="margin-top: -10px"> &nbsp;&nbsp;Scan untuk validasi</p>
 </div>
 <table style="float: right">
     <tr>
