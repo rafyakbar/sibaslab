@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Mahasiswa;
 
 class KalabController extends Controller
 {
@@ -25,7 +26,7 @@ class KalabController extends Controller
             $kasublab['menolak'] = Mahasiswa::getMahasiswaByStatus($kasublab, 2, false)->count();
         });
 
-        return view('kasublab.daftar_kasublab', [
+        return view('kalab.daftar_kasublab', [
             'daftarKasublab' => $daftarKasublab,
             'daftarProdi' => Auth::user()->getJurusan()->getProdi()
         ]);
