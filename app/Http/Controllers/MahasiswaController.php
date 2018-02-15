@@ -248,7 +248,7 @@ class MahasiswaController extends Controller
         $file = Mahasiswa::find($request->nim)->dir;
 
         return response()->download(
-            storage_path('app/public/berkas/' . $file)
+            storage_path('app/'. $file)
         );
     }
 
