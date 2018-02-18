@@ -24,7 +24,7 @@ class KasublabController extends Controller
         $daftarMahasiswa = Mahasiswa::getMahasiswaByStatus(Auth::user(), $status);
 
         $daftarMahasiswa = $daftarMahasiswa->map(function ($item) {
-            return $item->setHidden(['password']);
+            return $item->setHidden(['password', 'remember_token', 'updated_at', 'validasi', 'created_at', 'prodi_id', 'pivot']);
         });
 
         return view('kasublab.daftar_mahasiswa', [
