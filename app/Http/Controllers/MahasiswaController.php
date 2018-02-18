@@ -177,17 +177,28 @@ class MahasiswaController extends Controller
             'berkas' => 'nullable|file|mimes:pdf'
         ]);
 
-        $berkas = $request->file('berkas');
+        if($request->berkas!=null)
+        {
+            $berkas = $request->file('berkas');
+            $path = $berkas->store('public/berkas');
 
-        $path = $berkas->store('public/berkas');
-
-        $mhs = Mahasiswa::create([
-            'nama' => $request->nama,
-            'prodi_id' => $request->prodi,
-            'dir' => $path,
-            'password' => bcrypt($request->nim),
-            'id' => $request->nim
-        ]);
+            $mhs = Mahasiswa::create([
+                'nama' => $request->nama,
+                'prodi_id' => $request->prodi,
+                'dir' => $path,
+                'password' => bcrypt($request->nim),
+                'id' => $request->nim
+            ]);
+        }
+        else
+        {
+            $mhs = Mahasiswa::create([
+                'nama' => $request->nama,
+                'prodi_id' => $request->prodi,
+                'password' => bcrypt($request->nim),
+                'id' => $request->nim
+            ]);
+        }
 
         Auth::guard('mhs')->login($mhs);
         $this->kirimEmailKeKalabKasublab();
