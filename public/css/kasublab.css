@@ -5,6 +5,10 @@ body {
   font-size: 14px;
 }
 
+button:disabled {
+  cursor: not-allowed !important;
+}
+
 .app .content {
   padding: 70px 0px 45px 0px;
 }
@@ -39,12 +43,6 @@ body {
 .ui-tab > li.active > a {
   border-bottom: 5px solid rgba(0, 0, 0, 0.5);
   color: rgba(0, 0, 0, 0.75);
-}
-
-@media (max-width: 767px) {
-  .app .content {
-    padding: 50px 0px 45px 0px;
-  }
 }
 
 #daftar-mahasiswa {
@@ -168,11 +166,15 @@ body {
   color: #fff;
 }
 
+#daftar-mahasiswa .card-mhs .tools > button:focus {
+  -webkit-box-shadow: 0 0 0 3px rgba(54, 152, 206, 0.5);
+          box-shadow: 0 0 0 3px rgba(54, 152, 206, 0.5);
+}
+
 #daftar-mahasiswa .card-mhs .tools > button:disabled {
   border: 1px solid #ddd;
   color: #333;
   background-color: #fff;
-  cursor: default;
 }
 
 #daftar-mahasiswa .card-mhs .card-footer-custom {
@@ -288,5 +290,70 @@ body {
   padding: 0 10px 0;
   color: #333;
   cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .app .content {
+    padding: 50px 0px 45px 0px;
+  }
+
+  #daftar-mahasiswa .card-mhs .card-footer-custom,
+  #daftar-mahasiswa .card-mhs .counter-block {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+}
+
+#load-more-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#load-more-wrapper .btn-load-more {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+#load-more-wrapper .bullet-load {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 10px;
+  -webkit-animation: bullet-loading-animation;
+          animation: bullet-loading-animation;
+  -webkit-animation-duration: 0.6s;
+          animation-duration: 0.6s;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes bullet-loading-animation {
+  from {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  to {
+    background-color: white;
+  }
+}
+
+@keyframes bullet-loading-animation {
+  from {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  to {
+    background-color: white;
+  }
 }
 

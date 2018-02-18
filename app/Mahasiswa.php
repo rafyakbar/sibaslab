@@ -181,15 +181,15 @@ class Mahasiswa extends Authenticatable
     {
         // jika status 0, maka surat belum ditanggapi
         if($status == 0) {
-            $daftarMahasiswa = $user->getJurusan()->getRelasiMahasiswa()->whereNotIn('id', $user->getRelasiMahasiswa()->get()->pluck('id')->toArray())->where('konfirmasi', false)->offset($page * 12)->take(12);        
+            $daftarMahasiswa = $user->getJurusan()->getRelasiMahasiswa()->whereNotIn('id', $user->getRelasiMahasiswa()->get()->pluck('id')->toArray())->where('konfirmasi', false);
         }
         // jika status 1, maka surat telah disetujui
         else if($status == 1) {
-            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', true)->orderBy('konfirmasi.updated_at', 'desc')->offset($page * 12)->take(12);
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', true)->orderBy('konfirmasi.updated_at', 'desc');
         }
         // jika status 2 atau lebih, maka surat belum disetujui
         else {          
-            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false)->orderBy('konfirmasi.updated_at', 'desc')->offset($page * 12)->take(12);
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false)->orderBy('konfirmasi.updated_at', 'desc');
         }
 
         // if(!is_null($keyword)) {
@@ -199,18 +199,22 @@ class Mahasiswa extends Authenticatable
         if(!is_null($keyword)) {
             $daftarMahasiswa = $daftarMahasiswa->get()->filter(function ($item) use ($keyword) {
                 return strpos(strtolower($item->nama), strtolower($keyword)) > -1 || strpos($item->id, $keyword) > -1;
-            })->flatten();
+            })->flatten()->slice($page * 12, 12);
         } else {
-            $daftarMahasiswa = $daftarMahasiswa->get();
+            $daftarMahasiswa = $daftarMahasiswa->offset($page * 12)->take(12)->get();
         }
 
-        if(!$additionalCounter)
-            return $daftarMahasiswa;
+        if(!$additionalCounter) {
+            return $daftarMahasiswa->each(function ($mahasiswa) {
+                $mahasiswa['prodi'] = $mahasiswa->getProdi()->nama;
+            });
+        }
 
         return $daftarMahasiswa->each(function ($mahasiswa) {
             $mahasiswa['belum_menanggapi'] = $mahasiswa->getKalabKasublabYangBelumMenyetujui()->count();
             $mahasiswa['menyetujui'] = $mahasiswa->getKalabKasublabYangMenyetujui()->count();
             $mahasiswa['menolak'] = $mahasiswa->getKalabKasublabYangMenolak()->count();
+            $mahasiswa['prodi'] = $mahasiswa->getProdi()->nama;            
         });
     }
     

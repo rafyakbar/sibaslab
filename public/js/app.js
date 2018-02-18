@@ -11920,6 +11920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -12050,6 +12051,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             textarea.focus();
         },
         daftarBelumMenanggapi: function daftarBelumMenanggapi() {
+            if (this.mahasiswa.belum_menanggapi === 0) return;
+
             var that = this;
             var root = document.createElement('swal-list');
             root.innerText = 'Sedang memuat...';
@@ -12076,6 +12079,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         daftarMenyetujui: function daftarMenyetujui() {
+            if (this.mahasiswa.menyetujui === 0) return;
+
             var that = this;
             var root = document.createElement('swal-list');
             root.innerText = 'Sedang memuat...';
@@ -12102,6 +12107,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         daftarBelumMenyetujui: function daftarBelumMenyetujui() {
+            if (this.mahasiswa.menolak === 0) return;
+
             var that = this;
             var root = document.createElement('swal-list');
             root.innerText = 'Sedang memuat...';
@@ -12207,7 +12214,11 @@ var render = function() {
               _vm._v(_vm._s(_vm.mahasiswa.nama))
             ]),
             _vm._v(" "),
-            _c("h6", [_vm._v(_vm._s(_vm.mahasiswa.id))])
+            _c("h6", [_vm._v(_vm._s(_vm.mahasiswa.id))]),
+            _vm._v(" "),
+            _c("h6", { staticStyle: { "font-size": "12px", color: "#888" } }, [
+              _vm._v(_vm._s(_vm.mahasiswa.prodi))
+            ])
           ])
         ]),
         _vm._v(" "),

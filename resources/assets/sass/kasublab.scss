@@ -6,6 +6,12 @@ body {
     font-size: 14px;
 }
 
+button {
+    &:disabled {
+        cursor: not-allowed !important;        
+    }
+}
+
 .app {
     .content {
         padding: 70px 0px 45px 0px;
@@ -38,14 +44,6 @@ body {
                 border-bottom: 5px solid rgba(0, 0, 0, .5);
                 color: rgba(0, 0, 0, 0.75);
             }
-        }
-    }
-}
-
-@media (max-width: 767px) {
-    .app {
-        .content {
-            padding: 50px 0px 45px 0px;
         }
     }
 }
@@ -148,11 +146,14 @@ body {
                     color: #fff;
                 }
 
+                &:focus {
+                    box-shadow: 0 0 0 3px rgba(red(#3698ce), green(#3698ce), blue(#3698ce), 0.5);              
+                }
+
                 &:disabled {
                     border: 1px solid #ddd;
                     color: #333;
                     background-color: #fff;
-                    cursor: default
                 }
             }
         }
@@ -254,5 +255,56 @@ body {
         padding: 0 10px 0;
         color: #333;
         cursor: pointer;
+    }
+}
+
+@media (max-width: 767px) {
+    .app {
+        .content {
+            padding: 50px 0px 45px 0px;
+        }
+    }
+
+    #daftar-mahasiswa {
+        .card-mhs {
+            .card-footer-custom,
+            .counter-block {
+                margin-left: -10px;
+                margin-right: -10px;
+            }
+        }
+    }
+}
+
+#load-more-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn-load-more {
+        border-radius: 20px;
+        padding: 10px 20px;   
+    }
+
+    .bullet-load {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        background-color: #fff;
+        border-radius: 10px;
+        animation: bullet-loading-animation;
+        animation-duration: 0.6s;
+        animation-play-state: running;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes bullet-loading-animation {
+    from {
+        background-color: rgba(255, 255, 255, .3);
+    }
+
+    to {
+        background-color: rgba(255, 255, 255, 1);
     }
 }

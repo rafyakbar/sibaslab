@@ -5,6 +5,8 @@
 <link href="{{ asset('css/kasublab.css') }}" rel="stylesheet"/>
 @endpush
 
+@section('activity', 'Daftar Mahasiswa')
+
 @section('content')
 
 <ul class="ui-tab">
@@ -50,11 +52,14 @@
         <card-mhs v-for="mahasiswa in filteredMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <img v-show="isLoadMoreProcessing" src="{{ asset('images/material-loading.gif') }}" width="50"/>
-            <button v-show="canLoadMore" class="btn btn-primary" @click="loadMore">Tampilkan lainnya</button>
-        </div>
+    <div id="load-more-wrapper">
+            <button v-show="canLoadMore && !onSearchProcessing" class="btn btn-primary btn-load-more" @click="loadMore" :disabled="isLoadMoreProcessing">
+                {{--  <img v-show="isLoadMoreProcessing" src="{{ asset('images/loader.gif') }}" width="20"/>  --}}
+                <div v-show="isLoadMoreProcessing" class="bullet-load" style="animation-delay: 0s"></div>
+                <div v-show="isLoadMoreProcessing" class="bullet-load" style="animation-delay: 0.15s"></div>
+                <div v-show="isLoadMoreProcessing" class="bullet-load" style="animation-delay: 0.25s"></div>
+                @{{ isLoadMoreProcessing ? 'Sedang memuat' : 'Tampilkan lainnya' }}
+            </button>
     </div>
        
 </div>
@@ -87,7 +92,7 @@ let daftarMahasiswa = new Vue({
         onSearchProcessing: false
     },
     created() {
-        this.canLoadMore = this.daftarMahasiswa.length == 12
+        this.initLoadMore()
     },
     methods: {
         removeData(id) {
@@ -106,19 +111,18 @@ let daftarMahasiswa = new Vue({
                 success: function (response) {
                     that.isLoadMoreProcessing = false
 
-                    if(response.length === 0) {
+                    if(response.length !== 12)
                         that.canLoadMore = false
+
+                    if(that.keyword.length == 0) {
+                        for(i in response)
+                            that.daftarMahasiswa.push(response[i])
                     }
                     else {
-                        if(that.keyword.length == 0) {
-                            for(i in response)
-                                that.daftarMahasiswa.push(response[i])
-                        }
-                        else {
-                            for(i in response)
-                                that.filteredMahasiswa.push(response[i])
-                        }
+                        for(i in response)
+                            that.filteredMahasiswa.push(response[i])
                     }
+                    
                 }
             })
         },
@@ -130,9 +134,9 @@ let daftarMahasiswa = new Vue({
                 this.search_flag = true
                 this.onSearchProcessing = true
 
-                this.filteredMahasiswa = this.daftarMahasiswa.filter((mahasiswa) => {
+                {{--  this.filteredMahasiswa = this.daftarMahasiswa.filter((mahasiswa) => {
                     return mahasiswa.nama.toLowerCase().indexOf(that.keyword) > -1 || mahasiswa.id.indexOf(that.keyword) > -1
-                })
+                })  --}}
                 
                 $.ajax({
                     url: '{{ route('kasublab.cari.mahasiswa') }}',
@@ -140,14 +144,17 @@ let daftarMahasiswa = new Vue({
                     data: 'keyword=' + that.keyword + '&status=' + that.status,
                     success: (response) => {
                         this.onSearchProcessing = false
-                        if(that.keyword.length > 0)
+                        if(that.keyword.length > 0) {
                             that.filteredMahasiswa = response
+                            that.canLoadMore = that.filteredMahasiswa.length === 12
+                        }
                     }
                 })
             }
             else {
                 this.search_flag = false
                 this.filteredMahasiswa = []
+                this.canLoadMore = that.daftarMahasiswa.length === 12                
             }
         },
         checkKeywordLength() {
@@ -155,6 +162,9 @@ let daftarMahasiswa = new Vue({
                 this.filteredMahasiswa = []
                 this.search_flag = false
             }
+        },
+        initLoadMore() {
+            this.canLoadMore = this.daftarMahasiswa.length == 12
         }
     }
 })

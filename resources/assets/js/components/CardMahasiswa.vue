@@ -6,6 +6,7 @@
                     <div class="identity">
                         <h4 class="title">{{ mahasiswa.nama }}</h4>
                         <h6>{{ mahasiswa.id }}</h6>
+                        <h6 style="font-size: 12px;color: #888">{{ mahasiswa.prodi }}</h6>
                     </div>
                 </div>
 
@@ -193,6 +194,9 @@
                 textarea.focus()
             },
             daftarBelumMenanggapi() {
+                if(this.mahasiswa.belum_menanggapi === 0)
+                    return
+
                 let that = this
                 let root = document.createElement('swal-list')
                 root.innerText = 'Sedang memuat...'
@@ -219,6 +223,9 @@
                 })
             },
             daftarMenyetujui() {
+                if(this.mahasiswa.menyetujui === 0)
+                    return
+
                 let that = this
                 let root = document.createElement('swal-list')
                 root.innerText = 'Sedang memuat...'
@@ -245,6 +252,9 @@
                 })
             },
             daftarBelumMenyetujui() {
+                if(this.mahasiswa.menolak === 0)
+                    return
+
                 let that = this
                 let root = document.createElement('swal-list')
                 root.innerText = 'Sedang memuat...'
