@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('SET NULL');
             $table->string('nama');
+            $table->string('email')
+                ->default('');
             $table->string('password');
             $table->string('role');
             $table->boolean('tambah_kasublab')
