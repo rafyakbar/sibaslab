@@ -79,9 +79,9 @@
                         <td>{{ $kalab->getJurusan()->nama }}</td>
                         <td>
                             @if($kalab->tambah_kasublab)
-                                <button onclick="ubah({{ $kalab->id }})" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
+                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
                             @else
-                                <button onclick="ubah({{ $kalab->id }})" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
+                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
                             @endif
                         </td>
                     </tr>
