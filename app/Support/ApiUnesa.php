@@ -44,7 +44,9 @@ class ApiUnesa
             'id_prodi' => $id_prodi
         );
         $data = (new static())->kirim_data('post', $params);
-        return json_decode($data['isi']);
+        $data = json_decode($data['isi']);
+        $data = collect($data);
+        return $data;
     }
 
     private function baca_header($x)

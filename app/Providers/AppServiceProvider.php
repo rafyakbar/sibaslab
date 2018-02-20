@@ -17,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
          * set locale Indonesia secara global pada class Carbon
          */
         \Carbon\Carbon::setlocale('id');
+
+        /**
+         * set max execution time 5 menit
+         */
+        ini_set('max_execution_time', 300);
     }
 
     /**
