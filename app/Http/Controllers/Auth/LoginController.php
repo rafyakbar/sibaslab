@@ -120,7 +120,7 @@ class LoginController extends Controller {
         }
 
         Auth::logout();
-        return redirect()->route('user.login');
+        return redirect()->route('/');
     }
 
 }
