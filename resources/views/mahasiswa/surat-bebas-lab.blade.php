@@ -79,11 +79,11 @@
 <br>
 <div style="float: left;">
     <br>
-    <img style="height: 150px;" src="{{ route('mahasiswa.tampil.qr', ['nim' => Auth::guard('mhs')->user()->id]) }}"/>
+    <img style="height: 150px;" src="{{ asset('images/qrCode/'.Auth::guard('mhs')->user()->id.'.png') }}"/>
     <p style="margin-top: -10px"> &nbsp;&nbsp;Scan untuk validasi</p>
 </div>
 <table style="float: right">
-    <tr>
+    <tr>1
         <td width="50%" align="left">Mengetahui,<br>
             Ketua Laboratorium
             <br>
