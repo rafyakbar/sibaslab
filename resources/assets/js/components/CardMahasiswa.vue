@@ -137,7 +137,7 @@
                     }
                 })
             },
-            tolak() {
+            tolak(e) {
                 let that = this
                 let textarea = document.createElement('textarea')
                 textarea.className = 'form-control'
@@ -164,6 +164,12 @@
                                             icon: 'success',
                                             text: response.success
                                         })
+
+                                        if(typeof e === 'string' && e === 'edit') {
+                                            swal.close()
+                                            return
+                                        }
+
                                         that.$root.removeData(that.mahasiswa.id)
                                         swal.close()
                                     } else if (response.error) {
@@ -319,7 +325,18 @@
 
                 swal({
                     title: 'Catatan',
-                    content: p
+                    content: p,
+                    buttons: {
+                        confirm: true,
+                        edit: {
+                            text: 'Edit Catatan',
+                            value: 'edit'
+                        }
+                    }
+                }).then((value) => {
+                    if(value === 'edit') {
+                        that.tolak('edit')
+                    }
                 })
 
                 $.ajax({

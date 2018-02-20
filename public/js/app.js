@@ -11994,7 +11994,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        tolak: function tolak() {
+        tolak: function tolak(e) {
             var that = this;
             var textarea = document.createElement('textarea');
             textarea.className = 'form-control';
@@ -12021,6 +12021,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                         icon: 'success',
                                         text: response.success
                                     });
+
+                                    if (typeof e === 'string' && e === 'edit') {
+                                        swal.close();
+                                        return;
+                                    }
+
                                     that.$root.removeData(that.mahasiswa.id);
                                     swal.close();
                                 } else if (response.error) {
@@ -12173,7 +12179,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             swal({
                 title: 'Catatan',
-                content: p
+                content: p,
+                buttons: {
+                    confirm: true,
+                    edit: {
+                        text: 'Edit Catatan',
+                        value: 'edit'
+                    }
+                }
+            }).then(function (value) {
+                if (value === 'edit') {
+                    that.tolak('edit');
+                }
             });
 
             $.ajax({
