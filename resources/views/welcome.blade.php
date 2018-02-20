@@ -24,7 +24,7 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <a href="{{ route('mahasiswa.login') }}">
-                    <h3>Unduh Surat</h3>
+                    <h3>Masuk Mahasiswa</h3>
                     <p>Melakukan pengecekan dan pengunduhan surat setelah pengajuan</p>
                 </a>
             </li>
