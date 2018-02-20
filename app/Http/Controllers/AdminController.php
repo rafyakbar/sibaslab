@@ -47,6 +47,7 @@ class AdminController extends Controller
             'nama' => 'required',
             'role' => 'required',
             'prodi' => 'required|numeric',
+            'email' => 'required'
         ]);
         if (Prodi::find($request->prodi)->getJurusan()->getRelasiUser()->where('role', Role::KALAB)->count() > 0 && $request->role == Role::KALAB)
             return back()->withErrors([
@@ -55,6 +56,7 @@ class AdminController extends Controller
         $user = User::create([
             'id' => $request->id,
             'nama' => $request->nama,
+            'email' => $request->email,
             'role' => $request->role,
             'prodi_id' => $request->prodi,
             'password' => bcrypt($request->id)
