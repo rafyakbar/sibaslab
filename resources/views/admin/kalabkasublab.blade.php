@@ -5,6 +5,9 @@
 @section('title', 'Kalab & Kasublab')
 
 @section('content')
+    {{--{{ dd(\App\Support\ApiUnesa::getFakultasProdi()) }}--}}
+    {{--{{ dd(\App\Support\ApiUnesa::getMahasiswaPerProdi('8045a730-8836-4c73-a519-ce25474d36d0')) }}--}}
+{{--    {{ dd(Auth::user()->getFakultas()->id) }}--}}
     @if($errors->any())
         <div class="alert alert-warning">
             <ul>
@@ -110,8 +113,8 @@
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-warning btn-sm text-light" onclick="reset({{ $dosen->id }})">Reset password</button>
-                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi({{ $dosen->id }})">Hapus</button>
+                                <button class="btn btn-warning btn-sm text-light" onclick="reset('{{ $dosen->id }}')">Reset password</button>
+                                <button class="btn btn-danger btn-sm text-light" onclick="konfirmasi('{{ $dosen->id }}')">Hapus</button>
                             </div>
                         </td>
                     </tr>
