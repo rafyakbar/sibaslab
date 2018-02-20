@@ -53,7 +53,7 @@
     </div>
 
     <div id="load-more-wrapper">
-            <button v-show="canLoadMore && !onSearchProcessing" class="btn btn-primary btn-load-more" @click="loadMore" :disabled="isLoadMoreProcessing">
+            <button style="display: none" v-show="canLoadMore && !onSearchProcessing" class="btn btn-primary btn-load-more" @click="loadMore" :disabled="isLoadMoreProcessing">
                 {{--  <img v-show="isLoadMoreProcessing" src="{{ asset('images/loader.gif') }}" width="20"/>  --}}
                 <div v-show="isLoadMoreProcessing" class="bullet-load" style="animation-delay: 0s"></div>
                 <div v-show="isLoadMoreProcessing" class="bullet-load" style="animation-delay: 0.15s"></div>
