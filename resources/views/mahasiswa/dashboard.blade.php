@@ -157,7 +157,7 @@
         function tampilCatatan(catatan) {
             swal({
                 icon: 'info',
-                title: catatan
+                text: catatan
             });
         }
         @if(Session::has('message'))

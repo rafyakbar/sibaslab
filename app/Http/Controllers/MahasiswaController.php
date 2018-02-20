@@ -48,7 +48,7 @@ class MahasiswaController extends Controller
     {
         $data=['name' => Auth::guard('mhs')->user()->nama];
         Mail::send('emails.mail', $data, function($message) {
-            $message->to('bagashidayat45@gmail.com', 'Artisans Web')
+            $message->to('rafy683@gmail.com', 'Artisans Web')
                 ->subject('Pengajuan Surat Bebas Laboratorium');
             $message->from('bebaslabunesa@gmail.com','Bebas Lab Fakultas Teknik Unesa');
         });
@@ -174,7 +174,7 @@ class MahasiswaController extends Controller
             'nama' => 'required',
             'nim' => 'required|numeric|unique:mahasiswa,id',
             'prodi' => 'required|numeric',
-            'berkas' => 'nullable|file|mimes:pdf'
+            'berkas' => 'nullable|file|mimes:pdf|max:2000'
         ]);
 
         if($request->berkas!=null)
