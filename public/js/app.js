@@ -12181,11 +12181,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: 'Catatan',
                 content: p,
                 buttons: {
-                    confirm: true,
                     edit: {
                         text: 'Edit Catatan',
                         value: 'edit'
-                    }
+                    },
+                    confirm: true
                 }
             }).then(function (value) {
                 if (value === 'edit') {

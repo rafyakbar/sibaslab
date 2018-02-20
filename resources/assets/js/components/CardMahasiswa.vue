@@ -327,11 +327,11 @@
                     title: 'Catatan',
                     content: p,
                     buttons: {
-                        confirm: true,
                         edit: {
                             text: 'Edit Catatan',
                             value: 'edit'
-                        }
+                        },
+                        confirm: true
                     }
                 }).then((value) => {
                     if(value === 'edit') {
