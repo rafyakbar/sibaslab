@@ -5,6 +5,8 @@
 <link href="{{ asset('css/kasublab.css') }}" rel="stylesheet"/>
 @endpush
 
+@section('activity', 'Daftar Kasublab')
+
 @section('content')
 
     <header class="header--padding">
