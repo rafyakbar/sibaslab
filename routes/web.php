@@ -2,7 +2,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing');
 
 // Authentication Routes...
 Route::namespace('Auth')->group(function () {
