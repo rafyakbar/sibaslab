@@ -3,6 +3,11 @@
 @push('css')
 <link href="{{ asset('css/fonts.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/kasublab.css') }}" rel="stylesheet"/>
+<style>
+p {
+    margin: 0;
+}
+</style>
 @endpush
 
 @section('activity', 'Daftar Mahasiswa')
@@ -43,6 +48,7 @@
             <p>Sedang mencari</p>         
         </div>
     </div>
+    
 
     <div class="row" v-show="filteredMahasiswa.length == 0 && !search_flag">
         <card-mhs v-for="mahasiswa in daftarMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
@@ -50,6 +56,12 @@
     
     <div class="row" v-show="filteredMahasiswa.length > 0">
         <card-mhs v-for="mahasiswa in filteredMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
+    </div>
+    
+    <div style="display: none" class="card" v-show="!canLoadMore">
+        <div class="card-block"> 
+            <p>Tidak ada data yang bisa ditampilkan lagi</p>         
+        </div>
     </div>
 
     <div id="load-more-wrapper">
