@@ -58,7 +58,7 @@ p {
         <card-mhs v-for="mahasiswa in filteredMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
     
-    <div style="display: none" class="card" v-show="!canLoadMore">
+    <div style="display: none" class="card" v-show="!canLoadMore && (daftarMahasiswa.length > 0 || filteredMahasiswa > 0)">
         <div class="card-block"> 
             <p>Tidak ada data yang bisa ditampilkan lagi</p>         
         </div>
