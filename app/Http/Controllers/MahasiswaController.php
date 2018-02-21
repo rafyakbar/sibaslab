@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\URL;
 use App\Support\Role;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Events\SuratBelumDisetujui;
+use App\Events\SuratDisetujui;
 
 class MahasiswaController extends Controller
 {
@@ -272,8 +274,12 @@ class MahasiswaController extends Controller
     public function setujuiSurat(Request $request)
     {
         $penyetuju = Auth::user();
+        $mahasiswa = Mahasiswa::find($request->nim);
 
-        if($penyetuju->doKonfirmasi($request->nim, true)) {
+        if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
+
+            event(new SuratDisetujui($penyetuju, $mahasiswa));
+
             return response()->json([
                 'success' => 'Berhasil menyetujui'
             ]);
@@ -293,8 +299,12 @@ class MahasiswaController extends Controller
     public function tolakSurat(Request $request)
     {
         $penyetuju = Auth::user();
+        $mahasiswa = Mahasiswa::find($request->nim);        
 
-        if($penyetuju->doKonfirmasi($request->nim, false, $request->catatan)) {
+        if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
+
+            event(new SuratBelumDisetujui($penyetuju, $mahasiswa));
+            
             return response()->json([
                 'success' => 'Berhasil mengirim catatan !'
             ]);
