@@ -6,6 +6,7 @@ use App\Jurusan;
 use App\Mahasiswa;
 use App\Prodi;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -69,15 +70,17 @@ class MahasiswaController extends Controller
         $renderer->setMargin(0);
         $writer = new \BaconQrCode\Writer($renderer);
         $namaQr = Auth::guard('mhs')->user()->id;
-        $val = route('mahasiswa.validasi', ['val' => Auth::guard('mhs')->user()->validasi]);
-        $writer->writeFile($val, storage_path('app/public/qrCode/images/'.$namaQr.'.png'));
+        $val = route('mahasiswa.validasi', ['val' => encrypt(Auth::guard('mhs')->user()->id)]);
+        $writer->writeFile($val, 'images/qrCode/'.$namaQr.'.png');
 
-        return PDF::loadView('mahasiswa.surat-bebas-lab', [
+        $d = PDF::loadView('mahasiswa.surat-bebas-lab', [
             'jurusan' => $jurusan,
             'prodi' => $prodi,
             'qr' => QrCode::size(300)->generate('Smadia'),
             'semuaKasublab' => $kasublab,
             'kalab' => $kalab])->download('Surat bebas lab '.Auth::guard('mhs')->user()->nama.'.pdf');
+        File::delete(public_path('images/qrCode/'.$namaQr.'.png'));
+        return $d;
     }
 
     public function edit()
