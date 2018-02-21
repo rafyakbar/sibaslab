@@ -18,7 +18,6 @@
                 <input class="checkbox" id="remember" type="checkbox" name="remember">
                 <span>Ingat Saya</span>
             </label>
-            <a href="reset.html" class="forgot-btn pull-right">Lupa password?</a>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-block btn-primary">Login</button>

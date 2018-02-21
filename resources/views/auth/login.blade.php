@@ -18,7 +18,6 @@
                 <input class="checkbox" name="remember" id="remember" type="checkbox">
                 <span>Ingat</span>
             </label>
-            <a href="" class="forgot-btn pull-right">Klik untuk lupa password!</a>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-block btn-primary">Login</button>
