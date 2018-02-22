@@ -22,7 +22,7 @@ class Mahasiswa extends Authenticatable
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta'
+        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email'
     ];
 
     public function getKalab()
