@@ -29,7 +29,7 @@ class MahasiswaTable extends Migration
             $table->boolean('konfirmasi')->default(false);
             $table->text('dir')->nullable();
             $table->text('validasi')->nullable();
-            $table->text('password');
+            $table->text('password')->nullable();
             $table->timestamps();
             $table->rememberToken();
         });
