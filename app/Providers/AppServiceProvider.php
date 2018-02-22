@@ -19,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
         \Carbon\Carbon::setlocale('id');
 
         /**
-         * set max execution time 5 menit
+         * set max execution time 3 jam
          */
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 10800);
     }
 
     /**
