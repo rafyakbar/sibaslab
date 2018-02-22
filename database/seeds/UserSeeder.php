@@ -27,33 +27,33 @@ class UserSeeder extends Seeder
                 'role' => Role::ADMIN,
                 'prodi_id' => $fakultas->getRelasiJurusan()->first()->getRelasiProdi()->first()->id
             ]);
-            foreach ($fakultas->getJurusan() as $jurusan){
-                User::create([
-                    'id' => $idkalab++.'0',
-                    'nama' => $faker->unique()->name,
-                    'password' => bcrypt('secret'),
-                    'role' => Role::KALAB,
-                    'prodi_id' => $jurusan->getRelasiProdi()->first()->id,
-                    'tambah_kasublab' => rand(0,1)
-                ]);
-                foreach ($jurusan->getProdi() as $prodi){
-                    User::create([
-                        'id' => $idkalab.++$counter,
-                        'nama' => $faker->unique()->name,
-                        'password' => bcrypt('secret'),
-                        'role' => Role::KASUBLAB,
-                        'prodi_id' => $prodi->id,
-                    ]);
-                    User::create([
-                        'id' => $idkalab.++$counter,
-                        'nama' => $faker->unique()->name,
-                        'password' => bcrypt('secret'),
-                        'role' => Role::KASUBLAB,
-                        'prodi_id' => $prodi->id,
-                    ]);
-                }
-                $counter = 0;
-            }
+//            foreach ($fakultas->getJurusan() as $jurusan){
+//                User::create([
+//                    'id' => $idkalab++.'0',
+//                    'nama' => $faker->unique()->name,
+//                    'password' => bcrypt('secret'),
+//                    'role' => Role::KALAB,
+//                    'prodi_id' => $jurusan->getRelasiProdi()->first()->id,
+//                    'tambah_kasublab' => rand(0,1)
+//                ]);
+//                foreach ($jurusan->getProdi() as $prodi){
+//                    User::create([
+//                        'id' => $idkalab.++$counter,
+//                        'nama' => $faker->unique()->name,
+//                        'password' => bcrypt('secret'),
+//                        'role' => Role::KASUBLAB,
+//                        'prodi_id' => $prodi->id,
+//                    ]);
+//                    User::create([
+//                        'id' => $idkalab.++$counter,
+//                        'nama' => $faker->unique()->name,
+//                        'password' => bcrypt('secret'),
+//                        'role' => Role::KASUBLAB,
+//                        'prodi_id' => $prodi->id,
+//                    ]);
+//                }
+//                $counter = 0;
+//            }
         }
     }
 }
