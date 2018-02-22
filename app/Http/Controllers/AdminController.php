@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Fakultas;
 use App\Jurusan;
+use App\Prodi;
 use App\Mahasiswa;
 use App\Support\Role;
 use App\User;
