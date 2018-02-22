@@ -70,22 +70,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($kalabs as $kalab)
-                    <tr>
-                        <td>{{ ++$no }}</td>
-                        <td>{{ $kalab->id }}</td>
-                        <td>{{ $kalab->nama}}</td>
-                        <td>{{ $kalab->role }}</td>
-                        <td>{{ $kalab->getJurusan()->nama }}</td>
-                        <td>
-                            @if($kalab->tambah_kasublab)
-                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
-                            @else
-                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
+                {{--@foreach($kalabs as $kalab)--}}
+                    {{--<tr>--}}
+                        {{--<td>{{ ++$no }}</td>--}}
+                        {{--<td>{{ $kalab->id }}</td>--}}
+                        {{--<td>{{ $kalab->nama}}</td>--}}
+                        {{--<td>{{ $kalab->role }}</td>--}}
+                        {{--<td>{{ $kalab->getJurusan()->nama }}</td>--}}
+                        {{--<td>--}}
+                            {{--@if($kalab->tambah_kasublab)--}}
+                                {{--<button onclick="ubah('{{ $kalab->id }}')" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>--}}
+                            {{--@else--}}
+                                {{--<button onclick="ubah('{{ $kalab->id }}')" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>--}}
+                            {{--@endif--}}
+                        {{--</td>--}}
+                    {{--</tr>--}}
+                {{--@endforeach--}}
                 </tbody>
             </table>
         </div>
