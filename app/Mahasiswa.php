@@ -22,7 +22,7 @@ class Mahasiswa extends Authenticatable
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email'
+        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email', 'ajukan'
     ];
 
     public function getKalab()
@@ -216,6 +216,30 @@ class Mahasiswa extends Authenticatable
             $mahasiswa['menolak'] = $mahasiswa->getKalabKasublabYangMenolak()->count();
             $mahasiswa['prodi'] = $mahasiswa->getProdi()->nama;            
         });
+    }
+
+    /**
+     * mendapatkan relasi mahasiswa yang mengajukan
+     * @param null $jurusan_id
+     * @return mixed
+     */
+    public static function getRelasiYangMengajukan($jurusan_id = null)
+    {
+        if (is_null($jurusan_id)){
+            return Mahasiswa::where('ajukan', true);
+        }
+
+        return Jurusan::find($jurusan_id)->getRelasiMahasiswa()->where('ajukan', true);
+    }
+
+    /**
+     * mendapatkan data mahasiswa yang mengajukan
+     * @param null $jurusan_id
+     * @return mixed
+     */
+    public static function getYangMengajukan($jurusan_id = null)
+    {
+        return self::getRelasiYangMengajukan($jurusan_id)->get();
     }
     
 }

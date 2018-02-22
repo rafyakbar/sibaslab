@@ -27,6 +27,7 @@ class MahasiswaTable extends Migration
             $table->text('email')->default('');
             $table->float('ipk')->default(0);
             $table->string('ta')->nullable();
+            $table->boolean('ajukan')->default(false);
             $table->boolean('konfirmasi')->default(false);
             $table->text('dir')->nullable();
             $table->text('validasi')->nullable();
