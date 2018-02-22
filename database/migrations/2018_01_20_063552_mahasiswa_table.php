@@ -25,7 +25,7 @@ class MahasiswaTable extends Migration
                 ->onDelete('SET NULL');
             $table->string('nama');
             $table->float('ipk')->default(0);
-            $table->char('ta', 1)->nullable();
+            $table->string('ta')->nullable();
             $table->boolean('konfirmasi')->default(false);
             $table->text('dir')->nullable();
             $table->text('validasi')->nullable();
