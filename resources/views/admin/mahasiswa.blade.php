@@ -78,7 +78,7 @@
             language: {
                 searchPlaceholder: "Ketik NIM atau nama..."
             },
-            "lengthMenu": [[5, 10, 20, 40, 80, 100, -1], [5, 10, 20, 40, 80, 100, "Semua data"]],
+            "lengthMenu": [[10, 20, 40, 80, 100, -1], [10, 20, 40, 80, 100, "Semua data"]],
             ajax: {
                 url: '{{ route("admin.etc.getmahasiswa", ["jurusan" => $jurusan]) }}'
             },
