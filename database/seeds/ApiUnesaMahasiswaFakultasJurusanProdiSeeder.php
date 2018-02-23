@@ -16,29 +16,31 @@ class ApiUnesaMahasiswaFakultasJurusanProdiSeeder extends Seeder
      */
     public function run()
     {
-        foreach (ApiUnesa::getFakultasProdi() as $keyfakuktas => $fakultas){
+        foreach (ApiUnesa::getFakultasJurusanProdi() as $keyfakuktas => $fakultas){
             if (strtolower($fakultas->nama) == 'teknik'){
                 $f = Fakultas::create([
                     'nama' => $fakultas->nama
                 ]);
-                $j = Jurusan::create([
-                    'nama' => $f->nama,
-                    'fakultas_id' => $f->id
-                ]);
-                foreach ($fakultas->child as $keyprodi => $prodi){
-                    $p = Prodi::create([
-                        'nama' => $prodi,
-                        'jurusan_id' => $j->id
+                foreach ($fakultas->child as $keyjurusan => $jurusan){
+                    $j = Jurusan::create([
+                        'nama' => $jurusan->nama,
+                        'fakultas_id' => $f->id
                     ]);
-                    foreach (ApiUnesa::getMahasiswaPerProdi($keyprodi) as $keymhs => $mhs){
-                        Mahasiswa::create([
-                            'id' => $keymhs,
-                            'prodi_id' => $p->id,
-                            'nama' => $mhs->nama_mahasiswa,
-                            'ipk' => $mhs->aktivitas_kuliah->ipk,
-                            'ta' => $mhs->n_skripsi->n,
-                            'password' => bcrypt($keymhs)
+                    foreach ($jurusan->child as $keyprodi => $prodi){
+                        $p = Prodi::create([
+                            'nama' => $prodi,
+                            'jurusan_id' => $j->id
                         ]);
+                        foreach (ApiUnesa::getMahasiswaPerProdi($keyprodi) as $keymhs => $mhs){
+                            Mahasiswa::create([
+                                'id' => $keymhs,
+                                'prodi_id' => $p->id,
+                                'nama' => $mhs->nama_mahasiswa,
+                                'ipk' => $mhs->aktivitas_kuliah->ipk,
+                                'ta' => $mhs->n_skripsi->n,
+                                'password' => bcrypt($keymhs)
+                            ]);
+                        }
                     }
                 }
             }

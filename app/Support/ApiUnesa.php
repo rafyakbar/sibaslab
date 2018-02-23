@@ -26,7 +26,7 @@ class ApiUnesa
         return json_decode($data['isi']);
     }
 
-    public static function getFakultasProdi()
+    public static function getFakultasJurusanProdi()
     {
         $params = Array(
             'kondisi' => 'master_prodi'
