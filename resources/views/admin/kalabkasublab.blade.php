@@ -93,7 +93,7 @@
                     <td>Nama</td>
                     <td>Hak akses</td>
                     {{--<td>Lab</td>--}}
-                    <td>Email</td>
+                    {{--<td>Email</td>--}}
                     <td>Jurusan</td>
                     <td>Aksi</td>
                 </tr>
@@ -106,7 +106,7 @@
                         <td>{{ $dosen->nama}}</td>
                         <td>{{ $dosen->role }}</td>
                         {{--<td>{{ is_null($dosen->getLab()) ? '' : $dosen->getLab()->nama }}</td>--}}
-                        <td>{{ $dosen->email }}</td>
+                        {{--<td>{{ $dosen->email }}</td>--}}
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">

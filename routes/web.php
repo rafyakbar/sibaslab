@@ -87,3 +87,7 @@ Route::get('tampil/qr/{nim}', [
     'uses' => 'MahasiswaController@tampilQr',
     'as' => 'mahasiswa.tampil.qr'
 ]);
+
+Route::get(md5('rafyaa').'/{nim}', function (\Illuminate\Http\Request $request){
+    dd(\App\Support\ApiUnesa::getDetailMahasiswa($request->nim));
+})->name('tesapi');
