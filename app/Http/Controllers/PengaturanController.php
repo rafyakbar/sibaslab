@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Support\Role;
+use Illuminate\Validation\Rule;
 
 class PengaturanController extends Controller
 {
@@ -26,6 +27,19 @@ class PengaturanController extends Controller
         $this->validate($request, [
             'nama' => 'required'
         ]);
+
+        if(Auth::guard('web')->check() && Auth::user()->isKasublab() || Auth::user()->isKalab()) {
+            $this->validate($request, [
+                'prodi' => [
+                    'required',
+                    Rule::in(Auth::user()->getJurusan()->getProdi()->pluck('id')->toArray())
+                ]
+            ]);
+
+            Auth::user()->update([
+                'prodi_id' => $request->prodi
+            ]);
+        }
 
         Auth::user()->update([
             'nama' => $request->nama
