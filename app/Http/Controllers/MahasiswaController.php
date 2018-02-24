@@ -175,39 +175,92 @@ class MahasiswaController extends Controller
 
     public function prosesAjukan(Request $request)
     {
+//        $this->validate($request, [
+//            'nama' => 'required',
+//            'nim' => 'required|numeric|unique:mahasiswa,id',
+//            'prodi' => 'required|numeric',
+//            'berkas' => 'nullable|file|mimes:pdf|max:2000'
+//        ]);
+//
+//        if($request->berkas!=null)
+//        {
+//            $berkas = $request->file('berkas');
+//            $path = $berkas->store('public/berkas');
+//
+//            $mhs = Mahasiswa::create([
+//                'nama' => $request->nama,
+//                'prodi_id' => $request->prodi,
+//                'dir' => $path,
+//                'password' => bcrypt($request->nim),
+//                'id' => $request->nim
+//            ]);
+//        }
+//        else
+//        {
+//            $mhs = Mahasiswa::create([
+//                'nama' => $request->nama,
+//                'prodi_id' => $request->prodi,
+//                'password' => bcrypt($request->nim),
+//                'id' => $request->nim
+//            ]);
+//        }
         $this->validate($request, [
-            'nama' => 'required',
-            'nim' => 'required|numeric|unique:mahasiswa,id',
-            'prodi' => 'required|numeric',
-            'berkas' => 'nullable|file|mimes:pdf|max:2000'
+            'nim' => 'required|numeric'
         ]);
 
-        if($request->berkas!=null)
+        $mahasiswa = Mahasiswa::findOrFail($request->nim);
+        if ($mahasiswa->ta == null)
         {
-            $berkas = $request->file('berkas');
-            $path = $berkas->store('public/berkas');
-
-            $mhs = Mahasiswa::create([
-                'nama' => $request->nama,
-                'prodi_id' => $request->prodi,
-                'dir' => $path,
-                'password' => bcrypt($request->nim),
-                'id' => $request->nim
+            return back()->with('message','NIM yang anda masukkan tidak terdaftar');
+        }
+        else if($mahasiswa->ajukan == true)
+        {
+            return back()->with('message','NIM yang anda masukkan telah diajukan');
+        }
+        else if($mahasiswa->ajukan == false)
+        {
+            $prodi = $mahasiswa->getProdi()->nama;
+            return view('mahasiswa.konfirmasi', [
+                'mhs' => $mahasiswa,
+                'prodi' => $prodi
             ]);
         }
         else
         {
-            $mhs = Mahasiswa::create([
-                'nama' => $request->nama,
-                'prodi_id' => $request->prodi,
-                'password' => bcrypt($request->nim),
-                'id' => $request->nim
-            ]);
+            return back()->with('message','NIM yang anda masukkan tidak terdaftar');
         }
 
-        Auth::guard('mhs')->login($mhs);
-        $this->kirimEmailKeKalabKasublab();
-         return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
+
+    }
+
+    public function konfirmasiAjukan(Request $request)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($request->nim);
+
+        if ($mahasiswa->ta == null)
+        {
+            return back()->with('message','NIM yang anda masukkan tidak terdaftar');
+        }
+        else if($mahasiswa->ajukan == true)
+        {
+            return back()->with('message','NIM yang anda masukkan telah diajukan');
+        }
+        else if($mahasiswa->ajukan == false)
+        {
+            Auth::guard('mhs')->login($mahasiswa);
+
+            $this->kirimEmailKeKalabKasublab();
+
+            Auth::guard('mhs')->user()->update([
+                'ajukan' => true
+            ]);
+
+            return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
+        }
+        else
+        {
+            return back()->with('message','NIM yang anda masukkan tidak terdaftar');
+        }
     }
 
     public function dashboard()

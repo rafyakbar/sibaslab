@@ -14,7 +14,7 @@
 <body>
 <div class="auth">
     <div class="auth-container">
-        <div class="card">
+        <div class="card" style="border-radius: 5%">
             <header class="auth-header">
                 <h1 class="auth-title">
                     <div class="logo">
