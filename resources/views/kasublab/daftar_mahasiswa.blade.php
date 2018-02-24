@@ -58,7 +58,7 @@ p {
         <card-mhs v-for="mahasiswa in filteredMahasiswa" :key="mahasiswa.id" :mahasiswa="mahasiswa"></card-mhs>
     </div>
     
-    <div style="display: none" class="card" v-show="!canLoadMore && (daftarMahasiswa.length > 0 || filteredMahasiswa > 0)">
+    <div style="display: none" class="card" v-show="noMoreDataToLoad">
         <div class="card-block"> 
             <p>Tidak ada data yang bisa ditampilkan lagi</p>         
         </div>
@@ -97,6 +97,7 @@ let daftarMahasiswa = new Vue({
         // variabel dibawah ini untuk keperluan load more
         canLoadMore: true,
         isLoadMoreProcessing: false,
+        noMoreDataToLoad: false,
         // variable dibawah ini berfungsi untuk proses pencarian
         keyword: '',
         filteredMahasiswa: [],
@@ -123,8 +124,10 @@ let daftarMahasiswa = new Vue({
                 success: function (response) {
                     that.isLoadMoreProcessing = false
 
-                    if(response.length !== 12)
+                    if(response.length !== 12) {
                         that.canLoadMore = false
+                        that.noMoreDataToLoad = true
+                    }
 
                     if(that.keyword.length == 0) {
                         for(i in response)
@@ -145,6 +148,7 @@ let daftarMahasiswa = new Vue({
 
                 this.search_flag = true
                 this.onSearchProcessing = true
+                this.noMoreDataToLoad = false
 
                 {{--  this.filteredMahasiswa = this.daftarMahasiswa.filter((mahasiswa) => {
                     return mahasiswa.nama.toLowerCase().indexOf(that.keyword) > -1 || mahasiswa.id.indexOf(that.keyword) > -1
@@ -159,6 +163,7 @@ let daftarMahasiswa = new Vue({
                         if(that.keyword.length > 0) {
                             that.filteredMahasiswa = response
                             that.canLoadMore = that.filteredMahasiswa.length === 12
+                            that.noMoreDataToLoad = false
                         }
                     }
                 })

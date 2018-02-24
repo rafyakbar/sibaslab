@@ -6,7 +6,7 @@ Route::group(['prefix' => 'admin'], function (){
         'as' => 'admin.kalabkasublab'
     ]);
 
-    Route::get('mahasiswa/filter/{jurusan}', [
+    Route::get('mahasiswa/{id}', [
         'uses' => 'AdminController@mahasiswa',
         'as' => 'admin.mahasiswa'
     ]);

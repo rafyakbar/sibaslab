@@ -181,15 +181,15 @@ class Mahasiswa extends Authenticatable
     {
         // jika status 0, maka surat belum ditanggapi
         if($status == 0) {
-            $daftarMahasiswa = $user->getJurusan()->getRelasiMahasiswa()->whereNotIn('id', $user->getRelasiMahasiswa()->get()->pluck('id')->toArray())->where('konfirmasi', false);
+            $daftarMahasiswa = $user->getJurusan()->getRelasiMahasiswa()->whereNotIn('id', $user->getRelasiMahasiswa()->get()->pluck('id')->toArray())->where('konfirmasi', false)->where('ajukan', true);
         }
         // jika status 1, maka surat telah disetujui
         else if($status == 1) {
-            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', true)->orderBy('konfirmasi.updated_at', 'desc');
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', true)->orderBy('konfirmasi.updated_at', 'desc')->where('ajukan', true);
         }
         // jika status 2 atau lebih, maka surat belum disetujui
         else {          
-            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false)->orderBy('konfirmasi.updated_at', 'desc');
+            $daftarMahasiswa = $user->getRelasiMahasiswa()->wherePivot('disetujui', false)->orderBy('konfirmasi.updated_at', 'desc')->where('ajukan', true);
         }
 
         // if(!is_null($keyword)) {

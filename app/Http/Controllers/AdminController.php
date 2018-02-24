@@ -79,21 +79,11 @@ class AdminController extends Controller
 
     public function mahasiswa(Request $request)
     {
-        $request->jurusan = ($request->jurusan != 'Semua') ? (!Jurusan::checkByName($request->jurusan, Auth::user()->getFakultas()->id)) ? 'Semua' : $request->jurusan : 'Semua';
+        $mhs = Mahasiswa::whereRaw("id ILIKE '%".$request->id."%' or nama ILIKE '%".$request->id."%'")->paginate(15);
         return view('admin.mahasiswa', [
-            'jurusan' => $request->jurusan,
-            'jurusans' => Auth::user()->getFakultas()->getJurusan()
+            'mhs' => $mhs,
+            'q' => ($request->id == '[]') ? null : $request->id
         ]);
-    }
-
-    public function getMahasiswa(Request $request)
-    {
-        $mahasiswa = ($request->jurusan == 'Semua') ? Auth::user()->getFakultas()->getMahasiswa() : Jurusan::findByName($request->jurusan)->getMahasiswa();
-        return DataTables::of($mahasiswa)->addColumn('jurusan', function (Mahasiswa $mahasiswa) {
-            return $mahasiswa->getJurusan()->nama;
-        })->addColumn('aksi', function (Mahasiswa $mahasiswa) {
-            return '<button class="btn btn-warning btn-sm text-light" onclick="reset(' . $mahasiswa->id . ')">Reset password</button>';
-        })->rawColumns(['aksi'])->make(true);
     }
 
     public function resetUser(Request $request)
