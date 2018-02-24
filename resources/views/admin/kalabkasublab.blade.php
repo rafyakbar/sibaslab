@@ -5,9 +5,6 @@
 @section('title', 'Kalab & Kasublab')
 
 @section('content')
-    {{--{{ dd(\App\Support\ApiUnesa::getFakultasProdi()) }}--}}
-    {{--{{ dd(\App\Support\ApiUnesa::getMahasiswaPerProdi('8045a730-8836-4c73-a519-ce25474d36d0')) }}--}}
-{{--    {{ dd(Auth::user()->getFakultas()->id) }}--}}
     @if($errors->any())
         <div class="alert alert-warning">
             <ul>
@@ -96,7 +93,7 @@
                     <td>Nama</td>
                     <td>Hak akses</td>
                     {{--<td>Lab</td>--}}
-                    <td>Email</td>
+                    {{--<td>Email</td>--}}
                     <td>Jurusan</td>
                     <td>Aksi</td>
                 </tr>
@@ -109,7 +106,7 @@
                         <td>{{ $dosen->nama}}</td>
                         <td>{{ $dosen->role }}</td>
                         {{--<td>{{ is_null($dosen->getLab()) ? '' : $dosen->getLab()->nama }}</td>--}}
-                        <td>{{ $dosen->email }}</td>
+                        {{--<td>{{ $dosen->email }}</td>--}}
                         <td>{{ $dosen->getJurusan()->nama }}</td>
                         <td>
                             <div class="btn-group">
@@ -164,7 +161,7 @@
         });
         $('#kalabkasublab').DataTable({
             responsive: true,
-            "lengthMenu": [[5, 10, 20, 40, 80, 100, -1], [5, 10, 20, 40, 80, 100, "Semua data"]],
+            "lengthMenu": [[10, 20, 40, 80, 100, -1], [10, 20, 40, 80, 100, "Semua data"]],
             "columnDefs": [
                 {"orderable": false, "targets": 5}
             ]

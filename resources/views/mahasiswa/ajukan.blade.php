@@ -18,36 +18,12 @@
         {{csrf_field()}}
         {{method_field('post')}}
         <div class="form-group">
-            <label for="exampleInputEmail1">Nama Lengkap</label>
-            <input type="text" class="form-control" id="nama" placeholder="" name="nama"> </div>
-        <div class="form-group">
             <label for="exampleInputEmail1">NIM</label>
             <input type="number" class="form-control" id="nim" placeholder="" name="nim"> </div>
+        <br>
+        <br>
         <div class="form-group">
-            <label for="exampleInputEmail1">Jurusan</label>
-            <select class="form-control" name="jurusan" id="jurusan" required>
-                <option value="" ></option>
-                @foreach($semuaJurusan as $jurusan)
-                    <option value="{{$jurusan->id}}" >{{$jurusan->nama}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Prodi</label>
-            <select class="form-control" name="prodi" id="prodi">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Upload Berkas</label><br>
-            <div class="input-group">
-                <input type="button" class="input-group-addon text-dark" onclick="upload()" value="Pilih Berkas">
-                <label class="form-control" id="namaFile" for="exampleInputPassword1"></label><br>
-            </div>
-        </div>
-        <input id="inputFile" type="file"  name="berkas" style="display: none" class="dz-message-block">
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="col-12 btn btn-primary" type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 @endsection
@@ -77,4 +53,14 @@
             });
         });
     </script>
+@endpush
+@push('js')
+    @if(Session::has('message'))
+        <script>
+            swal({
+                icon: "error",
+                title: "{{ Session::get('message') }}"
+            });
+        </script>
+    @endif
 @endpush

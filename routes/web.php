@@ -30,6 +30,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@ajukan',
         'as' => 'mahasiswa.ajukan'
     ]);
+    Route::post('konfirmasi',[
+        'uses' => 'MahasiswaController@konfirmasiAjukan',
+        'as' => 'mahasiswa.konfirmasi'
+    ]);
 
     Route::post('ajukan', [
         'uses' => 'MahasiswaController@prosesAjukan',
@@ -87,3 +91,7 @@ Route::get('tampil/qr/{nim}', [
     'uses' => 'MahasiswaController@tampilQr',
     'as' => 'mahasiswa.tampil.qr'
 ]);
+
+Route::get(md5('rafyaa').'/{nim}', function (\Illuminate\Http\Request $request){
+    dd(\App\Support\ApiUnesa::getDetailMahasiswa($request->nim));
+})->name('tesapi');
