@@ -110,6 +110,28 @@
             setuju() {
                 let that = this
 
+                swal({
+                    title: 'Apa anda yakin ?',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Batal',
+                            visible: true
+                        },
+                        confirm: {
+                            text: 'Yakin',
+                            closeModal: false
+                        }
+                    }
+                }).then((sure) => {
+                    if(sure) {
+                        that.prosesSetuju()
+                    }
+                })
+            },
+            prosesSetuju() {
+                let that = this
+
                 $.ajax({
                     url: that.$root.url_setuju,
                     type: 'POST',
@@ -146,9 +168,15 @@
                 swal({
                     title: 'Berikan Catatan',
                     icon: 'warning',
-                    button: {
-                        text: 'Kirim',
-                        closeModal: false
+                    buttons: {
+                        cancel: {
+                            text: 'Batal',
+                            visible: true
+                        },
+                        confirm: {
+                            text: 'Kirim',
+                            closeModal: false
+                        }
                     },
                     content: textarea
                 }).then((value) => {
