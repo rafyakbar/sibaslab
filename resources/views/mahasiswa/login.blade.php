@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <p class="text-muted text-center">Belum mengajukan surat bebas lab?
-                <a href="signup.html">Ajukan Surat!</a>
+                <a href="{{ route('mahasiswa.ajukan') }}">Ajukan Surat!</a>
             </p>
         </div>
     </form>
