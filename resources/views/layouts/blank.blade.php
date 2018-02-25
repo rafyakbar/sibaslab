@@ -8,22 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('modular/css/vendor.css') }}">
     <link rel="stylesheet" href="{{ asset('modular/css/app-green.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/blank.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Theme initialization -->
 </head>
 <body>
 <div class="auth">
     <div class="auth-container">
-        <div class="card" style="border-radius: 5%">
+        <div class="card">
             <header class="auth-header">
                 <h1 class="auth-title">
-                    <div class="logo">
-                        <span class="l l1"></span>
-                        <span class="l l2"></span>
-                        <span class="l l3"></span>
-                        <span class="l l4"></span>
-                        <span class="l l5"></span>
-                    </div>
                     @yield('titleinfo')
                 </h1>
             </header>

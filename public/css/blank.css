@@ -1,0 +1,24 @@
+.auth-container .auth-header {
+    text-align: center;
+    border-bottom: 1px solid #85CE36;
+    background: #85CE36;
+    overflow: hidden;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.card {
+    background-color: #fff;
+    -webkit-box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+    box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+.auth-container .auth-title {
+    color: #ffffff;
+    padding: 20px;
+    line-height: 30px;
+    font-size: 26px;
+}

@@ -30,28 +30,28 @@
 
 @push('js')
     <script>
-        function upload() {
-            document.getElementById("inputFile").click();
-        }
-        $(document).ready(function(){
-            $('input[type="file"]').change(function(e){
-                var fileName = e.target.files[0].name;
-                document.getElementById("namaFile").innerHTML = fileName;
-            });
-        });
+        {{--function upload() {--}}
+            {{--document.getElementById("inputFile").click();--}}
+        {{--}--}}
+        {{--$(document).ready(function(){--}}
+            {{--$('input[type="file"]').change(function(e){--}}
+                {{--var fileName = e.target.files[0].name;--}}
+                {{--document.getElementById("namaFile").innerHTML = fileName;--}}
+            {{--});--}}
+        {{--});--}}
 
-        $('#jurusan').on('change', function(e){
-            console.log(e);
-            var jurusan_id = e.target.value;
+        {{--$('#jurusan').on('change', function(e){--}}
+            {{--console.log(e);--}}
+            {{--var jurusan_id = e.target.value;--}}
 
-            $.get('{{ url('mahasiswa/etc/getprodi') }}/' + jurusan_id, function (data) {
-                console.log(data);
-                $('#prodi').empty();
-                $.each(data, function (index, subCatObj) {
-                    $('#prodi').append('<option value="' + subCatObj.id + '">' + subCatObj.nama + '</option>');
-                });
-            });
-        });
+            {{--$.get('{{ url('mahasiswa/etc/getprodi') }}/' + jurusan_id, function (data) {--}}
+                {{--console.log(data);--}}
+                {{--$('#prodi').empty();--}}
+                {{--$.each(data, function (index, subCatObj) {--}}
+                    {{--$('#prodi').append('<option value="' + subCatObj.id + '">' + subCatObj.nama + '</option>');--}}
+                {{--});--}}
+            {{--});--}}
+        {{--});--}}
     </script>
 @endpush
 @push('js')
