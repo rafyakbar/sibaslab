@@ -32,7 +32,7 @@
                 <span class="name"><b>@yield('title')</b></span>
             </div>
             <div class="header-block header-block-buttons">
-                <a href="{{ (Auth::check()) ? Auth::user()->getFakultas()->link : Auth::guard('mhs')->user()->getFakultas()->link }}" class="btn btn-sm header-btn">
+                <a href="{{ (Auth::check()) ? Auth::user()->getFakultas()->link : Auth::guard('mhs')->user()->getFakultas()->link }}" class="btn btn-sm header-btn" target="_blank">
                     <i class="fa fa-university"></i>
                     <span>
                         Fakultas
