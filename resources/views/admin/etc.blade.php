@@ -43,9 +43,9 @@
                     </div>
                 </div>
                 <div class="card-block">
-                    <form action="" method="post">
+                    <form action="{{ route('admin.etc.sinkron') }}" method="post" id="sinkron">
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-primary disabled" value="Sinkron sekarang" disabled>
+                        <button type="button" class="btn btn-primary" onclick="sinkron()">Sinkron sekarang</button>
                     </form>
                 </div>
             </div>
@@ -70,22 +70,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{--@foreach($kalabs as $kalab)--}}
-                    {{--<tr>--}}
-                        {{--<td>{{ ++$no }}</td>--}}
-                        {{--<td>{{ $kalab->id }}</td>--}}
-                        {{--<td>{{ $kalab->nama}}</td>--}}
-                        {{--<td>{{ $kalab->role }}</td>--}}
-                        {{--<td>{{ $kalab->getJurusan()->nama }}</td>--}}
-                        {{--<td>--}}
-                            {{--@if($kalab->tambah_kasublab)--}}
-                                {{--<button onclick="ubah('{{ $kalab->id }}')" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>--}}
-                            {{--@else--}}
-                                {{--<button onclick="ubah('{{ $kalab->id }}')" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>--}}
-                            {{--@endif--}}
-                        {{--</td>--}}
-                    {{--</tr>--}}
-                {{--@endforeach--}}
+                @foreach($kalabs as $kalab)
+                    <tr>
+                        <td>{{ ++$no }}</td>
+                        <td>{{ $kalab->id }}</td>
+                        <td>{{ $kalab->nama}}</td>
+                        <td>{{ $kalab->role }}</td>
+                        <td>{{ $kalab->getJurusan()->nama }}</td>
+                        <td>
+                            @if($kalab->tambah_kasublab)
+                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-primary btn-sm text-light" title="Klik untuk ubah supaya tidak bisa menambahkan">Bisa menambahkan</button>
+                            @else
+                                <button onclick="ubah('{{ $kalab->id }}')" class="btn btn-danger btn-sm text-light" title="Klik untuk ubah supaya bisa menambahkan">Tidak bisa menambahkan</button>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -121,6 +121,16 @@
                 if (willReset) {
                     $('#user_id').val(id)
                     $('#user_form').submit()
+                }
+            })
+        }
+        function sinkron() {
+            swal({
+                title: "Mungkin ini akan membutuhkan waktu yang cukup lama. Klik 'OK' untuk melanjutkan, klik 'CANCEL' untuk membatalkan.",
+                buttons: true
+            }).then((willReset) => {
+                if (willReset) {
+                    $('#sinkron').submit()
                 }
             })
         }

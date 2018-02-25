@@ -55,4 +55,9 @@ Route::group(['prefix' => 'admin'], function (){
         'uses' => 'AdminController@ubahKalabTambahKasublab',
         'as' => 'admin.etc.kalab.update'
     ]);
+
+    Route::post('etc/sinkron', [
+        'uses' => 'AdminController@sinkron',
+        'as' => 'admin.etc.sinkron'
+    ]);
 });

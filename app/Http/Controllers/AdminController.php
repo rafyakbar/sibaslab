@@ -6,6 +6,7 @@ use App\Fakultas;
 use App\Jurusan;
 use App\Prodi;
 use App\Mahasiswa;
+use App\Support\ApiUnesa;
 use App\Support\Role;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -140,5 +141,60 @@ class AdminController extends Controller
         }
 
         return back()->withErrors(['Pengguna tersebut bukan dari Fakultas ' . Auth::user()->getFakultas()->nama . ' atau bukan Kalab']);
+    }
+
+    public function sinkron()
+    {
+        $jummhsupdate = 0;
+        $jummhsbaru = 0;
+        $jumjurbaru = 0;
+        $jumprdbaru = 0;
+        $jurusans = ApiUnesa::getFakultasJurusanProdi()->filter(function ($value, $key){
+            return strtolower($value->nama) == strtolower(Auth::user()->getFakultas()->nama);
+        })->first()->child;
+        foreach ($jurusans as $jurusan){
+            $j = Jurusan::findByName($jurusan->nama);
+            if (is_null($j)){
+                $j = Jurusan::create([
+                    'nama' => $jurusan->nama,
+                    'fakultas_id' => Auth::user()->getFakultas()->id
+                ]);
+                $jumjurbaru++;
+            }
+            foreach ($jurusan->child as $keyprodi => $prodi){
+                $p = Prodi::findByName($prodi);
+                if (is_null($p)){
+                    $p = Prodi::create([
+                        'nama' => $prodi,
+                        'jurusan_id' => $j->id
+                    ]);
+                    $jumprdbaru++;
+                }
+                foreach (ApiUnesa::getMahasiswaPerProdi($keyprodi) as $keymhs => $mhs){
+                    $mahasiswa = Mahasiswa::find($keymhs);
+                    if (!is_null($mahasiswa)){
+                        $mahasiswa->update([
+                            'nama' => $mhs->nama_mahasiswa,
+                            'ipk' => $mhs->aktivitas_kuliah->ipk,
+                            'ta' => $mhs->n_skripsi->n
+                        ]);
+                        $jummhsupdate++;
+                    }
+                    else{
+                        Mahasiswa::create([
+                            'id' => $keymhs,
+                            'prodi_id' => $p->id,
+                            'nama' => $mhs->nama_mahasiswa,
+                            'ipk' => $mhs->aktivitas_kuliah->ipk,
+                            'ta' => $mhs->n_skripsi->n,
+                            'password' => bcrypt($keymhs)
+                        ]);
+                        $jummhsbaru++;
+                    }
+                }
+            }
+        }
+
+        return back()->with('message', 'Berhasil memperbarui '.$jummhsupdate.' mahasiswa, menambah '.$jummhsbaru.' mahasiswa baru, menambah '.$jumjurbaru.' jurusan baru dan menambah '.$jumprdbaru.' prodi baru!');
     }
 }
