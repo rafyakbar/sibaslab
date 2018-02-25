@@ -79,7 +79,7 @@ class AdminController extends Controller
 
     public function mahasiswa(Request $request)
     {
-        $mhs = Mahasiswa::whereRaw("id ILIKE '%".$request->id."%' or nama ILIKE '%".$request->id."%'")->paginate(15);
+        $mhs = Mahasiswa::whereRaw("id ILIKE '%".$request->id."%' or nama ILIKE '%".$request->id."%'")->paginate(10);
         return view('admin.mahasiswa', [
             'mhs' => $mhs,
             'q' => ($request->id == '[]') ? null : $request->id

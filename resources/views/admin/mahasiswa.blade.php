@@ -49,8 +49,9 @@
         <div class="col-md-12">
             <div id="cari">
                 <input type="text" value="{{ $q }}" placeholder="Cari Mahasiswa . . ." id="in"/>
-                <button onclick="window.location = '{{ route('admin.mahasiswa', ['id' => null]) }}/' + encodeURIComponent($('#in').val())">
-                    <i class="fa fa-search"></i></button>
+                <button onclick="window.location = '{{ route('admin.mahasiswa', ['id' => null]) }}/' + encodeURIComponent($('#in').val())" id="buttonsearch">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -61,7 +62,15 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-block">
-                            {{ $m->nama }}
+                            <p>
+                                {{ $m->id }}<br>
+                                {{ $m->nama }}<br>
+                                Jurusan {{ $m->getJurusan()->nama }}<br>
+                                Prodi {{ $m->getProdi()->nama }}
+                            </p>
+                            <button class="btn btn-warning text-light" onclick="reset('{{ $m->id }}')">
+                                Reset Password
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -80,6 +89,10 @@
 
 @push('js')
     <script type="text/javascript">
+        $('#in').keypress(function(e){
+            if(e.keyCode==13)
+                $('#buttonsearch').click();
+        });
         $('#tes').children('ul.pagination').children().addClass('btn btn-secondary');
         @if($errors->any())
         swal({
