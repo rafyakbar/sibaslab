@@ -42,6 +42,22 @@
                         @endif
                     </div>
 
+                    {{--
+                      -- Menampilkan opsi mengganti program studi untuk
+                      -- kalab maupun kasublab
+                      --}}
+                    @if(Auth::guard('web')->check() && Auth::guard('web')->user()->isKasublab() || Auth::guard('web')->user()->isKalab())
+                    <div class="form-group">
+                        <label for="prodi" class="control-label">Prodi</label>
+                        <select name="prodi" class="form-control boxed">
+                            <option value="{{ Auth::user()->getProdi()->id }}">{{ Auth::user()->getProdi()->nama }}</option>
+                            @foreach (Auth::user()->getJurusan()->getRelasiProdi()->where('id', '!=', Auth::user()->getProdi()->id)->cursor() as $prodi)
+                                <option value="{{ $prodi->id }}">{{ $prodi->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+
                     <button type="submit" class="btn btn-primary">Simpan</button>
 
                 </form>

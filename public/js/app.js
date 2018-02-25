@@ -11967,6 +11967,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setuju: function setuju() {
             var that = this;
 
+            swal({
+                title: 'Apa anda yakin ?',
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: 'Batal',
+                        visible: true
+                    },
+                    confirm: {
+                        text: 'Yakin',
+                        closeModal: false
+                    }
+                }
+            }).then(function (sure) {
+                if (sure) {
+                    that.prosesSetuju();
+                }
+            });
+        },
+        prosesSetuju: function prosesSetuju() {
+            var that = this;
+
             $.ajax({
                 url: that.$root.url_setuju,
                 type: 'POST',
@@ -12003,9 +12025,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             swal({
                 title: 'Berikan Catatan',
                 icon: 'warning',
-                button: {
-                    text: 'Kirim',
-                    closeModal: false
+                buttons: {
+                    cancel: {
+                        text: 'Batal',
+                        visible: true
+                    },
+                    confirm: {
+                        text: 'Kirim',
+                        closeModal: false
+                    }
                 },
                 content: textarea
             }).then(function (value) {
