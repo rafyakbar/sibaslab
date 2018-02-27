@@ -92,10 +92,13 @@ class LoginController extends Controller {
            ]);
 
            $mahasiswa = Mahasiswa::findOrFail($request->id);
-           if(Hash::check($request->password, $mahasiswa->password))
+           if($mahasiswa->ajukan==true)
            {
-               Auth::guard('mhs')->login($mahasiswa);
-               return redirect()->route('mahasiswa.dashboard');
+               if(Hash::check($request->password, $mahasiswa->password))
+               {
+                   Auth::guard('mhs')->login($mahasiswa);
+                   return redirect()->route('mahasiswa.dashboard');
+               }
            }
 
            return back()->with('message','NIM atau password yang anda masukkan salah');

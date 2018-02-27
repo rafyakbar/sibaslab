@@ -299,11 +299,12 @@ class MahasiswaController extends Controller
 
     public function ajukan(Request $request)
     {
-        $jurusan = Jurusan::all();
-        $prodi = Prodi::all();
-        return view('mahasiswa.ajukan', [
-            'semuaJurusan' => $jurusan,
-            'semuaProdi' => $prodi]);
+//        $jurusan = Jurusan::all();
+//        $prodi = Prodi::all();
+//        return view('mahasiswa.ajukan', [
+//            'semuaJurusan' => $jurusan,
+//            'semuaProdi' => $prodi]);
+        return view('mahasiswa.ajukan');
     }
 
     /**
