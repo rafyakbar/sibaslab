@@ -37,6 +37,8 @@ class ApiUnesaMahasiswaFakultasJurusanProdiSeeder extends Seeder
                                 'prodi_id' => $p->id,
                                 'nama' => $mhs->nama_mahasiswa,
                                 'ipk' => $mhs->aktivitas_kuliah->ipk,
+                                'email' => $mhs->email,
+                                'jk' => $mhs->jenis_kelamin,
                                 'ta' => $mhs->n_skripsi->n,
                                 'password' => bcrypt($keymhs)
                             ]);
