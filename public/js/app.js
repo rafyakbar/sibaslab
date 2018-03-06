@@ -11921,6 +11921,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -12263,7 +12264,9 @@ var render = function() {
             _vm._v(" "),
             _c("h6", { staticStyle: { "font-size": "12px", color: "#888" } }, [
               _vm._v(_vm._s(_vm.mahasiswa.prodi))
-            ])
+            ]),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Nilai TA/Skripsi : " + _vm._s(_vm.mahasiswa.ta))])
           ])
         ]),
         _vm._v(" "),

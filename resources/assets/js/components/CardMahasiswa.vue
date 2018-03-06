@@ -7,6 +7,7 @@
                         <h4 class="title">{{ mahasiswa.nama }}</h4>
                         <h6>{{ mahasiswa.id }}</h6>
                         <h6 style="font-size: 12px;color: #888">{{ mahasiswa.prodi }}</h6>
+                        <h6>Nilai TA/Skripsi : {{ mahasiswa.ta }}</h6>
                     </div>
                 </div>
 
