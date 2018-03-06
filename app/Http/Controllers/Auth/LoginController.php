@@ -100,6 +100,10 @@ class LoginController extends Controller {
                    return redirect()->route('mahasiswa.dashboard');
                }
            }
+           else
+           {
+               return back()->with('message','NIM yang anda masukkan tidak terdaftar');
+           }
 
            return back()->with('message','NIM atau password yang anda masukkan salah');
         }
