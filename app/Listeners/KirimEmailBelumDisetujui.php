@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\SuratBelumDisetujui;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Fadaces\Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\SuratBelumDisetujuiMail;
 
 class KirimEmailBelumDisetujui
