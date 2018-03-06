@@ -248,13 +248,13 @@ class MahasiswaController extends Controller
         else if($mahasiswa->ajukan == false)
         {
 
-            $this->kirimEmailKeKalabKasublab();
+            Auth::guard('mhs')->login($mahasiswa);
 
             Auth::guard('mhs')->user()->update([
                 'ajukan' => true
             ]);
 
-            Auth::guard('mhs')->login($mahasiswa);
+            $this->kirimEmailKeKalabKasublab();
 
             return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
         }
