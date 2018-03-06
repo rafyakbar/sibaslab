@@ -119,7 +119,7 @@ class LoginController extends Controller {
     {
         if(Auth::guard('mhs')->check()) {
             Auth::guard('mhs')->logout();
-            return redirect()->route('mahasiswa.login');
+            return redirect()->route('landing');
         }
 
         Auth::logout();
