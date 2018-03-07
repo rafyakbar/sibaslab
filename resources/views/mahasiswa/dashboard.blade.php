@@ -77,7 +77,7 @@
                                                                 <div>
                                                                     <a class="date"
                                                                        style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
-                                                                    <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
+                                                                    <h4 class="item-title no-wrap">{{ $kasublab->nama}} </h4>
                                                                     <p class="date">{{$kasublab->id}} </p>
                                                                 </div>
                                                                 <p class="text-info date pull-right" style="font-size: small">{{$kasublab->role}}</p>

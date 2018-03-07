@@ -39,7 +39,7 @@
 </table>
 <br>
 <br>
-<p>Yang bertanda tangan dibawah ini menerangkan bahwa : </p>
+<p style="margin-left: 20px">Yang mengetahui dibawah ini menerangkan bahwa : </p>
 <table width="" style="margin-left: 50px">
     <tr>
         <td nowrap><font size="-1"><strong>NIM</strong></font></td>
@@ -54,7 +54,7 @@
         <td><font size="-1">: {{ $prodi->nama }} </font></td>
     </tr>
 </table>
-<p>telah terbebas dari tanggungan laboratorium.</p>
+<p style="margin-left: 20px">telah bebas dari tanggungan laboratorium.</p>
 <br>
 {{--<table style="width: 100%; " border=1 cellspacing=0 cellpadding="2">--}}
     {{--<tr>--}}
@@ -79,17 +79,14 @@
 <br>
 <div style="float: left;">
     <br>
-    <img style="height: 150px;" src="{{ asset('images/qrCode/'.Auth::guard('mhs')->user()->id.'.png') }}"/>
+    <img style="height: 150px; margin-left: 20px" src="{{ asset('images/qrCode/'.Auth::guard('mhs')->user()->id.'.png') }}"/>
     <p style="margin-top: -10px"> &nbsp;&nbsp;Scan untuk validasi</p>
 </div>
 <table style="float: right">
-    <tr>1
-        <td width="50%" align="left">Mengetahui,<br>
+    <tr>
+        <td width="50%" align="left">Surabaya, {{ now()->toDateString() }}
+            <br> Menyetujui,<br>
             Ketua Laboratorium
-            <br>
-            <br>
-            <br>
-            <br>
             <br>
             <u>@foreach($kalab as $kalab1)
                     {{ $kalab1->nama }}</u><br>{{ $kalab1->id }}
