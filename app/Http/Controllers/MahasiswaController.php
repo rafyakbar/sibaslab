@@ -254,7 +254,7 @@ class MahasiswaController extends Controller
                 'ajukan' => true
             ]);
 
-            $this->kirimEmailKeKalabKasublab();
+//            $this->kirimEmailKeKalabKasublab();
 
             return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
         }
