@@ -40,7 +40,7 @@
 <br>
 <br>
 <p>Yang bertanda tangan dibawah ini menerangkan bahwa : </p>
-<table width="">
+<table width="" style="margin-left: 50px">
     <tr>
         <td nowrap><font size="-1"><strong>NIM</strong></font></td>
         <td width="150" nowrap><font size="-1">: {{ Auth::guard('mhs')->user()->id }} </font></td>

@@ -254,7 +254,7 @@ class MahasiswaController extends Controller
                 'ajukan' => true
             ]);
 
-            $this->kirimEmailKeKalabKasublab();
+//            $this->kirimEmailKeKalabKasublab();
 
             return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
         }
@@ -336,7 +336,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
 
-            event(new SuratDisetujui($penyetuju, $mahasiswa));
+//            event(new SuratDisetujui($penyetuju, $mahasiswa));
 
             return response()->json([
                 'success' => 'Berhasil menyetujui'
@@ -361,7 +361,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
 
-            event(new SuratBelumDisetujui($penyetuju, $mahasiswa));
+//            event(new SuratBelumDisetujui($penyetuju, $mahasiswa));
             
             return response()->json([
                 'success' => 'Berhasil mengirim catatan !'

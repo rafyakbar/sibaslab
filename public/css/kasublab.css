@@ -9,6 +9,12 @@ button:disabled {
   cursor: not-allowed !important;
 }
 
+@media screen and (max-width: 500px) {
+  .btn-dark{
+    width: 100%;
+  }
+}
+
 .app .content {
   padding: 70px 0px 45px 0px;
 }
