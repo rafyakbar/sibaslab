@@ -46,7 +46,7 @@ class SuratBelumDisetujuiMail extends Mailable
      */
     public function build()
     {
-        $catatan = $pengirim->getRelasiMahasiswa()->where('id', $this->penerima->id)->first()->pivot->catatan;
+        $catatan = $this->pengirim->getRelasiMahasiswa()->where('id', $this->penerima->id)->first()->pivot->catatan;
         
         return $this->view('emails.surat_belum_disetujui', [
             'pengirim' => $this->pengirim,

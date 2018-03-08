@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use App\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -50,11 +50,7 @@ class MahasiswaController extends Controller
     public function kirimEmailKeKalabKasublab()
     {
         $data=['name' => Auth::guard('mhs')->user()->nama];
-        Mail::send('emails.mail', $data, function($message) {
-            $message->to('rafy683@gmail.com', 'Artisans Web')
-                ->subject('Pengajuan Surat Bebas Laboratorium');
-            $message->from('bebaslabunesa@gmail.com','Bebas Lab Fakultas Teknik Unesa');
-        });
+        Mail::to('bagashidayat45@gmail.com')->subject('Pengajuan Surat Bebas Laboratorium')->send('emails.mail', $data);
     }
 
     public function unduh()
@@ -254,7 +250,7 @@ class MahasiswaController extends Controller
                 'ajukan' => true
             ]);
 
-//            $this->kirimEmailKeKalabKasublab();
+            $this->kirimEmailKeKalabKasublab();
 
             return redirect(URL::route('mahasiswa.dashboard', [], false))->with('message', 'Gunakan NIM anda untuk password sementara dan segera perbarui password anda !');
         }
