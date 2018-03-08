@@ -32,7 +32,7 @@ class KirimEmailBelumDisetujui
         $penerima = $event->penerima->email;
         $pengirim = $event->pengirim->email;
 
-        Mail::to($penerima)->send(new SuratBelumDisetujuiMail($pengirim));
+        Mail::to($penerima)->send(new SuratBelumDisetujuiMail($pengirim, $penerima));
     }
 
 }

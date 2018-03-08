@@ -22,23 +22,13 @@ class SuratDisetujuiMail extends Mailable
     public $pengirim;
 
     /**
-     * Penerima dalam hal ini adalah mahasiswa
-     * dengan model Mahasiswa 
-     *
-     * @var Mahasiswa
-     */
-    public $penerima;
-
-    /**
      * Konstruktor
      *
      * @param User $pengirim
-     * @param Mahasiswa $penerima
      */
-    public function __construct($pengirim, $penerima)
+    public function __construct($pengirim)
     {
         $this->pengirim = $pengirim;
-        $this->penerima = $penerima;
     }
 
     /**
