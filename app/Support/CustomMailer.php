@@ -58,18 +58,15 @@ class CustomMailer {
                 $mail->isHTML(true);
                 $mail->Subject = $this->subject;
 
-                if(is_string($view)) {
+                if(is_string($view))
                     $mail->Body = view($view, $data)->render();
-                }
-                else {
-                    $mail->Body = $view->build()->render();
-                }
+
                 $mail->send();
             }
             catch (PHPMailerException $err) {
                 echo 'Gagal mengirim email';
             } catch (\Throwable $e) {
-                echo 'Gagal !';
+                //
             }
     }
 

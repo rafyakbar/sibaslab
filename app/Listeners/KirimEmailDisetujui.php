@@ -31,7 +31,9 @@ class KirimEmailDisetujui
         $penerima = $event->penerima->email;
         $pengirim = $event->pengirim->email;
 
-        Mail::to($penerima)->send(new SuratDisetujuiMail($pengirim));
+        Mail::to($penerima)->subject('Surat Disetujui')->send('emails.surat_disetujui', [
+            'pengirim' => $pengirim
+        ]);
     }
     
 }

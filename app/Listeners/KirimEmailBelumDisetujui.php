@@ -31,8 +31,12 @@ class KirimEmailBelumDisetujui
     {
         $penerima = $event->penerima->email;
         $pengirim = $event->pengirim->email;
+        $catatan = $this->pengirim->getRelasiMahasiswa()->where('id', $this->penerima->id)->first()->pivot->catatan;
 
-        Mail::to($penerima)->send(new SuratBelumDisetujuiMail($pengirim, $penerima));
+        Mail::to($penerima)->send('emails.surat_belum_disetujui', [
+            'pengirim' => $this->pengirim,
+            'catatan' => $catatan
+        ]);
     }
 
 }
