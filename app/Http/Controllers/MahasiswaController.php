@@ -323,7 +323,7 @@ class MahasiswaController extends Controller
      * Menyetujui surat untuk mahasiswa tertentu
      *
      * @param Request $request
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function setujuiSurat(Request $request)
     {
@@ -332,7 +332,11 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
 
-            event(new SuratDisetujui($penyetuju, $mahasiswa));
+            Mail::to($mahasiswa->email)
+                ->subject('Pengajuan Surat Disetujui')
+                ->send('emails.surat_disetujui', [
+                    'pengirim' => $penyetuju
+                ]);
 
             return response()->json([
                 'success' => 'Berhasil menyetujui'
@@ -348,7 +352,7 @@ class MahasiswaController extends Controller
      * Menolak penyetujuan surat dengan menambahkan catatan tertentu
      *
      * @param Request $request
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function tolakSurat(Request $request)
     {
@@ -357,7 +361,12 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
 
-            event(new SuratBelumDisetujui($penyetuju, $mahasiswa));
+            Mail::to($mahasiswa->email)
+                ->subject('Pengajuan Surat Disetujui')
+                ->send('emails.surat_belum_disetujui', [
+                    'pengirim' => $penyetuju,
+                    'catatan' => $penyetuju->getRelasiUser()->where('id', $mahasiswa->id)->first()->pivot->catatan
+                ]);
             
             return response()->json([
                 'success' => 'Berhasil mengirim catatan !'
