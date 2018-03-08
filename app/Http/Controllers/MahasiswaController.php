@@ -365,7 +365,7 @@ class MahasiswaController extends Controller
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_belum_disetujui', [
                     'pengirim' => $penyetuju,
-                    'catatan' => $penyetuju->getRelasiUser()->where('id', $mahasiswa->id)->first()->pivot->catatan
+                    'catatan' => $penyetuju->getRelasiMahasiswa()->where('id', $mahasiswa->id)->first()->pivot->catatan
                 ]);
             
             return response()->json([
