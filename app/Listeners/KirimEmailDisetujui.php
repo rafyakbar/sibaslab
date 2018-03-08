@@ -6,7 +6,7 @@ use App\Events\SuratDisetujui;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\SuratDisetujuiMail;
-use Illuminate\Support\Facades\Mail;
+use App\Facades\Mail;
 
 class KirimEmailDisetujui
 {
