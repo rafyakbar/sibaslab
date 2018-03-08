@@ -34,7 +34,7 @@ class CustomMailer {
 
             try {
                 $mail->isSMTP();
-                $mail->SMTPDebug = true;
+                $mail->SMTPDebug = false;
                 $mail->Host = $_ENV['MAIL_HOST'];
                 $mail->SMTPAuth = true;
                 $mail->Username = $_ENV['MAIL_USERNAME'];
