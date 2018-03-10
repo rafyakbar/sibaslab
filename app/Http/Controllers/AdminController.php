@@ -170,7 +170,11 @@ class AdminController extends Controller
                     ]);
                     $jumprdbaru++;
                 }
-                foreach (ApiUnesa::getMahasiswaPerProdi($keyprodi) as $keymhs => $mhs){
+                $filteredmhs = ApiUnesa::getMahasiswaPerProdi($keyprodi)
+                    ->filter(function ($value, $key){
+                        return !is_null($value->n_skripsi->n);
+                    });
+                foreach ($filteredmhs as $keymhs => $mhs){
                     $mahasiswa = Mahasiswa::find($keymhs);
                     if (!is_null($mahasiswa)){
                         $mahasiswa->update([
