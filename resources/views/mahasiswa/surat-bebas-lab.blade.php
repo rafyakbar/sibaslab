@@ -88,6 +88,7 @@
             <br> Menyetujui,<br>
             Ketua Laboratorium
             <br>
+            <br>
             <u>@foreach($kalab as $kalab1)
                     {{ $kalab1->nama }}</u><br>{{ $kalab1->id }}
                 @endforeach</td>
