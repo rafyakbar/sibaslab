@@ -50,7 +50,7 @@ class MahasiswaController extends Controller
     public function kirimEmailKeKalabKasublab()
     {
         $data=['name' => Auth::guard('mhs')->user()->nama];
-        Mail::to('bagashidayat45@gmail.com')->subject('Pengajuan Surat Bebas Laboratorium')->send('emails.mail', $data);
+        Mail::to('bagashidayat45@gmail.com')->subject('Pengajuan Surat Bebas Laboratorium')->send('pengajuan_surat.mail', $data);
     }
 
     public function unduh()
