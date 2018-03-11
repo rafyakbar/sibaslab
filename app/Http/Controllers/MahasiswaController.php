@@ -124,6 +124,17 @@ class MahasiswaController extends Controller
         }
     }
 
+    public function perbaruiEmail(Request $request)
+    {
+        Auth::guard('mhs')->user()->update([
+            'email' => $request->email
+        ]);
+
+        return back()->with([
+            'success' => 'Berhasil mengubah email !'
+        ]);
+    }
+
     /**
      * Mendapatkan daftar mahasiswa dengan offset tertentu yang akan
      * ditampilkan ketika pengguna menekan tombol lihat lainnya

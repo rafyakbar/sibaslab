@@ -80,9 +80,9 @@
 <div style="float: left;">
     <br>
     <img style="height: 150px; margin-left: 20px" src="{{ asset('images/qrCode/'.Auth::guard('mhs')->user()->id.'.png') }}"/>
-    <p style="margin-top: -10px"> &nbsp;&nbsp;Scan untuk validasi</p>
+    <p style="margin-top: -10px; margin-left: 20px"> &nbsp;&nbsp;Scan untuk validasi</p>
 </div>
-<table style="float: right; margin-right: 30px">
+<table style="float: right">
     <tr>
         <td width="50%" align="left">Surabaya, {{ now()->toDateString() }}
             <br> Menyetujui,<br>
