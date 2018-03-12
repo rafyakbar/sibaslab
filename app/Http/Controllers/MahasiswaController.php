@@ -343,7 +343,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
 
-            Mail::to($mahasiswa->email)
+            Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_disetujui', [
                     'pengirim' => $penyetuju
@@ -372,7 +372,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
 
-            Mail::to($mahasiswa->email)
+            Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_belum_disetujui', [
                     'pengirim' => $penyetuju,
