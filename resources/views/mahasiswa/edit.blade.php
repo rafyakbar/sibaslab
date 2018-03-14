@@ -59,6 +59,20 @@
                     </div>
                 </form>
             </div>
+            <div class="card card-block">
+                <form role="form" action="{{route('mahasiswa.email.perbarui')}}" method="post">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Perbarui Email</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Email</label>
+                        <input type="email" class="form-control" id="nama" placeholder="" value="{{ Auth::guard('mhs')->user()->email }}" name="email"> </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

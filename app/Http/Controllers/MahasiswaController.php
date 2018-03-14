@@ -50,7 +50,7 @@ class MahasiswaController extends Controller
     public function kirimEmailKeKalabKasublab()
     {
         $data=['name' => Auth::guard('mhs')->user()->nama];
-        Mail::to('bagashidayat45@gmail.com')->subject('Pengajuan Surat Bebas Laboratorium')->send('emails.mail', $data);
+        Mail::to('bagashidayat45@gmail.com')->subject('Pengajuan Surat Bebas Laboratorium')->send('emails.pengajuan_surat', $data);
     }
 
     public function unduh()
@@ -122,6 +122,17 @@ class MahasiswaController extends Controller
                 ]);
             }
         }
+    }
+
+    public function perbaruiEmail(Request $request)
+    {
+        Auth::guard('mhs')->user()->update([
+            'email' => $request->email
+        ]);
+
+        return back()->with([
+            'success' => 'Berhasil mengubah email !'
+        ]);
     }
 
     /**
@@ -332,7 +343,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
 
-            Mail::to($mahasiswa->email)
+            Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_disetujui', [
                     'pengirim' => $penyetuju
@@ -361,7 +372,7 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
 
-            Mail::to($mahasiswa->email)
+            Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_belum_disetujui', [
                     'pengirim' => $penyetuju,

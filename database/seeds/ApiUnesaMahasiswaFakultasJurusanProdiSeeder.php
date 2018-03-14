@@ -31,7 +31,11 @@ class ApiUnesaMahasiswaFakultasJurusanProdiSeeder extends Seeder
                             'nama' => $prodi,
                             'jurusan_id' => $j->id
                         ]);
-                        foreach (ApiUnesa::getMahasiswaPerProdi($keyprodi) as $keymhs => $mhs){
+                        $filteredmhs = ApiUnesa::getMahasiswaPerProdi($keyprodi)
+                            ->filter(function ($value, $key){
+                                return !is_null($value->n_skripsi->n);
+                            });
+                        foreach ($filteredmhs as $keymhs => $mhs){
                             Mahasiswa::create([
                                 'id' => $keymhs,
                                 'prodi_id' => $p->id,

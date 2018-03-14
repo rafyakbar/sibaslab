@@ -20,6 +20,10 @@ Route::group(['prefix' => 'mahasiswa'], function () {
         'uses' => 'MahasiswaController@perbaruiPassword',
         'as' => 'mahasiswa.password.perbarui'
     ]);
+    Route::post('perbaruiEmail', [
+        'uses' => 'MahasiswaController@perbaruiEmail',
+        'as' => 'mahasiswa.email.perbarui'
+    ]);
     Route::get('unduh', [
         'uses' => 'MahasiswaController@unduh',
         'as' => 'mahasiswa.unduh'
