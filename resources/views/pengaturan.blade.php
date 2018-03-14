@@ -51,7 +51,7 @@
                         <label for="prodi" class="control-label">Prodi</label>
                         <select name="prodi" class="form-control boxed">
                             <option value="{{ Auth::user()->getProdi()->id }}">{{ Auth::user()->getProdi()->nama }}</option>
-                            @foreach (Auth::user()->getJurusan()->getRelasiProdi()->where('id', '!=', Auth::user()->getProdi()->id)->cursor() as $prodi)
+                            @foreach (Auth::user()->getJurusan()->getRelasiProdi()->where('id', '!=', Auth::user()->getProdi()->id)->get() as $prodi)
                                 <option value="{{ $prodi->id }}">{{ $prodi->nama }}</option>
                             @endforeach
                         </select>
