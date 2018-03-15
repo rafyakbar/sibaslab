@@ -99,7 +99,7 @@ class Mahasiswa extends Authenticatable
 
     /**
      * mendapatkan relasi dengan dosen
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function getRelasiUser()
     {
