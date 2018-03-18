@@ -73,15 +73,17 @@
                                                 @foreach($kasublabMenyetujui as $kasublab)
                                                     <li class="item">
                                                         <div class="item-row">
-                                                            <div class="item-col item-col-title no-overflow">
-                                                                <div>
+                                                            {{--<div class="item-col item-col-title no-overflow">--}}
+                                                                <div class="col-sm-6">
                                                                     <a class="date"
                                                                        style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
                                                                     <h4 class="item-title no-wrap">{{ $kasublab->nama}} </h4>
                                                                     <p class="date">{{$kasublab->id}} </p>
                                                                 </div>
+                                                            <div class="col-sm-6">
                                                                 <p class="text-info date pull-right" style="font-size: small">{{$kasublab->role}}</p>
                                                             </div>
+                                                            {{--</div>--}}
                                                         </div>
                                                     </li>
                                                 @endforeach()
@@ -98,21 +100,23 @@
                                                 @foreach($kasublabMenolak as $kasublab)
                                                     <li class="item">
                                                         <div class="item-row">
-                                                            <div class="item-col item-col-title no-overflow">
-                                                                <div>
+                                                            {{--<div class="item-col item-col-title no-overflow">--}}
+                                                                <div class="col-sm-6">
                                                                     <a class="date"
                                                                        style="font-size: small">{{$kasublab->pivot->created_at->diffForHumans()}} </a>
                                                                     <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                                                     <p class="date">{{$kasublab->id}} </p>
                                                                 </div>
-                                                                <div class="pull-right" style="width: auto">
-                                                                    <p class="text-info" style="font-size: small">{{$kasublab->role}}</p>
-                                                                    <button class="btn btn-primary btn-sm rounded"
-                                                                            onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
-                                                                        Catatan
-                                                                    </button>
+                                                                <div class="col-sm-6">
+                                                                    <div class="pull-right" style="width: auto">
+                                                                        <p class="text-info" style="font-size: small">{{$kasublab->role}}</p>
+                                                                        <button class="btn btn-primary btn-sm rounded"
+                                                                                onclick="tampilCatatan('{{$kasublab->pivot->catatan}}')">Lihat
+                                                                            Catatan
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            {{--</div>--}}
                                                         </div>
                                                     </li>
                                                 @endforeach()
@@ -129,11 +133,13 @@
                                                 @foreach($kasublabBelumMenyetujui as $kasublab)
                                                     <li class="item">
                                                         <div class="item-row">
-                                                            <div class="item-col item-col-title no-overflow">
+                                                            <div class="col-sm-6">
                                                                 <div>
                                                                     <h4 class="item-title no-wrap">{{$kasublab->nama}} </h4>
                                                                     <p class="date">{{$kasublab->id}} </p>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
                                                                 <p class="text-info pull-right" style="font-size: small">{{$kasublab->role}}</p>
                                                             </div>
                                                         </div>
