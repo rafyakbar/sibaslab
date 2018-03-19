@@ -31,11 +31,13 @@ class ApiUnesaMahasiswaFakultasJurusanProdiSeeder extends Seeder
                             'nama' => $prodi,
                             'jurusan_id' => $j->id
                         ]);
-                        $filteredmhs = ApiUnesa::getMahasiswaPerProdi($keyprodi)
-                            ->filter(function ($value, $key){
-                                return !is_null($value->n_skripsi->n);
-                            });
+//                        $filteredmhs = ApiUnesa::getMahasiswaPerProdi($keyprodi)
+//                            ->filter(function ($value, $key){
+//                                return !is_null($value->n_skripsi->n);
+//                            });
+                        $filteredmhs = ApiUnesa::getMahasiswaPerProdi($keyprodi);
                         foreach ($filteredmhs as $keymhs => $mhs){
+                            $mhs = ApiUnesa::getDetailMahasiswa($keymhs);
                             Mahasiswa::create([
                                 'id' => $keymhs,
                                 'prodi_id' => $p->id,

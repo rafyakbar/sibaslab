@@ -6,10 +6,13 @@ use App\Support\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    use SoftDeletes;
 
     protected $keyType = 'string';
 
@@ -23,6 +26,8 @@ class User extends Authenticatable
     protected $fillable = [
         'id', 'nama', 'password', 'role', 'prodi_id', 'created_at', 'updated_at', 'tambah_kasublab', 'lab_id', 'email'
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.
