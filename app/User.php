@@ -112,11 +112,18 @@ class User extends Authenticatable
 
     /**
      * mendapatkan relasi dengan mahasiswa
-     * @return $this
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function getRelasiMahasiswa()
     {
-        return $this->belongsToMany('App\Mahasiswa', 'konfirmasi', 'user_id', 'mahasiswa_id')->withPivot('catatan', 'disetujui')->withTimestamps();
+        return $this->belongsToMany(
+            'App\Mahasiswa',
+            'konfirmasi',
+            'user_id',
+            'mahasiswa_id')
+            ->withPivot('catatan', 'disetujui')
+            ->withTimestamps();
     }
 
     /**
