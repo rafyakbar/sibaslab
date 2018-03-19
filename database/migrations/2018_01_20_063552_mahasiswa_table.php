@@ -29,6 +29,7 @@ class MahasiswaTable extends Migration
             $table->float('ipk')->default(0);
             $table->string('ta')->nullable();
             $table->boolean('ajukan')->default(false);
+            $table->timestamp('mengajukan_pada')->nullable();
             $table->boolean('konfirmasi')->default(false);
             $table->text('dir')->nullable();
             $table->text('validasi')->nullable();

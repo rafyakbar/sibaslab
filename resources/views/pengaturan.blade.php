@@ -5,7 +5,7 @@
 @section('content')
     
 <div class="row">
-    <div class="col">
+    <div class="col col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-block">
                 <div class="title-block">
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="col">
+    <div class="col col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-block">
                 <div class="title-block">

@@ -22,7 +22,7 @@ class Mahasiswa extends Authenticatable
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email', 'ajukan', 'jk'
+        'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email', 'ajukan', 'jk', 'mengajukan_pada'
     ];
 
     public function getKalab()
@@ -162,6 +162,7 @@ class Mahasiswa extends Authenticatable
             ->getRelasiUser()
             ->whereNotIn('id', $this->getIdUser())
             ->whereIn('role', [Role::KALAB, Role::KASUBLAB])
+            ->where('created_at', '<=', $this->mengajukan_pada)
             ->get();
     }
 

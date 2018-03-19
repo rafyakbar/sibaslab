@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jurusan;
 use App\Mahasiswa;
 use App\Prodi;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -258,7 +259,8 @@ class MahasiswaController extends Controller
             Auth::guard('mhs')->login($mahasiswa);
 
             Auth::guard('mhs')->user()->update([
-                'ajukan' => true
+                'ajukan' => true,
+                'mengajukan_pada' => Carbon::now()
             ]);
 
             $this->kirimEmailKeKalabKasublab();
