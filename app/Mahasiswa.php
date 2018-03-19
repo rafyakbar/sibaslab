@@ -25,6 +25,10 @@ class Mahasiswa extends Authenticatable
         'id', 'prodi_id', 'nama', 'password', 'konfirmasi', 'dir', 'validasi', 'created_at', 'updated_at', 'ipk', 'ta', 'email', 'ajukan', 'jk', 'mengajukan_pada'
     ];
 
+    protected $dates = [
+        'mengajukan_pada'
+    ];
+
     public function getKalab()
     {
         return $this->getRelasiUser()
