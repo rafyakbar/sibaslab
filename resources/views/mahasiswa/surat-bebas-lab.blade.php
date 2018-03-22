@@ -81,7 +81,7 @@
     <br>
     <img style="height: 150px; margin-left: 20px" src="{{ asset('images/qrCode/'.Auth::guard('mhs')->user()->id.'.png') }}"/>
     <br>
-    <p style="margin-top: -10px; margin-left: 20px"> &nbsp;&nbsp;Scan untuk validasi</p>
+    <p style="margin-left: 20px"> &nbsp;&nbsp;Scan untuk validasi</p>
 </div>
 <table style="float: right">
     <tr>
