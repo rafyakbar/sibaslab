@@ -46,6 +46,7 @@ class ApiUnesaMahasiswaFakultasJurusanProdiSeeder extends Seeder
                                 'email' => $mhs->email,
                                 'jk' => $mhs->jenis_kelamin,
                                 'ta' => $mhs->n_skripsi->n,
+                                'mengajukan_pada' => now()->toDateTimeString(),
                                 'password' => bcrypt($keymhs)
                             ]);
                         }
