@@ -12146,6 +12146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var that = this;
             var root = document.createElement('swal-list');
+            root.setAttribute('belum-menyetujui', 'true');
             root.innerText = 'Sedang memuat...';
 
             swal({
@@ -13311,7 +13312,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.list-group {\r\n    margin: 0 -20px 0;\r\n    padding: 0;\r\n    max-height: 300px;\r\n    overflow: scroll;\n}\n.list-group > .list-group-item {\r\n    border-radius: 0;\r\n    text-align: left;\r\n    font-weight: bold;\r\n    border-right: none;\r\n    border-left: none;\n}\r\n", ""]);
+exports.push([module.i, "\n.list-group {\r\n    margin: 0 -20px 0;\r\n    padding: 0;\r\n    max-height: 300px;\r\n    overflow: scroll;\n}\n.list-group > .list-group-item {\r\n    border-radius: 0;\r\n    text-align: left;\r\n    font-weight: bold;\r\n    border-right: none;\r\n    border-left: none;\n}\n.pointer {\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -13330,15 +13331,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['belum-menyetujui'],
     data: function data() {
         return {
-            list: []
+            list: [],
+            data_belum_menyetujui: false,
+            nama: null,
+            catatan: null
         };
     },
     mounted: function mounted() {
         this.list = this.$root.list;
+        this.data_belum_menyetujui = this.belumMenyetujui == 'true';
+    },
+
+    methods: {
+        tampilkanCatatan: function tampilkanCatatan(e, item) {
+            this.nama = item.nama;
+            this.catatan = item.pivot.catatan;
+        },
+        tampilkanDaftarBelumMenyetujui: function tampilkanDaftarBelumMenyetujui() {
+            this.nama = null;
+            this.catatan = null;
+        }
     }
 });
 
@@ -13350,15 +13375,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "list-group" },
-    _vm._l(_vm.list, function(item) {
-      return _c("li", { key: item.id, staticClass: "list-group-item" }, [
-        _vm._v("\n        " + _vm._s(item.nama) + "\n    ")
-      ])
-    })
-  )
+  return _c("div", [
+    _vm.nama == null
+      ? _c(
+          "ul",
+          { staticClass: "list-group" },
+          _vm._l(_vm.list, function(item) {
+            return _c(
+              "li",
+              {
+                key: item.id,
+                class: {
+                  "list-group-item": true,
+                  pointer: _vm.data_belum_menyetujui
+                },
+                on: {
+                  click: function($event) {
+                    _vm.tampilkanCatatan($event, item)
+                  }
+                }
+              },
+              [_vm._v("\r\n            " + _vm._s(item.nama) + "\r\n        ")]
+            )
+          })
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.nama != null
+      ? _c("div", { staticStyle: { "text-align": "left", padding: "0" } }, [
+          _c("b", [_vm._v("Catatan dari " + _vm._s(_vm.nama) + " : ")]),
+          _c("br"),
+          _vm._v(" "),
+          _c("p", { staticClass: "alert alert-info" }, [
+            _vm._v(_vm._s(_vm.catatan))
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: { click: _vm.tampilkanDaftarBelumMenyetujui }
+            },
+            [_vm._v("Kembali")]
+          )
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

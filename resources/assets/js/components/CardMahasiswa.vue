@@ -292,6 +292,7 @@
 
                 let that = this
                 let root = document.createElement('swal-list')
+                root.setAttribute('belum-menyetujui', 'true')
                 root.innerText = 'Sedang memuat...'
 
                 swal({
