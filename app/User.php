@@ -123,7 +123,7 @@ class User extends Authenticatable
             'user_id',
             'mahasiswa_id')
             ->withPivot('catatan', 'disetujui')
-            ->withTimestamps();
+            ->withTimestamps(); 
     }
 
     /**
@@ -234,4 +234,5 @@ class User extends Authenticatable
 
         return true;
     }
+    
 }
