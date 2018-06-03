@@ -21,7 +21,7 @@ class JurusanTable extends Migration
                 ->on('fakultas')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
-            $table->string('nama');
+            $table->string('nama')->unique();
         });
     }
 

@@ -22,7 +22,7 @@ class ProdiTable extends Migration
                 ->on('jurusan')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
-            $table->string('nama');
+            $table->string('nama')->unique();
         });
     }
 
