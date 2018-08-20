@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
         <div class="card card-mhs">
             <div class="card-block">
                 <div class="title-block">
@@ -263,6 +263,7 @@
 
                 let that = this
                 let root = document.createElement('swal-list')
+                root.setAttribute('belum-menyetujui', false)
                 root.innerText = 'Sedang memuat...'
 
                 swal({

@@ -2,7 +2,8 @@
 <div>
     <ul class="list-group" v-if="nama == null">
         <li :class="{'list-group-item': true, 'pointer': data_belum_menyetujui}" v-for="item in list" :key="item.id" @click="tampilkanCatatan($event, item)">
-            {{ item.nama }}
+            {{ item.nama }} <br>
+            <span style="font-size: 12px; font-weight: normal; padding-left: 5px">pada {{ date(item.pivot.updated_at) }} WIB</span>
         </li>
     </ul>
 
@@ -33,12 +34,25 @@
         },
         methods: {
             tampilkanCatatan(e, item) {
+                if (!this.data_belum_menyetujui)
+                    return
+
                 this.nama = item.nama
                 this.catatan = item.pivot.catatan
             },
             tampilkanDaftarBelumMenyetujui() {
                 this.nama = null
                 this.catatan = null
+            },
+            date(date) {
+                return new Date(date).toLocaleString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric'
+                })
             }
         }
     }
