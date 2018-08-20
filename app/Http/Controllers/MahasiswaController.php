@@ -345,11 +345,13 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, true)) {
 
+            try {
             Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_disetujui', [
                     'pengirim' => $penyetuju
                 ]);
+            } catch (\Exception $e) {}
 
             return response()->json([
                 'success' => 'Berhasil menyetujui'
@@ -374,12 +376,14 @@ class MahasiswaController extends Controller
 
         if($penyetuju->doKonfirmasi($mahasiswa->id, false, $request->catatan)) {
 
+            try {
             Mail::to('rafy683@gmail.com')
                 ->subject('Pengajuan Surat Disetujui')
                 ->send('emails.surat_belum_disetujui', [
                     'pengirim' => $penyetuju,
                     'catatan' => $penyetuju->getRelasiMahasiswa()->where('id', $mahasiswa->id)->first()->pivot->catatan
                 ]);
+            } catch (\Exception $e) {}
             
             return response()->json([
                 'success' => 'Berhasil mengirim catatan !'

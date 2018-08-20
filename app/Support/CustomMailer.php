@@ -64,9 +64,9 @@ class CustomMailer {
                 $mail->send();
             }
             catch (PHPMailerException $err) {
-                echo 'Gagal mengirim email';
+                throw new \Exception();
             } catch (\Throwable $e) {
-                //
+                throw new \Exception();                
             }
     }
 
