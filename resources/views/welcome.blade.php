@@ -20,7 +20,6 @@
     </div>
     <div class="jumbotron">
         <h1>Surat Bebas Laboratorium</h1>
-
         <ul class="list-group">
             <li class="list-group-item">
                 <a href="{{ route('mahasiswa.login') }}">
