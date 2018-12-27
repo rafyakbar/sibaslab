@@ -3,7 +3,7 @@
     <ul class="list-group" v-if="nama == null">
         <li :class="{'list-group-item': true, 'pointer': data_belum_menyetujui}" v-for="item in list" :key="item.id" @click="tampilkanCatatan($event, item)">
             {{ item.nama }} <br>
-            <span style="font-size: 12px; font-weight: normal; padding-left: 5px">pada {{ date(item.pivot.updated_at) }} WIB</span>
+            <span v-if="item.pivot !== undefined" style="font-size: 12px; font-weight: normal; padding-left: 5px">pada {{ date(item.pivot.updated_at) }} WIB</span>
         </li>
     </ul>
 
