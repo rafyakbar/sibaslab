@@ -13,9 +13,9 @@
 					<li class="list-group-item">Belum menyetujui {{ kasublab.menolak }} mahasiswa</li>
 				</ul>
 
-				<div class="btn-group" v-show="bisa_hapus">
-					<a :href="generateEditLink(kasublab.id)">Edit</a>
-					<button class="btn btn-danger" @click="hapus">Hapus</button>
+				<div class="btn-group">
+					<a class="btn btn-primary" :href="generateEditLink(kasublab.id)">Edit</a>
+					<button v-show="bisa_hapus" class="btn btn-danger" @click="hapus">Hapus</button>
 				</div>
 			</div>
 
