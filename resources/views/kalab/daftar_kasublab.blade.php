@@ -31,7 +31,10 @@
         data: {
             daftarKasublab: {!! $daftarKasublab !!},
             url_hapus: '{{ route('kasublab.hapus') }}',
-            bisa_hapus: {{ Auth::user()->tambah_kasublab ? 'true' : 'false' }}
+            bisa_hapus: {{ Auth::user()->tambah_kasublab ? 'true' : 'false' }},
+            url: {
+                edit: '{{ route('kasublab.edit', ['kasublab' => ''])  }}'
+            }
         },
         methods: {
             removeData(id) {
