@@ -14,6 +14,7 @@
 				</ul>
 
 				<div class="btn-group" v-show="bisa_hapus">
+					<a :href="generateEditLink(kasublab.id)">Edit</a>
 					<button class="btn btn-danger" @click="hapus">Hapus</button>
 				</div>
 			</div>
@@ -26,7 +27,8 @@
 <script>
 	export default {
 		props: {
-			kasublab: [Object]
+			kasublab: [Object],
+			editLink: String
 		},
 		data() {
 			return {
@@ -71,6 +73,10 @@
 						})
 					}
 				})
+			},
+
+			generateEditLink(id) {
+			    return this.$root.url.edit + '/' + id
 			}
 		}
 	}
