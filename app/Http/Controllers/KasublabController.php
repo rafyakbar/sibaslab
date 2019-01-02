@@ -49,6 +49,16 @@ class KasublabController extends Controller
             'success' => 'Berhasil menambahkan kasublab !'
         ]);
     }
+
+    public function editKasublab(Request $request)
+    {
+        $kasublab = User::find($request->id);
+        $kasublab->update([
+            'id' => $request->id,
+            'nama' => $request->nama,
+            'email' => $request->email
+        ]);
+    }
     
     /**
      * Menghapus kasublab

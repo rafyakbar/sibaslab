@@ -57,6 +57,11 @@ Route::post('kasublab/hapus', [
     'as' => 'kasublab.hapus'
 ]);
 
+Route::get('kasublab/edit/{nip}', [
+    'uses' => 'KasublabController@editKasublab',
+    'as' => 'kasublab.edit'
+]);
+
 Route::prefix('surat')->group(function () {
 
     Route::post('setuju', [
