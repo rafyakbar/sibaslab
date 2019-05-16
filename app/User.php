@@ -190,22 +190,22 @@ class User extends Authenticatable
                 // jika user adalah kalab, maka dicek dulu jumlah dari kasublab yang
                 // telah menyetujui, jika sudah semua, maka kalab dapat menyetujui surat
                 if($disetujui) {
-                    if($mahasiswa->getKalabKasublabYangMenyetujui()->count() >= $this->getJurusan()->getDaftarKasublab()->count()){
+                    // if($mahasiswa->getKalabKasublabYangMenyetujui()->count() >= $this->getJurusan()->getDaftarKasublab()->count()){
                     
                         $this->getRelasiMahasiswa()->detach($mahasiswa);
                         $this->getRelasiMahasiswa()->attach($mahasiswa, [
                             'disetujui' => true
                         ]);
         
-                        if($disetujui) {
+                        // if($disetujui) {
                             $mahasiswa->update([
                                 'konfirmasi' => true,
                                 'validasi' => encrypt($mahasiswa->id)
                             ]);
-                        }
+                        // }
         
                         return true;
-                    }
+                    // }
 
                     return false;
                 }
