@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class User extends Authenticatable
 {
@@ -184,6 +185,7 @@ class User extends Authenticatable
     public function doKonfirmasi($mahasiswa_id, $disetujui, $catatan = null)
     {
         try {
+            $catatan = preg_replace("/\r\n|\r|\n/",'<br>',$catatan);
             $mahasiswa = Mahasiswa::findOrFail($mahasiswa_id);
 
             if($this->isKalab()) { 

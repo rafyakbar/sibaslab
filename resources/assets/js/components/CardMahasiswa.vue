@@ -376,7 +376,7 @@
                     data: 'nim=' + that.mahasiswa.id,
                     success: function (response) {
                         if (response.catatan) {
-                            p.innerText = response.catatan
+                            p.innerHTML = response.catatan
                         }
                     }
                 })
